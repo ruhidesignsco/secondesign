@@ -2,731 +2,1114 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ruhi Iftar Games</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Play & Win | Ruhi Designs</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Jost:wght@300;400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
---gold:#B8860B;--gold-light:#D4A843;--brown-dark:#3E2723;--brown:#5D4037;
---cream:#FDF8F0;--text:#2C1810;--correct:#2E7D32;--wrong:#C62828;
+--bg:#3E2723;--bg2:#5D4037;--card:rgba(253,248,240,0.06);
+--card-border:rgba(253,248,240,0.1);--gold:#B8860B;--gold-light:#D4A843;
+--gold-dark:#8B6914;--cream:#FDF8F0;--cream-dark:#F5EDE0;
+--text:#FDF8F0;--text2:rgba(253,248,240,0.55);--text-dark:#2C1810;
+--correct:#2E7D32;--wrong:#C62828;
 }
-html{font-size:18px}
+html{font-size:18px;overflow:hidden;height:100%}
 body{
-font-family:'Jost',sans-serif;background:var(--cream);color:var(--text);
-min-height:100vh;overflow-x:hidden;position:relative;
+font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);
+height:100%;overflow:hidden;position:relative;
+touch-action:manipulation;overscroll-behavior:none;
+-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent;
 }
 h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600}
-.arabic{font-family:'Noto Naskh Arabic',serif}
+.arabic{font-family:'Noto Naskh Arabic','Cormorant Garamond',serif}
 
-/* Background pattern */
+/* Background */
 body::before{
 content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 background:
-  radial-gradient(circle at 20% 30%,rgba(184,134,11,.06) 0%,transparent 50%),
-  radial-gradient(circle at 80% 70%,rgba(93,64,55,.06) 0%,transparent 50%),
-  repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(184,134,11,.015) 40px,rgba(184,134,11,.015) 80px);
+ radial-gradient(ellipse at 30% 10%,rgba(184,134,11,0.07) 0%,transparent 50%),
+ radial-gradient(ellipse at 70% 90%,rgba(93,64,55,0.3) 0%,transparent 50%),
+ linear-gradient(180deg,#3E2723 0%,#2C1810 100%);
 }
+body::after{
+content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.025;
+background-image:
+ repeating-linear-gradient(0deg,transparent,transparent 60px,rgba(184,134,11,.12) 60px,rgba(184,134,11,.12) 61px),
+ repeating-linear-gradient(90deg,transparent,transparent 60px,rgba(184,134,11,.12) 60px,rgba(184,134,11,.12) 61px);
+}
+
+/* Stars */
+.stars-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.star{
+position:absolute;border-radius:50%;background:var(--gold-light);
+animation:twinkle var(--dur) ease-in-out infinite;animation-delay:var(--delay);
+}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}50%{opacity:var(--peak);transform:scale(1)}}
+
+/* Floating lanterns */
+.lantern-deco{
+position:fixed;z-index:0;pointer-events:none;opacity:.08;
+width:28px;display:flex;flex-direction:column;align-items:center;
+animation:lanternFloat var(--dur) ease-in-out infinite;animation-delay:var(--delay);
+}
+.lantern-deco .hook{width:1.5px;height:14px;background:var(--gold)}
+.lantern-deco .body{
+width:24px;height:36px;border-radius:5px 5px 50% 50%;
+background:linear-gradient(180deg,var(--gold),var(--gold-dark));
+position:relative;
+}
+.lantern-deco .body::after{
+content:'';position:absolute;top:7px;left:50%;transform:translateX(-50%);
+width:6px;height:12px;border-radius:50%;
+background:rgba(212,168,67,.5);filter:blur(3px);
+}
+@keyframes lanternFloat{0%,100%{transform:rotate(-2deg) translateY(0)}50%{transform:rotate(2deg) translateY(-8px)}}
 
 /* Screens */
 .screen{
-display:none;flex-direction:column;align-items:center;justify-content:center;
-min-height:100vh;padding:2rem;position:relative;z-index:1;
-animation:fadeIn .5s ease;
+position:fixed;inset:0;display:flex;flex-direction:column;
+align-items:center;justify-content:center;padding:1.5rem;
+z-index:1;opacity:0;pointer-events:none;
+transition:opacity .5s ease,transform .5s ease;
+transform:scale(.97);overflow-y:auto;
 }
-.screen.active{display:flex}
-@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.screen.active{opacity:1;pointer-events:auto;z-index:2;transform:scale(1)}
 
-/* Welcome Screen */
-#welcome-screen .logo-container{text-align:center;margin-bottom:2rem}
-#welcome-screen .brand-arabic{
-font-size:5rem;color:var(--gold);text-shadow:0 2px 15px rgba(184,134,11,.3);
-animation:float 3s ease-in-out infinite;
-}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-#welcome-screen h1{font-size:3.5rem;color:var(--brown-dark);margin:.5rem 0}
-#welcome-screen .subtitle{font-size:1.3rem;color:var(--brown);margin-bottom:2.5rem;letter-spacing:2px}
-
-/* Decorative border */
-.decorative-border{
-width:200px;height:3px;margin:1rem auto;
+/* Decorative divider */
+.divider{
+width:180px;height:1.5px;margin:.8rem auto;position:relative;
 background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.divider::after{
+content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);
+width:8px;height:8px;background:var(--gold);border-radius:50%;
+box-shadow:0 0 8px rgba(184,134,11,.4);
 }
 
 /* Buttons */
 .btn{
-font-family:'Jost',sans-serif;font-size:1.1rem;font-weight:500;
-padding:1rem 2.5rem;border:none;border-radius:12px;cursor:pointer;
-transition:all .3s ease;position:relative;overflow:hidden;
-touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+font-family:'Jost',sans-serif;font-weight:600;border:none;border-radius:14px;
+cursor:pointer;transition:all .25s ease;position:relative;overflow:hidden;
+touch-action:manipulation;letter-spacing:.5px;
 }
-.btn::after{
-content:'';position:absolute;inset:0;
-background:linear-gradient(135deg,rgba(255,255,255,.2),transparent);
-opacity:0;transition:opacity .3s;
-}
-.btn:hover::after,.btn:active::after{opacity:1}
+.btn:active{transform:scale(.96)!important}
 .btn-primary{
-background:linear-gradient(135deg,var(--gold),var(--gold-light));
-color:#fff;box-shadow:0 4px 20px rgba(184,134,11,.35);
+background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+color:var(--cream);padding:1rem 2.5rem;font-size:1.1rem;
+box-shadow:0 4px 20px rgba(184,134,11,.25);
 }
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(184,134,11,.45)}
-.btn-primary:active{transform:translateY(0)}
+.btn-primary:hover{box-shadow:0 6px 28px rgba(184,134,11,.35);transform:translateY(-2px)}
 .btn-secondary{
-background:transparent;color:var(--gold);
-border:2px solid var(--gold);
+background:transparent;color:var(--gold-light);padding:.9rem 2rem;font-size:1rem;
+border:1.5px solid rgba(184,134,11,.5);
 }
-.btn-secondary:hover{background:var(--gold);color:#fff}
-.btn-large{padding:1.3rem 3.5rem;font-size:1.4rem;border-radius:16px}
-
-/* Game Selection */
-.games-grid{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:1.5rem;width:100%;max-width:1000px;margin:2rem 0;
+.btn-secondary:hover{background:rgba(184,134,11,.15);color:var(--gold-light)}
+.btn-large{padding:1.4rem 3.5rem;font-size:1.5rem;border-radius:16px}
+.btn-start{
+padding:1.5rem 4rem;font-size:1.5rem;border-radius:50px;
+background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));
+color:#2C1810;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+box-shadow:0 4px 30px rgba(184,134,11,.3);
+animation:btnGlow 3s ease-in-out infinite;
 }
-.game-card{
-background:#fff;border-radius:20px;padding:2rem;text-align:center;
-cursor:pointer;transition:all .3s ease;
-border:2px solid transparent;
-box-shadow:0 4px 20px rgba(0,0,0,.06);
-}
-.game-card:hover{
-transform:translateY(-6px);border-color:var(--gold);
-box-shadow:0 8px 35px rgba(184,134,11,.15);
-}
-.game-card .icon{font-size:3rem;margin-bottom:1rem}
-.game-card h3{font-size:1.5rem;color:var(--brown-dark);margin-bottom:.5rem}
-.game-card p{color:var(--brown);font-size:.9rem;line-height:1.5}
-
-/* Level Selection */
-.levels-grid{
-display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;
-max-width:600px;margin:2rem 0;
-}
-.level-btn{
-width:80px;height:80px;border-radius:50%;font-size:1.8rem;font-weight:600;
-background:#fff;color:var(--brown-dark);border:3px solid var(--gold-light);
-cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;
-font-family:'Cormorant Garamond',serif;
-}
-.level-btn:hover{
-background:var(--gold);color:#fff;transform:scale(1.1);
-box-shadow:0 4px 20px rgba(184,134,11,.4);
+@keyframes btnGlow{0%,100%{box-shadow:0 4px 30px rgba(184,134,11,.3)}50%{box-shadow:0 6px 45px rgba(184,134,11,.45)}}
+.btn-spin{
+padding:1.3rem 3rem;font-size:1.3rem;border-radius:50px;
+background:linear-gradient(135deg,var(--gold-light),var(--gold));
+color:#2C1810;font-weight:700;letter-spacing:1px;
+box-shadow:0 4px 20px rgba(184,134,11,.3);
 }
 
-/* Question Screen */
-.question-container{
-width:100%;max-width:800px;
+/* ===== WELCOME ===== */
+#screen-welcome .brand-arabic{
+font-size:5rem;color:var(--gold);
+text-shadow:0 2px 20px rgba(184,134,11,.3);
+animation:floatBrand 4s ease-in-out infinite;line-height:1.2;
 }
+@keyframes floatBrand{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+#screen-welcome h1{
+font-size:2.8rem;color:var(--cream);margin:.3rem 0;letter-spacing:4px;
+text-transform:uppercase;font-weight:300;
+}
+#screen-welcome .subtitle{
+font-size:1rem;color:var(--gold-light);letter-spacing:5px;text-transform:uppercase;
+margin-bottom:1.5rem;font-weight:400;
+}
+.instructions{
+display:flex;flex-direction:column;gap:.6rem;margin:1.5rem 0 2rem;
+max-width:480px;width:100%;
+}
+.inst-step{
+display:flex;align-items:center;gap:.8rem;
+background:rgba(93,64,55,0.3);border:1px solid rgba(184,134,11,.15);
+border-radius:10px;padding:.8rem 1.2rem;
+}
+.inst-num{
+width:30px;height:30px;border-radius:50%;
+background:transparent;border:1.5px solid var(--gold);
+color:var(--gold);display:flex;align-items:center;justify-content:center;
+font-weight:600;font-size:.85rem;flex-shrink:0;
+}
+.inst-text{font-size:.9rem;color:var(--text2);letter-spacing:.3px}
+
+/* ===== WHEEL SCREENS ===== */
+.wheel-wrapper{position:relative;margin:1.5rem 0}
+.wheel-pointer{
+position:absolute;top:-8px;left:50%;transform:translateX(-50%);
+width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;
+border-top:26px solid var(--gold-light);z-index:5;
+filter:drop-shadow(0 2px 6px rgba(184,134,11,.4));
+}
+canvas{display:block;border-radius:50%}
+
+/* ===== GAME REVEAL ===== */
+.reveal-icon{font-size:3.5rem;margin-bottom:1rem;animation:revealPop .6s ease}
+.reveal-title{font-size:2.5rem;color:var(--gold);margin:.5rem 0;animation:revealPop .6s ease .1s both}
+.reveal-desc{color:var(--text2);font-size:1rem;margin-bottom:2rem;animation:revealPop .6s ease .2s both}
+@keyframes revealPop{from{opacity:0;transform:scale(.5) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* ===== QUESTION SCREEN ===== */
+.question-container{width:100%;max-width:800px}
 .game-header{
-display:flex;justify-content:space-between;align-items:center;
-margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;
+display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;
 }
-.score-display{
-font-size:1.3rem;font-weight:600;color:var(--gold);
-background:#fff;padding:.6rem 1.5rem;border-radius:30px;
-box-shadow:0 2px 10px rgba(0,0,0,.06);
+.game-name{
+font-size:.85rem;color:var(--gold-light);font-weight:500;
+letter-spacing:1.5px;text-transform:uppercase;
 }
-.score-display.animate{animation:scorePop .4s ease}
-@keyframes scorePop{0%{transform:scale(1)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
+.score-badge{
+font-size:1.1rem;font-weight:600;color:var(--gold);
+background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.25);
+padding:.4rem 1.2rem;border-radius:20px;
+}
+.score-badge.pop{animation:scorePop .4s ease}
+@keyframes scorePop{50%{transform:scale(1.25)}}
 
-.progress-bar-container{
-width:100%;height:8px;background:#e0d5c7;border-radius:10px;
-margin-bottom:2rem;overflow:hidden;
+/* Progress dots */
+.progress-dots{display:flex;gap:.6rem;justify-content:center;margin-bottom:1.2rem}
+.pdot{
+width:34px;height:34px;border-radius:50%;
+background:rgba(93,64,55,.3);border:1.5px solid rgba(253,248,240,.12);
+display:flex;align-items:center;justify-content:center;
+font-size:.75rem;font-weight:600;color:var(--text2);
+transition:all .3s ease;
 }
-.progress-bar{
-height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-light));
-border-radius:10px;transition:width .5s ease;
-}
-
-.question-number{font-size:.95rem;color:var(--brown);margin-bottom:.8rem}
-.question-text{
-font-size:1.6rem;font-weight:600;color:var(--brown-dark);
-line-height:1.5;margin-bottom:2rem;text-align:center;
-font-family:'Cormorant Garamond',serif;
-background:#fff;padding:2rem;border-radius:20px;
-box-shadow:0 4px 20px rgba(0,0,0,.05);
-}
-.question-text .arabic-text{
-display:block;font-size:2rem;margin:.8rem 0;
-color:var(--gold);line-height:1.8;
-}
-
-.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-@media(max-width:600px){.options-grid{grid-template-columns:1fr}}
-.option-btn{
-background:#fff;border:2px solid #e0d5c7;border-radius:16px;
-padding:1.2rem 1.5rem;font-size:1.1rem;text-align:center;
-cursor:pointer;transition:all .3s;font-family:'Jost',sans-serif;
-color:var(--text);position:relative;overflow:hidden;
-}
-.option-btn:hover:not(.disabled){
-border-color:var(--gold);background:rgba(184,134,11,.05);
-transform:translateY(-2px);
-}
-.option-btn.correct{
-background:var(--correct)!important;color:#fff!important;
-border-color:var(--correct)!important;animation:correctPulse .5s ease;
-}
-.option-btn.wrong{
-background:var(--wrong)!important;color:#fff!important;
-border-color:var(--wrong)!important;animation:shake .5s ease;
-}
-.option-btn.disabled{pointer-events:none;opacity:.7}
-.option-btn.show-correct{
-border-color:var(--correct)!important;background:rgba(46,125,50,.1)!important;
-}
-@keyframes correctPulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
-@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
-
-.explanation{
-margin-top:1.5rem;padding:1.2rem;background:rgba(184,134,11,.08);
-border-radius:12px;border-left:4px solid var(--gold);
-font-size:.95rem;color:var(--brown);line-height:1.6;
-animation:fadeIn .3s ease;
-}
-.next-btn-container{text-align:center;margin-top:1.5rem}
+.pdot.current{border-color:var(--gold);color:var(--gold)}
+.pdot.correct-dot{background:var(--correct);border-color:var(--correct);color:var(--cream)}
+.pdot.wrong-dot{background:var(--wrong);border-color:var(--wrong);color:var(--cream)}
 
 /* Timer */
-.timer-bar{
-width:100%;height:10px;background:#e0d5c7;border-radius:10px;
-margin-bottom:1.5rem;overflow:hidden;
+.timer-bar-wrap{width:100%;height:6px;background:rgba(253,248,240,.08);border-radius:10px;margin-bottom:.5rem;overflow:hidden}
+.timer-bar-fill{height:100%;border-radius:10px;transition:width .1s linear;background:linear-gradient(90deg,var(--wrong),var(--gold),var(--correct))}
+.timer-num{text-align:center;font-size:1.6rem;font-weight:700;color:var(--gold);font-family:'Cormorant Garamond',serif;margin-bottom:.5rem}
+.timer-num.urgent{color:var(--wrong);animation:pulse .5s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Question card */
+.question-card{
+background:rgba(93,64,55,.2);border:1px solid rgba(184,134,11,.12);
+border-radius:16px;padding:1.8rem;margin-bottom:1.5rem;
+text-align:center;
 }
-.timer-fill{
-height:100%;background:linear-gradient(90deg,var(--wrong),var(--gold),var(--correct));
-border-radius:10px;transition:width .1s linear;
+.question-text{
+font-size:1.4rem;font-weight:500;line-height:1.6;color:var(--cream);
+font-family:'Cormorant Garamond',serif;
 }
-.timer-text{
+.question-text .arabic-text{
+display:block;font-size:1.9rem;margin:.6rem 0;
+color:var(--gold);line-height:1.8;
+font-family:'Noto Naskh Arabic',serif;direction:rtl;
+}
+
+/* Options */
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+@media(max-width:600px){.options-grid{grid-template-columns:1fr}}
+.option-btn{
+background:rgba(93,64,55,.25);border:1.5px solid rgba(253,248,240,.1);border-radius:12px;
+padding:1.1rem 1.3rem;font-size:1.05rem;text-align:center;
+cursor:pointer;transition:all .25s;font-family:'Jost',sans-serif;
+color:var(--cream);position:relative;min-height:60px;
+display:flex;align-items:center;justify-content:center;
+}
+.option-btn:hover:not(.locked){border-color:rgba(184,134,11,.4);background:rgba(184,134,11,.1)}
+.option-btn:active:not(.locked){transform:scale(.97)}
+.option-btn.correct-opt{background:var(--correct)!important;border-color:var(--correct)!important;color:var(--cream)!important;animation:correctBounce .5s ease}
+.option-btn.wrong-opt{background:var(--wrong)!important;border-color:var(--wrong)!important;color:var(--cream)!important;animation:shake .5s ease}
+.option-btn.show-correct{border-color:var(--correct)!important;background:rgba(46,125,50,.15)!important}
+.option-btn.locked{pointer-events:none;opacity:.65}
+.option-btn .arabic{direction:rtl}
+@keyframes correctBounce{0%{transform:scale(1)}40%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+
+/* Explanation */
+.explanation-box{
+margin-top:1rem;padding:1rem 1.2rem;border-radius:10px;
+background:rgba(184,134,11,.06);border-left:3px solid var(--gold);
+font-size:.9rem;color:var(--text2);line-height:1.6;
+animation:fadeUp .3s ease;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.next-btn-wrap{text-align:center;margin-top:1rem}
+
+/* ===== RESULTS ===== */
+.results-container{text-align:center;max-width:500px}
+.score-circle{
+width:150px;height:150px;border-radius:50%;margin:0 auto 1.5rem;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+background:rgba(93,64,55,.25);border:2px solid var(--gold);
+box-shadow:0 4px 30px rgba(184,134,11,.15);
+animation:scoreReveal .8s ease;
+}
+.score-circle .num{font-size:3.2rem;font-weight:700;color:var(--gold);font-family:'Cormorant Garamond',serif;line-height:1}
+.score-circle .of{font-size:1.1rem;color:var(--text2)}
+@keyframes scoreReveal{from{transform:scale(0) rotate(-180deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.results-msg{font-size:1.7rem;color:var(--cream);margin:.5rem 0}
+.results-sub{font-size:1rem;color:var(--text2);margin-bottom:1.5rem}
+.unlock-badge{
+display:inline-block;padding:.7rem 1.8rem;border-radius:30px;
+background:rgba(46,125,50,.1);
+border:1.5px solid var(--correct);color:var(--correct);
+font-weight:600;font-size:1rem;letter-spacing:1.5px;
+margin-bottom:1.5rem;animation:unlockPulse 2s ease infinite;
+}
+@keyframes unlockPulse{0%,100%{box-shadow:0 0 15px rgba(46,125,50,.15)}50%{box-shadow:0 0 25px rgba(46,125,50,.25)}}
+.results-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;margin-top:1rem}
+
+/* ===== REDEMPTION ===== */
+.redemption-container{text-align:center;max-width:500px}
+.prize-display{
+font-size:3.5rem;margin-bottom:1rem;
+animation:prizeReveal 1s ease;
+}
+@keyframes prizeReveal{from{transform:scale(0) rotate(-10deg);opacity:0}60%{transform:scale(1.1) rotate(2deg)}to{transform:scale(1) rotate(0);opacity:1}}
+.prize-title{font-size:2.2rem;color:var(--gold);margin:.5rem 0}
+.prize-sub{font-size:1rem;color:var(--text2);margin-bottom:1.5rem}
+.claim-card{
+background:rgba(93,64,55,.25);border:1.5px solid rgba(184,134,11,.3);border-radius:16px;
+padding:1.5rem 2rem;margin:1.5rem 0;
+}
+.claim-label{font-size:.9rem;color:var(--text2);margin-bottom:.5rem}
+.claim-code{
 font-size:2rem;font-weight:700;color:var(--gold);
-text-align:center;margin-bottom:.5rem;
-font-family:'Cormorant Garamond',serif;
+letter-spacing:5px;font-family:'Jost',sans-serif;margin:.5rem 0;
 }
-.timer-text.urgent{color:var(--wrong);animation:pulse .5s ease infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.claim-time{font-size:.85rem;color:var(--text2)}
+.claim-instruction{
+font-size:.95rem;color:var(--cream);margin-top:1rem;
+padding:.8rem;background:rgba(184,134,11,.08);border-radius:8px;
+}
 
-/* Results Screen */
-.results-container{text-align:center;max-width:600px}
-.results-score{
-font-size:5rem;font-weight:700;color:var(--gold);
-font-family:'Cormorant Garamond',serif;
-animation:scoreReveal 1s ease;
+/* ===== ATTRACT/IDLE OVERLAY ===== */
+#attract-overlay{
+position:fixed;inset:0;z-index:100;
+background:rgba(44,24,16,.93);
+display:none;flex-direction:column;align-items:center;justify-content:center;
+cursor:pointer;
 }
-@keyframes scoreReveal{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.results-message{font-size:1.5rem;color:var(--brown-dark);margin:1rem 0 .5rem}
-.results-subtitle{font-size:1.1rem;color:var(--brown);margin-bottom:2rem}
-.results-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+#attract-overlay.visible{display:flex}
+#attract-overlay .attract-text{
+font-size:2.3rem;color:var(--gold);font-family:'Cormorant Garamond',serif;
+font-weight:600;animation:attractPulse 2.5s ease-in-out infinite;
+}
+#attract-overlay .attract-sub{font-size:1.2rem;color:var(--text2);margin-top:.5rem}
+@keyframes attractPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 
-/* Sparkle particles */
-.sparkle{
-position:fixed;pointer-events:none;z-index:999;
-width:8px;height:8px;border-radius:50%;
+/* Footer brand */
+.footer-brand{
+margin-top:1.5rem;font-size:.75rem;color:var(--text2);letter-spacing:4px;
+text-transform:uppercase;font-weight:400;
 }
-@keyframes sparkleAnim{
-0%{opacity:1;transform:translate(0,0) scale(1)}
-100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}
-}
+.footer-brand a{color:rgba(184,134,11,.6);text-decoration:none;transition:color .3s}
+.footer-brand a:hover{color:var(--gold)}
 
 /* Confetti */
-.confetti-piece{
-position:fixed;top:-10px;z-index:998;pointer-events:none;
-width:10px;height:20px;border-radius:2px;
-}
-@keyframes confettiFall{
-0%{transform:translateY(0) rotateZ(0deg);opacity:1}
-100%{transform:translateY(100vh) rotateZ(720deg);opacity:0}
-}
+.confetti{position:fixed;top:-10px;z-index:99;pointer-events:none;border-radius:1px}
+@keyframes confettiFall{0%{transform:translateY(0) rotateZ(0);opacity:.8}100%{transform:translateY(100vh) rotateZ(720deg);opacity:0}}
 
-/* Crescent Moon decorative element */
-.crescent{
-position:fixed;top:30px;right:40px;font-size:3rem;color:var(--gold);
-opacity:.15;z-index:0;
-}
-.crescent::after{content:'\\2602'}
-
-/* Stars decoration */
-.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.star{
-position:absolute;width:4px;height:4px;background:var(--gold);
-border-radius:50%;opacity:0;animation:twinkle 3s ease-in-out infinite;
-}
-@keyframes twinkle{0%,100%{opacity:0}50%{opacity:.3}}
-
-/* Footer link */
-.footer-link{
-margin-top:2rem;font-size:.9rem;
-}
-.footer-link a{
-color:var(--gold);text-decoration:none;
-border-bottom:1px solid transparent;transition:border-color .3s;
-}
-.footer-link a:hover{border-bottom-color:var(--gold)}
-
-/* Lantern decoration */
-.lantern{
-position:fixed;z-index:0;opacity:.08;font-size:4rem;color:var(--gold);
-animation:lanternSwing 4s ease-in-out infinite;
-}
-.lantern:nth-child(1){top:10%;left:5%;animation-delay:0s}
-.lantern:nth-child(2){top:20%;right:8%;animation-delay:1s}
-.lantern:nth-child(3){bottom:15%;left:10%;animation-delay:2s}
-@keyframes lanternSwing{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+/* Sparkle */
+.sparkle{position:fixed;pointer-events:none;z-index:99;border-radius:50%}
+@keyframes sparkleOut{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}}
 
 /* Responsive */
 @media(max-width:768px){
-html{font-size:16px}
-#welcome-screen .brand-arabic{font-size:3.5rem}
-#welcome-screen h1{font-size:2.5rem}
-.games-grid{grid-template-columns:1fr}
-.levels-grid{grid-template-columns:repeat(5,1fr);gap:.8rem}
-.level-btn{width:60px;height:60px;font-size:1.4rem}
-.question-text{font-size:1.3rem;padding:1.5rem}
+ html{font-size:16px}
+ #screen-welcome .brand-arabic{font-size:3.8rem}
+ #screen-welcome h1{font-size:2.3rem}
+ .reveal-title{font-size:2.2rem}
+ .question-text{font-size:1.25rem}
+ .score-circle{width:130px;height:130px}
+ .score-circle .num{font-size:2.8rem}
 }
 @media(min-width:1200px){
-html{font-size:20px}
-.question-text{font-size:1.8rem}
-}
-
-/* Glow effect */
-.glow{
-box-shadow:0 0 30px rgba(184,134,11,.4),0 0 60px rgba(184,134,11,.2)!important;
+ html{font-size:20px}
+ .question-text{font-size:1.6rem}
 }
 </style>
 </head>
 <body>
 
-<!-- Decorative elements -->
-<div class="stars" id="stars"></div>
-<div class="lantern">&#9776;</div>
-<div class="lantern">&#9776;</div>
-<div class="lantern">&#9776;</div>
+<!-- Background decorations -->
+<div class="stars-bg" id="stars-bg"></div>
+<div class="lantern-deco" style="top:8%;left:5%;--dur:5s;--delay:0s"><div class="hook"></div><div class="body"></div></div>
+<div class="lantern-deco" style="top:12%;right:7%;--dur:6s;--delay:1.5s"><div class="hook"></div><div class="body"></div></div>
+<div class="lantern-deco" style="top:5%;left:35%;--dur:5.5s;--delay:.8s"><div class="hook"></div><div class="body"></div></div>
+<div class="lantern-deco" style="top:9%;right:30%;--dur:4.5s;--delay:2s"><div class="hook"></div><div class="body"></div></div>
 
-<!-- WELCOME SCREEN -->
-<div class="screen active" id="welcome-screen">
-<div class="logo-container">
+<!-- ATTRACT OVERLAY -->
+<div id="attract-overlay" onclick="dismissAttract()">
+<div class="attract-text">Tap Anywhere to Play!</div>
+<div class="attract-sub">Play & Win with Ruhi Designs</div>
+</div>
+
+<!-- SCREEN: WELCOME -->
+<div class="screen active" id="screen-welcome">
+<div style="text-align:center">
 <div class="brand-arabic arabic">&#1585;&#1608;&#1581;&#1610;</div>
-<div class="decorative-border"></div>
-<h1>Iftar Games</h1>
-<p class="subtitle">Test Your Islamic Knowledge</p>
+<div class="divider"></div>
+<h1>Play & Win</h1>
+<p class="subtitle">with Ruhi Designs</p>
 </div>
-<button class="btn btn-primary btn-large" onclick="showScreen('menu-screen')">Start Playing</button>
-<div class="footer-link"><a href="index.html">Back to Ruhi Designs</a></div>
+<div class="instructions">
+<div class="inst-step"><span class="inst-num">1</span><span class="inst-text">Spin the wheel to discover your challenge</span></div>
+<div class="inst-step"><span class="inst-num">2</span><span class="inst-text">Answer 7 questions correctly</span></div>
+<div class="inst-step"><span class="inst-num">3</span><span class="inst-text">Score 6/7 or 7/7 to unlock the Prize Wheel!</span></div>
 </div>
-
-<!-- MENU SCREEN -->
-<div class="screen" id="menu-screen">
-<h2 style="font-size:2.5rem;color:var(--brown-dark);margin-bottom:.5rem">Choose a Game</h2>
-<div class="decorative-border"></div>
-<div class="games-grid">
-<div class="game-card" onclick="selectGame('trivia')">
-<div class="icon">&#9733;</div>
-<h3>Islamic Trivia</h3>
-<p>General knowledge across all Islamic topics. Pick your difficulty!</p>
-</div>
-<div class="game-card" onclick="selectGame('arabic')">
-<div class="icon">&#1576;&#1575;</div>
-<h3>Guess the Arabic Word</h3>
-<p>Can you match the Arabic word to its English meaning?</p>
-</div>
-<div class="game-card" onclick="selectGame('ayah')">
-<div class="icon">&#9775;</div>
-<h3>Complete the Ayah</h3>
-<p>Fill in the missing part of the Quranic verse.</p>
-</div>
-<div class="game-card" onclick="selectGame('history')">
-<div class="icon">&#9203;</div>
-<h3>Islamic History Quiz</h3>
-<p>Journey through Islamic history, prophets, and key events.</p>
-</div>
-<div class="game-card" onclick="selectGame('rapid')">
-<div class="icon">&#9889;</div>
-<h3>Rapid Fire Round</h3>
-<p>Quick questions, 15 seconds each. How many can you get?</p>
-</div>
-</div>
-<button class="btn btn-secondary" onclick="showScreen('welcome-screen')">Back</button>
+<button class="btn btn-start" onclick="startExperience()">TAP TO START</button>
+<div class="footer-brand"><a href="index.html">ruhi designs</a></div>
 </div>
 
-<!-- LEVEL SCREEN -->
-<div class="screen" id="level-screen">
-<h2 style="font-size:2.2rem;color:var(--brown-dark)" id="level-title">Pick a Level</h2>
-<div class="decorative-border"></div>
-<p style="color:var(--brown);margin:1rem 0;font-size:1.1rem">Each number reveals a different set of questions!</p>
-<div class="levels-grid" id="levels-container"></div>
-<button class="btn btn-secondary" style="margin-top:1rem" onclick="showScreen('menu-screen')">Back to Games</button>
+<!-- SCREEN: GAME WHEEL -->
+<div class="screen" id="screen-game-wheel">
+<h2 style="font-size:2rem;color:var(--cream);letter-spacing:2px;margin-bottom:.5rem">Spin to Choose Your Challenge!</h2>
+<div class="divider"></div>
+<div class="wheel-wrapper">
+<div class="wheel-pointer"></div>
+<canvas id="game-wheel-canvas"></canvas>
+</div>
+<button class="btn btn-spin" id="btn-spin-game" onclick="spinGameWheel()">SPIN!</button>
 </div>
 
-<!-- QUESTION SCREEN -->
-<div class="screen" id="question-screen" style="justify-content:flex-start;padding-top:2rem">
+<!-- SCREEN: GAME REVEAL -->
+<div class="screen" id="screen-reveal">
+<div class="reveal-icon" id="reveal-icon"></div>
+<h2 style="color:var(--text2);font-size:1.3rem;margin-bottom:.3rem">Your Challenge Is...</h2>
+<div class="reveal-title" id="reveal-title"></div>
+<p class="reveal-desc" id="reveal-desc"></p>
+<button class="btn btn-primary btn-large" onclick="beginQuestions()">Let's Go!</button>
+</div>
+
+<!-- SCREEN: QUESTIONS -->
+<div class="screen" id="screen-question" style="justify-content:flex-start;padding-top:1.5rem">
 <div class="question-container">
 <div class="game-header">
-<span class="score-display" id="score-display">Score: 0</span>
-<span class="question-number" id="question-number">Question 1/10</span>
+<div class="game-name" id="game-name-label"></div>
+<div class="score-badge" id="score-badge">0 / 7</div>
 </div>
-<div class="timer-bar" id="timer-bar" style="display:none">
-<div class="timer-fill" id="timer-fill"></div>
+<div class="progress-dots" id="progress-dots"></div>
+<div id="timer-section" style="display:none">
+<div class="timer-num" id="timer-num">12</div>
+<div class="timer-bar-wrap"><div class="timer-bar-fill" id="timer-bar-fill"></div></div>
 </div>
-<div class="timer-text" id="timer-text" style="display:none">15</div>
-<div class="progress-bar-container"><div class="progress-bar" id="progress-bar"></div></div>
-<div class="question-text" id="question-text"></div>
+<div class="question-card"><div class="question-text" id="question-text"></div></div>
 <div class="options-grid" id="options-grid"></div>
-<div id="explanation-container"></div>
-<div class="next-btn-container" id="next-btn-container" style="display:none">
+<div class="explanation-box" id="explanation-box" style="display:none"></div>
+<div class="next-btn-wrap" id="next-btn-wrap" style="display:none">
 <button class="btn btn-primary" onclick="nextQuestion()">Next Question</button>
 </div>
 </div>
 </div>
 
-<!-- RESULTS SCREEN -->
-<div class="screen" id="results-screen">
+<!-- SCREEN: RESULTS -->
+<div class="screen" id="screen-results">
 <div class="results-container">
-<div class="results-score" id="results-score">0/10</div>
-<h2 class="results-message" id="results-message"></h2>
-<p class="results-subtitle" id="results-subtitle"></p>
-<div class="decorative-border"></div>
-<div class="results-buttons">
-<button class="btn btn-primary" onclick="replayGame()">Play Again</button>
-<button class="btn btn-secondary" onclick="showScreen('menu-screen')">Choose Another Game</button>
+<div class="score-circle"><span class="num" id="res-score-num">0</span><span class="of">/ 7</span></div>
+<h2 class="results-msg" id="res-msg"></h2>
+<p class="results-sub" id="res-sub"></p>
+<div class="divider"></div>
+<div id="section-unlock" style="display:none">
+<div class="unlock-badge">PRIZE WHEEL UNLOCKED!</div><br>
+<button class="btn btn-primary btn-large" onclick="showPrizeWheel()">Spin the Prize Wheel!</button>
+</div>
+<div id="section-tryagain" style="display:none">
+<div class="results-btns">
+<button class="btn btn-primary" onclick="restartFull()">Try Again</button>
+<button class="btn btn-secondary" onclick="restartFull()">Back to Start</button>
 </div>
 </div>
-<div class="footer-link"><a href="index.html">Back to Ruhi Designs</a></div>
+</div>
+</div>
+
+<!-- SCREEN: PRIZE WHEEL -->
+<div class="screen" id="screen-prize-wheel">
+<h2 style="font-size:2rem;color:var(--cream);letter-spacing:2px;margin-bottom:.5rem">Spin for Your Prize!</h2>
+<div class="divider"></div>
+<div class="wheel-wrapper">
+<div class="wheel-pointer"></div>
+<canvas id="prize-wheel-canvas"></canvas>
+</div>
+<button class="btn btn-spin" id="btn-spin-prize" onclick="spinPrizeWheel()">SPIN!</button>
+</div>
+
+<!-- SCREEN: REDEMPTION -->
+<div class="screen" id="screen-redemption">
+<div class="redemption-container">
+<div class="prize-display" id="prize-display-icon"></div>
+<h1 class="prize-title" id="prize-title-text"></h1>
+<p class="prize-sub" id="prize-sub-text"></p>
+<div class="divider"></div>
+<div class="claim-card" id="claim-card" style="display:none">
+<div class="claim-label">Your Claim Code</div>
+<div class="claim-code" id="claim-code"></div>
+<div class="claim-time" id="claim-time"></div>
+<div class="claim-instruction">Show this screen at the Ruhi Designs stall to claim your prize!</div>
+</div>
+<div style="margin-top:1.5rem">
+<button class="btn btn-primary" onclick="restartFull()">Play Again</button>
+</div>
+<div class="footer-brand"><a href="index.html">ruhi designs</a></div>
+</div>
 </div>
 
 <script>
-// ===== STATE =====
-let currentGame='';
-let currentLevel=1;
-let currentQuestionIndex=0;
-let score=0;
-let questions=[];
-let timerInterval=null;
-let timeLeft=15;
-let answered=false;
+// ===================== CONFIGURATION =====================
+const QUESTIONS_PER_ROUND = 7;
+const WIN_THRESHOLD = 6;
+const RAPID_TIME = 12;
+const IDLE_TIMEOUT = 90000;
 
-// ===== NAVIGATION =====
+const GAME_CATEGORIES = [
+ {id:'trivia',name:'Islamic Trivia',icon:'\u2733',color:'#5D4037',desc:'Test your deep Islamic knowledge'},
+ {id:'arabic',name:'Guess the Arabic Word',icon:'\u0628\u0627',color:'#6D4C41',desc:'Match the Arabic word to its meaning'},
+ {id:'ayah',name:'Complete the Ayah',icon:'\u2635',color:'#4E342E',desc:'Fill in the missing part of the verse'},
+ {id:'history',name:'Islamic History',icon:'\u231A',color:'#795548',desc:'Journey through Islamic civilization'},
+ {id:'rapid',name:'Rapid Fire',icon:'\u26A1',color:'#8D6E63',desc:'Quick answers, 12 seconds each!'},
+];
+
+const PRIZES = [
+ {name:'Free Tote Bag!',prob:.05,color:'#B8860B',icon:'\uD83D\uDCBC'},
+ {name:'Coaster',prob:.10,color:'#6D4C41',icon:'\u2615'},
+ {name:'Bookmark',prob:.10,color:'#795548',icon:'\uD83D\uDD16'},
+ {name:'$5 Off',prob:.15,color:'#5D4037',icon:'\uD83C\uDF89'},
+ {name:'$2 Off',prob:.25,color:'#8D6E63',icon:'\u2B50'},
+ {name:'Better Luck Next Time',prob:.35,color:'#4E342E',icon:'\uD83D\uDE0A'},
+];
+
+// ===================== STATE =====================
+let state = {
+ game:null, qIndex:0, score:0, questions:[], answered:false,
+ timerInterval:null, timeLeft:0, dotStates:[], wheelSpinning:false,
+};
+let idleTimer = null;
+const recentQs = {};
+
+// ===================== AUDIO =====================
+let audioCtx = null;
+function getAudioCtx(){
+ if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+ return audioCtx;
+}
+function playTone(freq,dur,type='sine',vol=.15){
+ try{
+  const ctx=getAudioCtx();const o=ctx.createOscillator();const g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);o.type=type;o.frequency.value=freq;
+  g.gain.value=vol;o.start();
+  g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);
+  o.stop(ctx.currentTime+dur);
+ }catch(e){}
+}
+function sfxCorrect(){playTone(523,.08);setTimeout(()=>playTone(659,.08),80);setTimeout(()=>playTone(784,.15),160)}
+function sfxWrong(){playTone(200,.25,'sawtooth',.1)}
+function sfxTick(){playTone(900,.03,'sine',.08)}
+function sfxWin(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,.2),i*120))}
+
+// ===================== IDLE / ATTRACT =====================
+function resetIdle(){
+ clearTimeout(idleTimer);
+ idleTimer = setTimeout(showAttract, IDLE_TIMEOUT);
+}
+function showAttract(){
+ document.getElementById('attract-overlay').classList.add('visible');
+}
+function dismissAttract(){
+ document.getElementById('attract-overlay').classList.remove('visible');
+ restartFull();
+ resetIdle();
+}
+document.addEventListener('touchstart',resetIdle,{passive:true});
+document.addEventListener('click',resetIdle);
+resetIdle();
+
+// ===================== SCREENS =====================
 function showScreen(id){
-document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
+ document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}
 }
 
-function selectGame(game){
-currentGame=game;
-const titles={trivia:'Islamic Trivia',arabic:'Guess the Arabic Word',ayah:'Complete the Ayah',history:'Islamic History Quiz',rapid:'Rapid Fire Round'};
-document.getElementById('level-title').textContent=titles[game]+' - Pick a Level';
-const cont=document.getElementById('levels-container');
-cont.innerHTML='';
-const numLevels=game==='rapid'?5:10;
-for(let i=1;i<=numLevels;i++){
-const btn=document.createElement('button');
-btn.className='level-btn';
-btn.textContent=i;
-btn.onclick=()=>startGame(i);
-cont.appendChild(btn);
-}
-showScreen('level-screen');
+function startExperience(){
+ resetIdle();
+ showScreen('screen-game-wheel');
+ setTimeout(()=>drawGameWheel(),50);
 }
 
-function startGame(level){
-currentLevel=level;
-currentQuestionIndex=0;
-score=0;
-answered=false;
-questions=getQuestions(currentGame,level);
-document.getElementById('score-display').textContent='Score: 0';
-const isRapid=currentGame==='rapid';
-document.getElementById('timer-bar').style.display=isRapid?'block':'none';
-document.getElementById('timer-text').style.display=isRapid?'block':'none';
-showScreen('question-screen');
-displayQuestion();
+function restartFull(){
+ state={game:null,qIndex:0,score:0,questions:[],answered:false,timerInterval:null,timeLeft:0,dotStates:[],wheelSpinning:false};
+ showScreen('screen-welcome');
+ resetIdle();
 }
 
-function displayQuestion(){
-if(currentQuestionIndex>=questions.length){endGame();return;}
-answered=false;
-const q=questions[currentQuestionIndex];
-document.getElementById('question-number').textContent=`Question ${currentQuestionIndex+1}/${questions.length}`;
-document.getElementById('progress-bar').style.width=((currentQuestionIndex)/questions.length*100)+'%';
-document.getElementById('question-text').innerHTML=q.question;
-document.getElementById('explanation-container').innerHTML='';
-document.getElementById('next-btn-container').style.display='none';
-const grid=document.getElementById('options-grid');
-grid.innerHTML='';
-q.options.forEach((opt,i)=>{
-const btn=document.createElement('button');
-btn.className='option-btn';
-btn.innerHTML=opt;
-btn.onclick=()=>selectAnswer(i,q.correct,q.explanation);
-grid.appendChild(btn);
-});
-if(currentGame==='rapid')startTimer();
+// ===================== CANVAS UTILS =====================
+function initCanvas(canvas, size){
+ const dpr = window.devicePixelRatio||1;
+ canvas.width = size*dpr; canvas.height = size*dpr;
+ canvas.style.width = size+'px'; canvas.style.height = size+'px';
+ const ctx = canvas.getContext('2d');
+ ctx.scale(dpr,dpr);
+ return {ctx, size};
 }
 
-function selectAnswer(selected,correct,explanation){
-if(answered)return;
-answered=true;
-if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-const btns=document.querySelectorAll('.option-btn');
-btns.forEach((b,i)=>{
-b.classList.add('disabled');
-if(i===correct)b.classList.add('correct');
-if(i===selected&&selected!==correct)b.classList.add('wrong');
-});
-if(selected===correct){
-score++;
-document.getElementById('score-display').textContent='Score: '+score;
-document.getElementById('score-display').classList.remove('animate');
-void document.getElementById('score-display').offsetWidth;
-document.getElementById('score-display').classList.add('animate');
-createSparkles();
+// ===================== GAME WHEEL =====================
+let gameWheelAngle = 0;
+function drawGameWheel(rotation){
+ const canvas = document.getElementById('game-wheel-canvas');
+ const dispSize = Math.min(380, window.innerWidth - 60);
+ const {ctx, size} = initCanvas(canvas, dispSize);
+ const cx=size/2, cy=size/2, r=size/2-12;
+ if(rotation!==undefined) gameWheelAngle=rotation;
+
+ ctx.clearRect(0,0,size,size);
+
+ // Outer ring
+ ctx.beginPath();ctx.arc(cx,cy,r+4,0,Math.PI*2);
+ ctx.strokeStyle='rgba(184,134,11,0.3)';ctx.lineWidth=5;ctx.stroke();
+
+ const segAngle = Math.PI*2/GAME_CATEGORIES.length;
+ GAME_CATEGORIES.forEach((cat,i)=>{
+  const start = gameWheelAngle + i*segAngle;
+  const end = start + segAngle;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,start,end);ctx.closePath();
+  const grad = ctx.createRadialGradient(cx,cy,r*.2,cx,cy,r);
+  grad.addColorStop(0, lightenColor(cat.color,.2));
+  grad.addColorStop(1, cat.color);
+  ctx.fillStyle=grad;ctx.fill();
+  ctx.strokeStyle='rgba(184,134,11,0.35)';ctx.lineWidth=1.5;ctx.stroke();
+  // Label
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(start+segAngle/2);
+  ctx.fillStyle='#FDF8F0';ctx.font='600 '+Math.round(size*.037)+'px Jost,sans-serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(cat.name, r*0.62, 0, r*.52);
+  ctx.font = Math.round(size*.065)+'px serif';
+  ctx.fillText(cat.icon, r*.28, 0);
+  ctx.restore();
+ });
+
+ // Center circle
+ ctx.beginPath();ctx.arc(cx,cy,size*.1,0,Math.PI*2);
+ const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,size*.1);
+ cg.addColorStop(0,'#3E2723');cg.addColorStop(1,'#2C1810');
+ ctx.fillStyle=cg;ctx.fill();
+ ctx.strokeStyle='#B8860B';ctx.lineWidth=2;ctx.stroke();
+ ctx.fillStyle='#D4A843';ctx.font='600 '+Math.round(size*.04)+'px Jost';
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('SPIN',cx,cy);
 }
-if(explanation&&selected!==correct){
-document.getElementById('explanation-container').innerHTML=
-'<div class="explanation">'+explanation+'</div>';
+
+function spinGameWheel(){
+ if(state.wheelSpinning) return;
+ state.wheelSpinning = true;
+ document.getElementById('btn-spin-game').style.display='none';
+ resetIdle();
+
+ const resultIdx = Math.floor(Math.random()*GAME_CATEGORIES.length);
+ const segAngle = Math.PI*2/GAME_CATEGORIES.length;
+ // Target: segment center at top (pointer = -PI/2)
+ const segMid = resultIdx*segAngle + segAngle/2;
+ const spins = 5+Math.floor(Math.random()*3);
+ const target = -(Math.PI/2) - segMid + spins*Math.PI*2;
+
+ const startAngle = gameWheelAngle;
+ const totalDelta = target - startAngle;
+ const duration = 4500;
+ const startT = performance.now();
+ let lastTickAngle = startAngle;
+
+ function animate(now){
+  const elapsed = now-startT;
+  const p = Math.min(elapsed/duration,1);
+  const ease = 1-Math.pow(1-p,3.5);
+  const current = startAngle + totalDelta*ease;
+  gameWheelAngle = current;
+  drawGameWheel(current);
+  // Tick sound at segment boundaries
+  const segsPassed = Math.floor(Math.abs(current-lastTickAngle)/segAngle);
+  if(segsPassed>0){sfxTick();lastTickAngle=current;}
+  if(p<1){requestAnimationFrame(animate);}
+  else{
+   state.wheelSpinning=false;
+   state.game = GAME_CATEGORIES[resultIdx];
+   setTimeout(()=>showGameReveal(resultIdx),500);
+  }
+ }
+ requestAnimationFrame(animate);
 }
-if(currentGame==='rapid'){
-setTimeout(nextQuestion,1500);
-}else{
-document.getElementById('next-btn-container').style.display='block';
+
+function showGameReveal(idx){
+ const cat = GAME_CATEGORIES[idx];
+ document.getElementById('reveal-icon').textContent = cat.icon;
+ document.getElementById('reveal-title').textContent = cat.name;
+ document.getElementById('reveal-desc').textContent = cat.desc;
+ sfxWin();
+ showScreen('screen-reveal');
 }
+
+// ===================== QUESTIONS =====================
+function getRandomQuestions(catId){
+ const bank = questionBanks[catId];
+ if(!recentQs[catId]) recentQs[catId]=new Set();
+ let avail=[];
+ for(let i=0;i<bank.length;i++){if(!recentQs[catId].has(i))avail.push(i);}
+ if(avail.length<QUESTIONS_PER_ROUND){recentQs[catId].clear();avail=[];for(let i=0;i<bank.length;i++)avail.push(i);}
+ // Fisher-Yates
+ for(let i=avail.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[avail[i],avail[j]]=[avail[j],avail[i]];}
+ const sel=avail.slice(0,QUESTIONS_PER_ROUND);
+ sel.forEach(i=>recentQs[catId].add(i));
+ return sel.map(i=>bank[i]);
+}
+
+function beginQuestions(){
+ const catId = state.game.id;
+ state.qIndex=0;state.score=0;state.answered=false;
+ state.questions=getRandomQuestions(catId);
+ state.dotStates=new Array(QUESTIONS_PER_ROUND).fill('upcoming');
+ document.getElementById('game-name-label').textContent=state.game.name;
+ document.getElementById('score-badge').textContent='0 / '+QUESTIONS_PER_ROUND;
+ const isRapid = catId==='rapid';
+ document.getElementById('timer-section').style.display=isRapid?'block':'none';
+ showScreen('screen-question');
+ renderQuestion();
+}
+
+function renderQuestion(){
+ if(state.qIndex>=state.questions.length){endRound();return;}
+ state.answered=false;
+ const q=state.questions[state.qIndex];
+
+ // Progress dots
+ state.dotStates[state.qIndex]='current';
+ const dotsEl=document.getElementById('progress-dots');
+ dotsEl.innerHTML='';
+ for(let i=0;i<QUESTIONS_PER_ROUND;i++){
+  const d=document.createElement('div');d.className='pdot';
+  if(state.dotStates[i]==='current')d.classList.add('current');
+  else if(state.dotStates[i]==='correct')d.classList.add('correct-dot');
+  else if(state.dotStates[i]==='wrong')d.classList.add('wrong-dot');
+  d.textContent=i+1;dotsEl.appendChild(d);
+ }
+
+ document.getElementById('question-text').innerHTML=q.question;
+ document.getElementById('explanation-box').style.display='none';
+ document.getElementById('next-btn-wrap').style.display='none';
+
+ const grid=document.getElementById('options-grid');
+ grid.innerHTML='';
+ q.options.forEach((opt,i)=>{
+  const btn=document.createElement('button');btn.className='option-btn';
+  btn.innerHTML=opt;
+  btn.onclick=()=>selectAnswer(i);
+  grid.appendChild(btn);
+ });
+
+ if(state.game.id==='rapid') startRapidTimer();
+}
+
+function selectAnswer(selected){
+ if(state.answered)return;
+ state.answered=true;
+ if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}
+ const q=state.questions[state.qIndex];
+ const correct=q.correct;
+ const btns=document.querySelectorAll('.option-btn');
+ btns.forEach((b,i)=>{
+  b.classList.add('locked');
+  if(i===correct) b.classList.add('correct-opt');
+  if(i===selected&&selected!==correct){b.classList.add('wrong-opt');}
+ });
+
+ if(selected===correct){
+  state.score++;state.dotStates[state.qIndex]='correct';
+  sfxCorrect();createSparkles();
+ }else{
+  state.dotStates[state.qIndex]='wrong';
+  sfxWrong();
+  if(q.explanation){
+   const eb=document.getElementById('explanation-box');
+   eb.textContent=q.explanation;eb.style.display='block';
+  }
+ }
+
+ document.getElementById('score-badge').textContent=state.score+' / '+QUESTIONS_PER_ROUND;
+ const sb=document.getElementById('score-badge');
+ sb.classList.remove('pop');void sb.offsetWidth;sb.classList.add('pop');
+
+ // Update dots
+ const dots=document.querySelectorAll('.pdot');
+ dots[state.qIndex].className='pdot '+(selected===correct?'correct-dot':'wrong-dot');
+
+ if(state.game.id==='rapid'){
+  setTimeout(nextQuestion,1500);
+ }else{
+  document.getElementById('next-btn-wrap').style.display='block';
+ }
 }
 
 function nextQuestion(){
-currentQuestionIndex++;
-displayQuestion();
+ state.qIndex++;
+ renderQuestion();
 }
 
-function startTimer(){
-timeLeft=15;
-const fill=document.getElementById('timer-fill');
-const txt=document.getElementById('timer-text');
-fill.style.width='100%';
-txt.textContent='15';
-txt.classList.remove('urgent');
-timerInterval=setInterval(()=>{
-timeLeft-=0.1;
-if(timeLeft<=0){
-clearInterval(timerInterval);timerInterval=null;
-timeLeft=0;
-if(!answered)selectAnswer(-1,questions[currentQuestionIndex].correct,questions[currentQuestionIndex].explanation);
-}
-fill.style.width=(timeLeft/15*100)+'%';
-txt.textContent=Math.ceil(timeLeft);
-if(timeLeft<=5)txt.classList.add('urgent');
-},100);
+function startRapidTimer(){
+ state.timeLeft=RAPID_TIME;
+ const fill=document.getElementById('timer-bar-fill');
+ const num=document.getElementById('timer-num');
+ fill.style.width='100%';num.textContent=RAPID_TIME;num.classList.remove('urgent');
+ state.timerInterval=setInterval(()=>{
+  state.timeLeft-=0.1;
+  if(state.timeLeft<=0){
+   clearInterval(state.timerInterval);state.timerInterval=null;state.timeLeft=0;
+   if(!state.answered) selectAnswer(-1);
+  }
+  fill.style.width=(state.timeLeft/RAPID_TIME*100)+'%';
+  num.textContent=Math.ceil(state.timeLeft);
+  if(state.timeLeft<=4) num.classList.add('urgent');
+ },100);
 }
 
-function endGame(){
-if(timerInterval){clearInterval(timerInterval);timerInterval=null;}
-const total=questions.length;
-const pct=score/total;
-document.getElementById('results-score').textContent=score+'/'+total;
-let msg,sub;
-if(pct===1){msg='Absolutely Perfect!';sub='MashaAllah! You are a true scholar!';createConfetti();}
-else if(pct>=.8){msg='Excellent Work!';sub='SubhanAllah! Impressive knowledge!';createConfetti();}
-else if(pct>=.6){msg='Great Job!';sub='Alhamdulillah! Keep learning and growing!';}
-else if(pct>=.4){msg='Good Effort!';sub='Every question is a chance to learn something new!';}
-else{msg='Keep Learning!';sub='The pursuit of knowledge is a noble journey. Try again!';}
-document.getElementById('results-message').textContent=msg;
-document.getElementById('results-subtitle').textContent=sub;
-showScreen('results-screen');
+// ===================== RESULTS =====================
+function endRound(){
+ if(state.timerInterval){clearInterval(state.timerInterval);state.timerInterval=null;}
+ const s=state.score;
+ document.getElementById('res-score-num').textContent=s;
+ const won = s>=WIN_THRESHOLD;
+ let msg,sub;
+ if(s===7){msg='Absolutely Perfect!';sub='MashaAllah, you truly are a scholar!';}
+ else if(s===6){msg='Excellent Work!';sub='SubhanAllah, impressive knowledge!';}
+ else if(s>=4){msg='Good Effort!';sub='So close! You need 6/7 to unlock the prize wheel.';}
+ else{msg='Keep Learning!';sub='The pursuit of knowledge is a noble journey. Try again!';}
+ document.getElementById('res-msg').textContent=msg;
+ document.getElementById('res-sub').textContent=sub;
+ document.getElementById('section-unlock').style.display=won?'block':'none';
+ document.getElementById('section-tryagain').style.display=won?'none':'block';
+ showScreen('screen-results');
+ if(won){createConfetti();sfxWin();}
 }
 
-function replayGame(){selectGame(currentGame);}
+// ===================== PRIZE WHEEL =====================
+let prizeWheelAngle = 0;
+function drawPrizeWheel(rotation){
+ const canvas=document.getElementById('prize-wheel-canvas');
+ const dispSize=Math.min(380,window.innerWidth-60);
+ const{ctx,size}=initCanvas(canvas,dispSize);
+ const cx=size/2,cy=size/2,r=size/2-12;
+ if(rotation!==undefined)prizeWheelAngle=rotation;
+ ctx.clearRect(0,0,size,size);
 
-// ===== EFFECTS =====
+ ctx.beginPath();ctx.arc(cx,cy,r+4,0,Math.PI*2);
+ ctx.strokeStyle='rgba(184,134,11,0.3)';ctx.lineWidth=5;ctx.stroke();
+
+ let startA=prizeWheelAngle;
+ PRIZES.forEach((p,i)=>{
+  const sweep=p.prob*Math.PI*2;
+  ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,startA,startA+sweep);ctx.closePath();
+  const grad=ctx.createRadialGradient(cx,cy,r*.2,cx,cy,r);
+  grad.addColorStop(0,lightenColor(p.color,.18));grad.addColorStop(1,p.color);
+  ctx.fillStyle=grad;ctx.fill();
+  ctx.strokeStyle='rgba(184,134,11,0.35)';ctx.lineWidth=1.5;ctx.stroke();
+  // Label
+  ctx.save();ctx.translate(cx,cy);ctx.rotate(startA+sweep/2);
+  ctx.fillStyle='#FDF8F0';ctx.font='600 '+Math.round(size*.032)+'px Jost,sans-serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(p.name,r*0.68,0,r*.48);
+  ctx.font=Math.round(size*.05)+'px serif';
+  ctx.fillText(p.icon,r*.3,0);
+  ctx.restore();
+  startA+=sweep;
+ });
+
+ ctx.beginPath();ctx.arc(cx,cy,size*.1,0,Math.PI*2);
+ const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,size*.1);
+ cg.addColorStop(0,'#3E2723');cg.addColorStop(1,'#2C1810');
+ ctx.fillStyle=cg;ctx.fill();ctx.strokeStyle='#B8860B';ctx.lineWidth=2;ctx.stroke();
+ ctx.fillStyle='#D4A843';ctx.font='600 '+Math.round(size*.035)+'px Jost';
+ ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('PRIZE',cx,cy);
+}
+
+function showPrizeWheel(){
+ showScreen('screen-prize-wheel');
+ document.getElementById('btn-spin-prize').style.display='';
+ prizeWheelAngle=0;
+ setTimeout(()=>drawPrizeWheel(0),50);
+}
+
+function selectWeightedPrize(){
+ const r=Math.random();let cum=0;
+ for(let i=0;i<PRIZES.length;i++){cum+=PRIZES[i].prob;if(r<cum)return i;}
+ return PRIZES.length-1;
+}
+
+function spinPrizeWheel(){
+ if(state.wheelSpinning)return;
+ state.wheelSpinning=true;
+ document.getElementById('btn-spin-prize').style.display='none';
+ resetIdle();
+
+ const resultIdx=selectWeightedPrize();
+ // Calculate angle for segment center
+ let segStart=0;
+ for(let i=0;i<resultIdx;i++) segStart+=PRIZES[i].prob*Math.PI*2;
+ const segMid=segStart+PRIZES[resultIdx].prob*Math.PI;
+ const spins=6+Math.floor(Math.random()*3);
+ const target=-(Math.PI/2)-segMid+spins*Math.PI*2;
+
+ const startAngle=prizeWheelAngle;
+ const totalDelta=target-startAngle;
+ const duration=5500;
+ const startT=performance.now();
+ let lastTickA=startAngle;
+
+ function animate(now){
+  const elapsed=now-startT;const p=Math.min(elapsed/duration,1);
+  const ease=1-Math.pow(1-p,4);
+  const cur=startAngle+totalDelta*ease;
+  prizeWheelAngle=cur;drawPrizeWheel(cur);
+  const totalSegAngle=PRIZES[0].prob*Math.PI*2;
+  if(Math.abs(cur-lastTickA)>totalSegAngle){sfxTick();lastTickA=cur;}
+  if(p<1){requestAnimationFrame(animate);}
+  else{
+   state.wheelSpinning=false;
+   setTimeout(()=>showRedemption(resultIdx),600);
+  }
+ }
+ requestAnimationFrame(animate);
+}
+
+function showRedemption(prizeIdx){
+ const prize=PRIZES[prizeIdx];
+ document.getElementById('prize-display-icon').textContent=prize.icon;
+ document.getElementById('prize-title-text').textContent=prize.name;
+ const isWin = prizeIdx < PRIZES.length-1; // not "Better Luck"
+ const cc=document.getElementById('claim-card');
+ if(isWin){
+  document.getElementById('prize-sub-text').textContent='Congratulations! You won a prize!';
+  cc.style.display='block';
+  document.getElementById('claim-code').textContent=generateClaimCode();
+  document.getElementById('claim-time').textContent=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+  createConfetti();sfxWin();
+ }else{
+  document.getElementById('prize-sub-text').textContent='Don\'t worry, come back and try again!';
+  cc.style.display='none';
+ }
+ showScreen('screen-redemption');
+}
+
+function generateClaimCode(){
+ const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+ let code='RUHI-';
+ for(let i=0;i<4;i++) code+=c[Math.floor(Math.random()*c.length)];
+ return code;
+}
+
+// ===================== EFFECTS =====================
 function createSparkles(){
-for(let i=0;i<12;i++){
-const s=document.createElement('div');
-s.className='sparkle';
-s.style.left=Math.random()*window.innerWidth+'px';
-s.style.top=Math.random()*window.innerHeight*.6+window.innerHeight*.2+'px';
-s.style.background=['#B8860B','#D4A843','#FFD700','#FFF8DC'][Math.floor(Math.random()*4)];
-s.style.setProperty('--tx',(Math.random()*100-50)+'px');
-s.style.setProperty('--ty',(Math.random()*100-50)+'px');
-s.style.animation='sparkleAnim .8s ease forwards';
-s.style.animationDelay=(Math.random()*.3)+'s';
-document.body.appendChild(s);
-setTimeout(()=>s.remove(),1200);
-}
+ for(let i=0;i<15;i++){
+  const s=document.createElement('div');s.className='sparkle';
+  s.style.left=Math.random()*window.innerWidth+'px';
+  s.style.top=(Math.random()*.5+.2)*window.innerHeight+'px';
+  s.style.width=s.style.height=(4+Math.random()*6)+'px';
+  s.style.background=['#D4A843','#B8860B','#FDF8F0','#8B6914'][Math.floor(Math.random()*4)];
+  s.style.setProperty('--tx',(Math.random()*120-60)+'px');
+  s.style.setProperty('--ty',(Math.random()*120-60)+'px');
+  s.style.animation='sparkleOut .8s ease forwards';
+  s.style.animationDelay=(Math.random()*.3)+'s';
+  document.body.appendChild(s);setTimeout(()=>s.remove(),1200);
+ }
 }
 function createConfetti(){
-const colors=['#B8860B','#D4A843','#3E2723','#5D4037','#FFD700','#2E7D32','#C62828','#1565C0'];
-for(let i=0;i<50;i++){
-const c=document.createElement('div');
-c.className='confetti-piece';
-c.style.left=Math.random()*100+'vw';
-c.style.background=colors[Math.floor(Math.random()*colors.length)];
-c.style.animation=`confettiFall ${2+Math.random()*2}s ease ${Math.random()*1}s forwards`;
-c.style.width=(6+Math.random()*8)+'px';
-c.style.height=(10+Math.random()*15)+'px';
-document.body.appendChild(c);
-setTimeout(()=>c.remove(),5000);
+ const colors=['#D4A843','#B8860B','#FDF8F0','#5D4037','#8B6914','#795548','#F5EDE0','#6D4C41'];
+ for(let i=0;i<60;i++){
+  const c=document.createElement('div');c.className='confetti';
+  c.style.left=Math.random()*100+'vw';
+  c.style.background=colors[Math.floor(Math.random()*colors.length)];
+  c.style.width=(5+Math.random()*8)+'px';c.style.height=(8+Math.random()*14)+'px';
+  c.style.animation=`confettiFall ${2+Math.random()*2.5}s ease ${Math.random()*.8}s forwards`;
+  document.body.appendChild(c);setTimeout(()=>c.remove(),6000);
+ }
 }
+
+// ===================== HELPERS =====================
+function lightenColor(hex,amt){
+ let r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+ r=Math.min(255,Math.round(r+(255-r)*amt));
+ g=Math.min(255,Math.round(g+(255-g)*amt));
+ b=Math.min(255,Math.round(b+(255-b)*amt));
+ return '#'+[r,g,b].map(v=>v.toString(16).padStart(2,'0')).join('');
 }
 
 // Stars background
 (function(){
-const cont=document.getElementById('stars');
-for(let i=0;i<20;i++){
-const s=document.createElement('div');
-s.className='star';
-s.style.left=Math.random()*100+'%';
-s.style.top=Math.random()*100+'%';
-s.style.animationDelay=Math.random()*3+'s';
-cont.appendChild(s);
-}
+ const cont=document.getElementById('stars-bg');
+ for(let i=0;i<20;i++){
+  const s=document.createElement('div');s.className='star';
+  const sz=2+Math.random()*3;
+  s.style.width=sz+'px';s.style.height=sz+'px';
+  s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';
+  s.style.setProperty('--dur',(3+Math.random()*4)+'s');
+  s.style.setProperty('--delay',Math.random()*5+'s');
+  s.style.setProperty('--peak',.15+Math.random()*.35);
+  cont.appendChild(s);
+ }
 })();
 
-// ===== QUESTION DATA =====
-function getQuestions(game,level){
-const bank=questionBanks[game];
-// Each level picks a slice of questions; wrap around if needed
-const allQ=bank;
-const perLevel=10;
-const start=((level-1)*perLevel)%allQ.length;
-let qs=[];
-for(let i=0;i<perLevel;i++){
-qs.push(allQ[(start+i)%allQ.length]);
-}
-// Shuffle
-for(let i=qs.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[qs[i],qs[j]]=[qs[j],qs[i]];}
-return qs;
-}
+// ===================== QUESTION BANKS =====================
+const questionBanks = {
 
-const questionBanks={
 // ==================== ISLAMIC TRIVIA ====================
 trivia:[
-{question:'How many surahs are in the Quran?',options:['112','113','114','115'],correct:2,explanation:'The Quran contains 114 surahs (chapters).'},
-{question:'What is the longest surah in the Quran?',options:['Al-Imran','An-Nisa','Al-Baqarah','Al-Maidah'],correct:2,explanation:'Surah Al-Baqarah is the longest surah with 286 ayahs.'},
-{question:'How many pillars of Islam are there?',options:['4','5','6','7'],correct:1,explanation:'There are 5 pillars: Shahada, Salah, Zakat, Sawm, and Hajj.'},
-{question:'What is the first pillar of Islam?',options:['Salah','Zakat','Shahada','Hajj'],correct:2,explanation:'The Shahada (declaration of faith) is the first pillar of Islam.'},
-{question:'In which month was the Quran first revealed?',options:['Shaban','Rajab','Ramadan','Dhul Hijjah'],correct:2,explanation:'The Quran was first revealed in the month of Ramadan.'},
-{question:'How many times a day do Muslims pray?',options:['3','4','5','7'],correct:2,explanation:'Muslims pray 5 obligatory prayers: Fajr, Dhuhr, Asr, Maghrib, and Isha.'},
-{question:'What is the holiest city in Islam?',options:['Medina','Jerusalem','Makkah','Cairo'],correct:2,explanation:'Makkah is the holiest city in Islam, home to the Kaaba.'},
-{question:'Who was the first muezzin in Islam?',options:['Umar (RA)','Bilal (RA)','Abu Bakr (RA)','Ali (RA)'],correct:1,explanation:'Bilal ibn Rabah (RA) was the first muezzin, chosen by Prophet Muhammad (PBUH).'},
-{question:'What is the meaning of "Islam"?',options:['Peace','Love','Submission to God','Brotherhood'],correct:2,explanation:'Islam means "submission to the will of God (Allah)."'},
-{question:'How many chapters (juz) is the Quran divided into for reading?',options:['20','25','30','40'],correct:2,explanation:'The Quran is divided into 30 juz (parts) to facilitate reading over a month.'},
-{question:'What is the shortest surah in the Quran?',options:['Al-Ikhlas','Al-Kawthar','An-Nas','Al-Asr'],correct:1,explanation:'Surah Al-Kawthar is the shortest surah with only 3 verses.'},
-{question:'What does "Alhamdulillah" mean?',options:['God is Great','All praise is due to God','In the name of God','God willing'],correct:1,explanation:'"Alhamdulillah" means "All praise is due to Allah."'},
-{question:'What is the night of Laylatul Qadr also known as?',options:['Night of Forgiveness','Night of Power','Night of Light','Night of Mercy'],correct:1,explanation:'Laylatul Qadr is known as the Night of Power/Decree.'},
-{question:'Which angel is responsible for delivering revelation?',options:['Mikail','Israfil','Jibreel','Azrael'],correct:2,explanation:'Angel Jibreel (Gabriel) delivered Allah\'s revelations to the prophets.'},
-{question:'What is the Zakat percentage on savings?',options:['1.5%','2%','2.5%','5%'],correct:2,explanation:'Zakat is 2.5% of savings held for one lunar year above the nisab threshold.'},
-{question:'What is the name of the well near the Kaaba?',options:['Zamzam','Salsabil','Kawthar','Tasnim'],correct:0,explanation:'The well of Zamzam is located within the Masjid al-Haram in Makkah.'},
-{question:'Which prophet is mentioned most in the Quran?',options:['Prophet Ibrahim','Prophet Muhammad','Prophet Musa','Prophet Isa'],correct:2,explanation:'Prophet Musa (Moses) is mentioned by name the most times in the Quran (136 times).'},
-{question:'What does "Taqwa" mean?',options:['Patience','God-consciousness','Charity','Prayer'],correct:1,explanation:'Taqwa means God-consciousness, piety, and awareness of Allah.'},
-{question:'How many names does Allah have according to hadith?',options:['77','88','99','100'],correct:2,explanation:'According to hadith, Allah has 99 beautiful names (Asma ul-Husna).'},
-{question:'What is the literal meaning of "Quran"?',options:['The Book','The Recitation','The Truth','The Guide'],correct:1,explanation:'The word "Quran" comes from the Arabic root "qara\'a" meaning "to recite."'},
-{question:'Which surah is known as the "Heart of the Quran"?',options:['Al-Fatiha','Ya-Sin','Al-Mulk','Ar-Rahman'],correct:1,explanation:'Surah Ya-Sin is referred to as the "Heart of the Quran" in hadith.'},
-{question:'What is the Islamic term for the pilgrimage to Makkah?',options:['Umrah','Ziyarah','Hajj','Safar'],correct:2,explanation:'Hajj is the annual Islamic pilgrimage to Makkah, one of the five pillars of Islam.'},
-{question:'What is Sadaqah?',options:['Mandatory charity','Voluntary charity','Tax on land','Prayer offering'],correct:1,explanation:'Sadaqah refers to voluntary acts of charity given out of goodwill.'},
-{question:'In which city is the Prophet\'s Mosque (Masjid an-Nabawi)?',options:['Makkah','Medina','Jerusalem','Taif'],correct:1,explanation:'Masjid an-Nabawi is located in Medina, Saudi Arabia.'},
-{question:'What is the Islamic calendar based on?',options:['Solar cycle','Lunar cycle','Both solar and lunar','Seasonal changes'],correct:1,explanation:'The Islamic (Hijri) calendar is based on the lunar cycle.'},
-{question:'What is the meal before dawn during Ramadan called?',options:['Iftar','Suhoor','Walimah','Aqiqah'],correct:1,explanation:'Suhoor is the pre-dawn meal eaten before beginning the fast.'},
-{question:'How many rakats are in Fajr prayer (fard)?',options:['2','3','4','1'],correct:0,explanation:'Fajr prayer consists of 2 fard (obligatory) rakats.'},
-{question:'What does "Subhanallah" mean?',options:['God is Great','Glory be to God','God willing','Thank God'],correct:1,explanation:'"Subhanallah" means "Glory be to Allah" or "Allah is free from imperfection."'},
-{question:'Which direction do Muslims face during prayer?',options:['East','West','Towards the Kaaba','North'],correct:2,explanation:'Muslims face the Qibla, the direction of the Kaaba in Makkah.'},
-{question:'What is the Night Journey of the Prophet called?',options:['Hijrah','Isra and Miraj','Badr','Hudaybiyyah'],correct:1,explanation:'Al-Isra wal-Miraj refers to the Prophet\'s night journey and ascension to the heavens.'},
+{question:'Which companion narrated the most hadith in the major collections?',options:['Aisha (RA)','Abu Hurairah (RA)','Ibn Umar (RA)','Anas ibn Malik (RA)'],correct:1,explanation:'Abu Hurairah (RA) narrated approximately 5,374 hadith, the most of any companion.'},
+{question:'Which surah of the Quran does not begin with Bismillah?',options:['Al-Anfal','At-Tawbah','Al-Baqarah','Al-Fatiha'],correct:1,explanation:'Surah At-Tawbah (Chapter 9) is the only surah that does not begin with Bismillah.'},
+{question:'In the Hadith of Jibreel, how is "Ihsan" defined?',options:['Giving charity generously','Worshipping Allah as if you see Him','Performing Hajj every year','Fasting every Monday and Thursday'],correct:1,explanation:'Ihsan is defined as worshipping Allah as though you see Him, and if you cannot see Him, then knowing that He sees you.'},
+{question:'How many gates does Jannah have according to authentic hadith?',options:['4','7','8','12'],correct:2,explanation:'According to hadith in Sahih al-Bukhari and Muslim, Jannah has 8 gates.'},
+{question:'What is the nisab threshold for gold when calculating Zakat?',options:['52.5 grams','72.5 grams','85 grams','100 grams'],correct:2,explanation:'The nisab for gold is 85 grams (approximately 7.5 tolas). Zakat of 2.5% is due on wealth above this threshold held for one lunar year.'},
+{question:'Which surah is described in hadith as being equivalent to one-third of the Quran?',options:['Al-Fatiha','Al-Ikhlas','Al-Mulk','Ya-Sin'],correct:1,explanation:'Prophet Muhammad (PBUH) said that Surah Al-Ikhlas is equivalent to one-third of the Quran (Sahih Muslim).'},
+{question:'How many takbeers (Allahu Akbar) are said in Salat al-Janazah?',options:['2','3','4','5'],correct:2,explanation:'The funeral prayer (Salat al-Janazah) consists of 4 takbeers, with specific supplications after each.'},
+{question:'What is the term for spiritual retreat in the mosque, especially during the last 10 days of Ramadan?',options:['Tahajjud','I\'tikaf','Umrah','Qiyam'],correct:1,explanation:'I\'tikaf is the practice of secluding oneself in the mosque for worship, commonly observed in the last 10 days of Ramadan.'},
+{question:'In which surah and ayah is Ayatul Kursi (the Verse of the Throne)?',options:['Al-Imran, Ayah 18','Al-Baqarah, Ayah 255','An-Nisa, Ayah 171','Al-Maidah, Ayah 3'],correct:1,explanation:'Ayatul Kursi is Surah Al-Baqarah (2:255), one of the greatest verses of the Quran.'},
+{question:'How many circuits around the Kaaba make one complete Tawaf?',options:['3','5','7','9'],correct:2,explanation:'One complete Tawaf consists of 7 circuits (rounds) around the Kaaba, beginning and ending at the Black Stone.'},
+{question:'According to the Quran, how many years did Prophet Nuh (AS) call his people to Islam?',options:['500 years','700 years','850 years','950 years'],correct:3,explanation:'The Quran states in Surah Al-Ankabut (29:14) that Nuh (AS) remained among his people for 950 years.'},
+{question:'Which surah uniquely contains two Bismillahs?',options:['Al-Fatiha','An-Naml','Al-Baqarah','Ar-Rahman'],correct:1,explanation:'Surah An-Naml (Chapter 27) contains Bismillah at its beginning and again within verse 30 (in the letter of Prophet Sulayman).'},
+{question:'What is "Qiyas" in Islamic jurisprudence?',options:['Scholarly consensus','Analogical reasoning','Prophetic tradition','Divine revelation'],correct:1,explanation:'Qiyas is the process of analogical reasoning used by jurists to derive rulings on new issues based on established precedents.'},
+{question:'What is the kaffarah for deliberately breaking a Ramadan fast without valid excuse?',options:['Fasting 3 days','Fasting 30 days','Fasting 60 consecutive days','Giving charity only'],correct:2,explanation:'The kaffarah (expiation) is to fast 60 consecutive days, or if unable, to feed 60 poor people (based on hadith in Sahih al-Bukhari).'},
+{question:'Which Islamic scholar compiled Sahih al-Bukhari, the most authentic hadith collection?',options:['Imam Malik ibn Anas','Imam Muhammad al-Bukhari','Imam Muslim ibn al-Hajjaj','Imam Abu Dawud'],correct:1,explanation:'Imam Muhammad ibn Ismail al-Bukhari (810-870 CE) compiled Sahih al-Bukhari over 16 years.'},
+{question:'What is the Islamic concept of "Shura"?',options:['Pilgrimage','Fasting','Consultation','Mandatory charity'],correct:2,explanation:'Shura means mutual consultation, emphasized in the Quran (42:38) as a principle of communal decision-making.'},
+{question:'Which companion was tasked with compiling the Quran into a single manuscript under Abu Bakr (RA)?',options:['Ali ibn Abi Talib (RA)','Zaid ibn Thabit (RA)','Abdullah ibn Masud (RA)','Ubayy ibn Ka\'b (RA)'],correct:1,explanation:'Zaid ibn Thabit (RA) led the compilation effort, being the primary scribe of the Prophet (PBUH).'},
+{question:'What does "Tawakkul" mean in Islamic theology?',options:['Patience in hardship','Complete trust and reliance on Allah','Seeking Allah\'s forgiveness','Repenting from sins'],correct:1,explanation:'Tawakkul is placing complete trust and reliance on Allah while taking practical means (tying the camel).'},
+{question:'How many days of fasting are recommended in Shawwal after Ramadan?',options:['3 days','6 days','10 days','15 days'],correct:1,explanation:'Fasting 6 days of Shawwal after Ramadan is highly recommended, as it is like fasting the entire year (Sahih Muslim).'},
+{question:'What is the term for the pre-Islamic period of ignorance?',options:['Fitrah','Jahiliyyah','Fitnah','Riddah'],correct:1,explanation:'Jahiliyyah refers to the period of ignorance before the revelation of Islam, characterized by idol worship and social injustice.'},
+{question:'Which prophet was given the miracle of bringing the dead back to life by Allah\'s permission?',options:['Prophet Musa (AS)','Prophet Ibrahim (AS)','Prophet Isa (AS)','Prophet Dawud (AS)'],correct:2,explanation:'Prophet Isa (Jesus) (AS) was given this miracle among others, as mentioned in Surah Al-Imran (3:49).'},
+{question:'What is the minimum duration wealth must be held above nisab before Zakat becomes obligatory?',options:['6 months','1 lunar year','2 years','3 months'],correct:1,explanation:'Wealth must be held above the nisab for one complete lunar year (Hawl) before Zakat becomes due.'},
+{question:'What are the last two surahs of the Quran collectively called?',options:['Al-Mu\'awwidhatayn','Al-Musabbihat','Az-Zahrawain','Al-Hawameem'],correct:0,explanation:'Surahs Al-Falaq and An-Nas are called Al-Mu\'awwidhatayn (the two protective ones), often recited for spiritual protection.'},
+{question:'How many prophets are mentioned by name in the Quran?',options:['20','25','28','33'],correct:1,explanation:'25 prophets are mentioned by name in the Quran, from Adam (AS) to Muhammad (PBUH).'},
+{question:'What does "Sakinah" mean in Islamic context?',options:['Sacrifice','Tranquility and divine peace','Strict obedience','Migration for faith'],correct:1,explanation:'Sakinah refers to tranquility, peace, and serenity sent down by Allah, mentioned multiple times in the Quran.'},
 ],
 
 // ==================== ARABIC WORDS ====================
 arabic:[
-{question:'What does <span class="arabic arabic-text">بِسْمِ اللَّهِ</span> (Bismillah) mean?',options:['Praise be to God','In the name of God','God is Great','Peace be upon you'],correct:1,explanation:'"Bismillah" means "In the name of Allah."'},
-{question:'What does <span class="arabic arabic-text">صَبْر</span> (Sabr) mean?',options:['Gratitude','Forgiveness','Patience','Mercy'],correct:2,explanation:'Sabr means patience, endurance, and perseverance.'},
-{question:'What does <span class="arabic arabic-text">رَحْمَة</span> (Rahmah) mean?',options:['Justice','Mercy','Knowledge','Strength'],correct:1,explanation:'Rahmah means mercy, compassion, and kindness.'},
-{question:'What does <span class="arabic arabic-text">نُور</span> (Noor) mean?',options:['Water','Fire','Light','Air'],correct:2,explanation:'Noor means light, radiance, or illumination.'},
-{question:'What does <span class="arabic arabic-text">عِلْم</span> (Ilm) mean?',options:['Wisdom','Knowledge','Faith','Power'],correct:1,explanation:'Ilm means knowledge or science.'},
-{question:'What does <span class="arabic arabic-text">دُعَاء</span> (Dua) mean?',options:['Fasting','Charity','Supplication/Prayer','Pilgrimage'],correct:2,explanation:'Dua means supplication or personal prayer to Allah.'},
-{question:'What does <span class="arabic arabic-text">تَوْبَة</span> (Tawbah) mean?',options:['Sin','Punishment','Reward','Repentance'],correct:3,explanation:'Tawbah means repentance, turning back to Allah.'},
-{question:'What does <span class="arabic arabic-text">جَنَّة</span> (Jannah) mean?',options:['Earth','Paradise','Sky','Ocean'],correct:1,explanation:'Jannah means paradise or garden, referring to Heaven.'},
-{question:'What does <span class="arabic arabic-text">شُكْر</span> (Shukr) mean?',options:['Patience','Gratitude','Faith','Hope'],correct:1,explanation:'Shukr means gratitude and thankfulness.'},
-{question:'What does <span class="arabic arabic-text">أُمَّة</span> (Ummah) mean?',options:['Family','Tribe','Community/Nation','City'],correct:2,explanation:'Ummah refers to the Muslim community as a whole.'},
-{question:'What does <span class="arabic arabic-text">حَلَال</span> (Halal) mean?',options:['Forbidden','Permissible','Required','Disliked'],correct:1,explanation:'Halal means permissible or lawful in Islam.'},
-{question:'What does <span class="arabic arabic-text">حَرَام</span> (Haram) mean?',options:['Permissible','Recommended','Sacred only','Forbidden'],correct:3,explanation:'Haram means forbidden or prohibited in Islam.'},
-{question:'What does <span class="arabic arabic-text">بَرَكَة</span> (Barakah) mean?',options:['Strength','Blessing','Wealth','Beauty'],correct:1,explanation:'Barakah means blessing, divine grace.'},
-{question:'What does <span class="arabic arabic-text">هِدَايَة</span> (Hidayah) mean?',options:['Warning','Guidance','Protection','Sustenance'],correct:1,explanation:'Hidayah means guidance, especially divine guidance.'},
-{question:'What does <span class="arabic arabic-text">أَمَانَة</span> (Amanah) mean?',options:['Safety','Charity','Trust/Responsibility','Agreement'],correct:2,explanation:'Amanah means trust, trustworthiness, or responsibility.'},
-{question:'What does <span class="arabic arabic-text">فِتْنَة</span> (Fitnah) mean?',options:['Beauty','Trial/Tribulation','Victory','Journey'],correct:1,explanation:'Fitnah means trial, temptation, or tribulation.'},
-{question:'What does <span class="arabic arabic-text">خُشُوع</span> (Khushoo) mean?',options:['Speed','Humility in worship','Loudness','Anger'],correct:1,explanation:'Khushoo means deep concentration and humility, especially in prayer.'},
-{question:'What does <span class="arabic arabic-text">تَقْوَى</span> (Taqwa) mean?',options:['Strength','Wealth','God-consciousness','Leadership'],correct:2,explanation:'Taqwa means being conscious and aware of Allah, piety.'},
-{question:'What does <span class="arabic arabic-text">رِزْق</span> (Rizq) mean?',options:['Risk','Provision/Sustenance','Journey','Garden'],correct:1,explanation:'Rizq means provision, sustenance, or livelihood from Allah.'},
-{question:'What does <span class="arabic arabic-text">ذِكْر</span> (Dhikr) mean?',options:['Thought','Remembrance of God','Reading','Writing'],correct:1,explanation:'Dhikr means remembrance of Allah through words of praise and glorification.'},
+{question:'What does <span class="arabic arabic-text">\u062A\u0641\u0633\u064A\u0631</span> (Tafsir) mean?',options:['Purification','Interpretation of the Quran','Biography','Legal ruling'],correct:1,explanation:'Tafsir means exegesis or interpretation of the Quran, a major Islamic scholarly discipline.'},
+{question:'What does <span class="arabic arabic-text">\u0639\u062F\u0644</span> (Adl) mean?',options:['Worship','Knowledge','Justice','Mercy'],correct:2,explanation:'Adl means justice and fairness, a core principle in Islam.'},
+{question:'What does <span class="arabic arabic-text">\u0641\u0644\u0627\u062D</span> (Falah) mean?',options:['Corruption','Success and prosperity','Prayer','Fear'],correct:1,explanation:'Falah means success and prosperity, heard daily in the adhan: "Hayya \'alal-Falah" (Come to success).'},
+{question:'What does <span class="arabic arabic-text">\u0628\u0627\u0637\u0644</span> (Batil) mean?',options:['Hero','Truth','Falsehood','Patience'],correct:2,explanation:'Batil means falsehood, vanity, or something invalid and without basis.'},
+{question:'What does <span class="arabic arabic-text">\u0645\u064A\u0632\u0627\u0646</span> (Mizan) mean?',options:['Blessing','Scale or Balance','Forgiveness','Journey'],correct:1,explanation:'Mizan means scale or balance, used to refer to the Scale of Justice on the Day of Judgment.'},
+{question:'What does <span class="arabic arabic-text">\u062A\u062F\u0628\u0631</span> (Tadabbur) mean?',options:['Memorization','Speed','Deep reflection and contemplation','Recitation'],correct:2,explanation:'Tadabbur means deep reflection and contemplation, especially of the Quran\'s meanings.'},
+{question:'What does <span class="arabic arabic-text">\u0641\u0642\u0647</span> (Fiqh) mean?',options:['Philosophy','History','Islamic jurisprudence','Grammar'],correct:2,explanation:'Fiqh literally means "deep understanding" and refers to Islamic jurisprudence and legal rulings.'},
+{question:'What does <span class="arabic arabic-text">\u0639\u0642\u064A\u062F\u0629</span> (Aqeedah) mean?',options:['Practice','Creed and belief system','Poetry','Community'],correct:1,explanation:'Aqeedah refers to the Islamic creed or belief system, the foundational beliefs a Muslim holds.'},
+{question:'What does <span class="arabic arabic-text">\u0633\u064A\u0631\u0629</span> (Seerah) mean?',options:['Secret','Biography (of the Prophet)','Law','Garden'],correct:1,explanation:'Seerah refers to the biography and life story of Prophet Muhammad (PBUH).'},
+{question:'What does <span class="arabic arabic-text">\u0646\u064A\u0629</span> (Niyyah) mean?',options:['Night','Intention','Grace','Sleep'],correct:1,explanation:'Niyyah means intention. In Islam, the validity of deeds depends on one\'s intention (hadith: "Actions are judged by intentions").'},
+{question:'What does <span class="arabic arabic-text">\u0641\u0637\u0631\u0629</span> (Fitrah) mean?',options:['Festival','Breaking fast','Natural disposition','Tax'],correct:2,explanation:'Fitrah refers to the innate natural disposition with which every human is born, inclined towards knowing Allah.'},
+{question:'What does <span class="arabic arabic-text">\u062A\u0632\u0643\u064A\u0629</span> (Tazkiyah) mean?',options:['Decoration','Purification of the soul','Multiplication','Destruction'],correct:1,explanation:'Tazkiyah means purification and growth, especially the spiritual purification of one\'s soul and character.'},
+{question:'What does <span class="arabic arabic-text">\u0642\u062F\u0631</span> (Qadar) mean?',options:['Power','Ability','Divine decree and predestination','Value'],correct:2,explanation:'Qadar means divine decree or predestination, one of the six articles of faith in Islam.'},
+{question:'What does <span class="arabic arabic-text">\u0648\u062D\u064A</span> (Wahy) mean?',options:['Loneliness','Inspiration','Divine revelation','Fear'],correct:2,explanation:'Wahy means divine revelation, the means by which Allah communicated His message to the prophets.'},
+{question:'What does <span class="arabic arabic-text">\u062D\u064A\u0627\u0621</span> (Haya) mean?',options:['Life','Modesty and shyness','Beauty','Confusion'],correct:1,explanation:'Haya means modesty and shyness. The Prophet (PBUH) said: "Haya is a branch of faith" (Sahih al-Bukhari).'},
+{question:'What does <span class="arabic arabic-text">\u0625\u062E\u0644\u0627\u0635</span> (Ikhlas) mean?',options:['Creation','Salvation','Sincerity','Extraction'],correct:2,explanation:'Ikhlas means sincerity, doing deeds purely for the sake of Allah without seeking worldly recognition.'},
+{question:'What does <span class="arabic arabic-text">\u0641\u0631\u0642\u0627\u0646</span> (Furqan) mean?',options:['Division','Criterion that distinguishes truth from falsehood','Forgiveness','Abundance'],correct:1,explanation:'Furqan means the criterion that distinguishes right from wrong. It is also a name for the Quran (Surah Al-Furqan).'},
+{question:'What does <span class="arabic arabic-text">\u0645\u0646\u0627\u0641\u0642</span> (Munafiq) mean?',options:['Generous person','Hypocrite','Scholar','Traveller'],correct:1,explanation:'Munafiq means a hypocrite, someone who outwardly claims faith while concealing disbelief. A major theme in the Quran.'},
+{question:'What does <span class="arabic arabic-text">\u062E\u0634\u064A\u0629</span> (Khashyah) mean?',options:['Roughness','Joy','Awe-filled fear (of Allah)','Anger'],correct:2,explanation:'Khashyah means a deep, reverential fear mixed with awe, specifically the fear of Allah rooted in knowledge of His greatness.'},
+{question:'What does <span class="arabic arabic-text">\u062A\u0648\u062D\u064A\u062F</span> (Tawheed) mean?',options:['Multiplication','Monotheism / Oneness of God','Unity of people','Repetition'],correct:1,explanation:'Tawheed is the fundamental Islamic concept of the absolute oneness and uniqueness of Allah.'},
+{question:'What does <span class="arabic arabic-text">\u0628\u0631\u0647\u0627\u0646</span> (Burhan) mean?',options:['Volcano','Clear proof and evidence','Container','Blessing'],correct:1,explanation:'Burhan means clear, undeniable proof or evidence. Used in the Quran to refer to divine proofs.'},
+{question:'What does <span class="arabic arabic-text">\u063A\u064A\u0628</span> (Ghayb) mean?',options:['Forest','Absence','The Unseen','Stranger'],correct:2,explanation:'Ghayb refers to the unseen realm, matters beyond human perception. Belief in the Ghayb is a quality of the believers (2:3).'},
+{question:'What does <span class="arabic arabic-text">\u0633\u0643\u064A\u0646\u0629</span> (Sakinah) mean?',options:['Housing','Knife','Tranquility and divine peace','Silence'],correct:2,explanation:'Sakinah means divine tranquility and inner peace sent down by Allah upon the hearts of believers.'},
+{question:'What does <span class="arabic arabic-text">\u0645\u0642\u0627\u0635\u062F</span> (Maqasid) mean?',options:['Scissors','Objectives and purposes','Destinations','Stories'],correct:1,explanation:'Maqasid means objectives or purposes, commonly used in "Maqasid al-Shariah" (objectives of Islamic law).'},
+{question:'What does <span class="arabic arabic-text">\u0628\u064A\u0639\u0629</span> (Bay\'ah) mean?',options:['Sale','Pledge of allegiance','House','Environment'],correct:1,explanation:'Bay\'ah means a pledge of allegiance, historically given to leaders and the Prophet (PBUH).'},
 ],
 
 // ==================== COMPLETE THE AYAH ====================
 ayah:[
-{question:'Complete the ayah: <span class="arabic arabic-text">بِسْمِ اللَّهِ الرَّحْمَنِ ...</span><br>(In the name of Allah, the Most Gracious, the Most ...)',options:['<span class="arabic">الْعَظِيمِ</span> (the Greatest)','<span class="arabic">الرَّحِيمِ</span> (the Most Merciful)','<span class="arabic">الْكَرِيمِ</span> (the Most Generous)','<span class="arabic">الْحَكِيمِ</span> (the Most Wise)'],correct:1,explanation:'The complete Bismillah is: "In the name of Allah, the Most Gracious, the Most Merciful."'},
-{question:'Complete: <span class="arabic arabic-text">إِيَّاكَ نَعْبُدُ وَإِيَّاكَ ...</span><br>(You alone we worship, and You alone we ...)',options:['<span class="arabic">نَشْكُرُ</span> (we thank)','<span class="arabic">نَذْكُرُ</span> (we remember)','<span class="arabic">نَسْتَعِينُ</span> (we ask for help)','<span class="arabic">نَخْشَى</span> (we fear)'],correct:2,explanation:'From Surah Al-Fatiha (1:5): "You alone we worship, and You alone we ask for help."'},
-{question:'Complete: <span class="arabic arabic-text">قُلْ هُوَ اللَّهُ ...</span><br>(Say: He is Allah, ...)',options:['<span class="arabic">الْعَظِيمُ</span> (the Greatest)','<span class="arabic">الْوَاحِدُ</span> (the One)','<span class="arabic">أَحَدٌ</span> (the One/Unique)','<span class="arabic">الْكَبِيرُ</span> (the Grand)'],correct:2,explanation:'Surah Al-Ikhlas (112:1): "Say: He is Allah, the One (Ahad)."'},
-{question:'Complete: <span class="arabic arabic-text">إِنَّ مَعَ الْعُسْرِ ...</span><br>(Indeed, with hardship comes ...)',options:['<span class="arabic">صَبْرًا</span> (patience)','<span class="arabic">يُسْرًا</span> (ease)','<span class="arabic">أَجْرًا</span> (reward)','<span class="arabic">نَصْرًا</span> (victory)'],correct:1,explanation:'Surah Ash-Sharh (94:6): "Indeed, with hardship comes ease."'},
-{question:'Complete: <span class="arabic arabic-text">وَلَسَوْفَ يُعْطِيكَ رَبُّكَ ...</span><br>(And your Lord will give you, and you will be ...)',options:['<span class="arabic">فَتَرْضَى</span> (satisfied)','<span class="arabic">فَتَفْرَحُ</span> (joyful)','<span class="arabic">فَتَشْكُرُ</span> (grateful)','<span class="arabic">فَتَعْلَمُ</span> (knowing)'],correct:0,explanation:'Surah Ad-Duha (93:5): "And your Lord will give you, and you will be satisfied."'},
-{question:'Complete: <span class="arabic arabic-text">فَاذْكُرُونِي ...</span><br>(So remember Me; ...)',options:['<span class="arabic">أَشْكُرْكُمْ</span> (I will thank you)','<span class="arabic">أَرْحَمْكُمْ</span> (I will have mercy on you)','<span class="arabic">أَذْكُرْكُمْ</span> (I will remember you)','<span class="arabic">أَهْدِكُمْ</span> (I will guide you)'],correct:2,explanation:'Surah Al-Baqarah (2:152): "So remember Me; I will remember you."'},
-{question:'Complete: <span class="arabic arabic-text">وَمَنْ يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ ...</span><br>(And whoever relies upon Allah - then He is ...)',options:['<span class="arabic">رَحِيمٌ</span> (merciful to him)','<span class="arabic">حَسْبُهُ</span> (sufficient for him)','<span class="arabic">مَعَهُ</span> (with him)','<span class="arabic">وَلِيُّهُ</span> (his ally)'],correct:1,explanation:'Surah At-Talaq (65:3): "Whoever relies upon Allah - then He is sufficient for him."'},
-{question:'Complete: <span class="arabic arabic-text">إِنَّا أَعْطَيْنَاكَ ...</span><br>(Indeed, We have granted you ...)',options:['<span class="arabic">الْجَنَّةَ</span> (Paradise)','<span class="arabic">الْحِكْمَةَ</span> (Wisdom)','<span class="arabic">الْكَوْثَرَ</span> (Al-Kawthar)','<span class="arabic">الْكِتَابَ</span> (the Book)'],correct:2,explanation:'Surah Al-Kawthar (108:1): "Indeed, We have granted you Al-Kawthar (abundance)."'},
-{question:'Complete: <span class="arabic arabic-text">وَقُلْ رَبِّ زِدْنِي ...</span><br>(And say: My Lord, increase me in ...)',options:['<span class="arabic">إِيمَانًا</span> (faith)','<span class="arabic">صَبْرًا</span> (patience)','<span class="arabic">عِلْمًا</span> (knowledge)','<span class="arabic">رِزْقًا</span> (provision)'],correct:2,explanation:'Surah Ta-Ha (20:114): "And say: My Lord, increase me in knowledge."'},
-{question:'Complete: <span class="arabic arabic-text">لَا إِكْرَاهَ فِي ...</span><br>(There is no compulsion in ...)',options:['<span class="arabic">الْحَيَاةِ</span> (life)','<span class="arabic">الدِّينِ</span> (religion)','<span class="arabic">الْعِبَادَةِ</span> (worship)','<span class="arabic">الْإِسْلَامِ</span> (Islam)'],correct:1,explanation:'Surah Al-Baqarah (2:256): "There is no compulsion in religion."'},
-{question:'Complete: <span class="arabic arabic-text">وَاصْبِرْ فَإِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ ...</span><br>(And be patient, for Allah does not let go to waste the reward of ...)',options:['<span class="arabic">الصَّابِرِينَ</span> (the patient)','<span class="arabic">الْمُحْسِنِينَ</span> (the doers of good)','<span class="arabic">الْمُؤْمِنِينَ</span> (the believers)','<span class="arabic">الصَّالِحِينَ</span> (the righteous)'],correct:1,explanation:'Surah Hud (11:115): "...Allah does not let go to waste the reward of the doers of good."'},
-{question:'Complete: <span class="arabic arabic-text">ادْعُونِي ...</span><br>(Call upon Me; ...)',options:['<span class="arabic">أَسْتَجِبْ لَكُمْ</span> (I will respond to you)','<span class="arabic">أَغْفِرْ لَكُمْ</span> (I will forgive you)','<span class="arabic">أَرْزُقْكُمْ</span> (I will provide for you)','<span class="arabic">أَهْدِكُمْ</span> (I will guide you)'],correct:0,explanation:'Surah Ghafir (40:60): "Call upon Me; I will respond to you."'},
-{question:'Complete: <span class="arabic arabic-text">إِنَّ اللَّهَ مَعَ ...</span><br>(Indeed, Allah is with ...)',options:['<span class="arabic">الْمُتَّقِينَ</span> (the God-conscious)','<span class="arabic">الصَّابِرِينَ</span> (the patient)','<span class="arabic">الْمُؤْمِنِينَ</span> (the believers)','<span class="arabic">الشَّاكِرِينَ</span> (the grateful)'],correct:1,explanation:'Surah Al-Baqarah (2:153): "Indeed, Allah is with the patient."'},
-{question:'Complete: <span class="arabic arabic-text">وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن ...</span><br>(And We have made the Quran easy for remembrance, so is there any who will ...)',options:['<span class="arabic">مُتَفَكِّرٍ</span> (reflect)','<span class="arabic">مُدَّكِرٍ</span> (remember/take heed)','<span class="arabic">شَاكِرٍ</span> (be grateful)','<span class="arabic">سَامِعٍ</span> (listen)'],correct:1,explanation:'Surah Al-Qamar (54:17): "...so is there any who will remember (take heed)?"'},
+{question:'Complete: <span class="arabic arabic-text">\u0644\u0627 \u064A\u0643\u0644\u0641 \u0627\u0644\u0644\u0647 \u0646\u0641\u0633\u0627 \u0625\u0644\u0627 ...</span><br>(Allah does not burden a soul beyond its...)',options:['<span class="arabic">\u0637\u0627\u0642\u062A\u0647\u0627</span> (strength)','<span class="arabic">\u0648\u0633\u0639\u0647\u0627</span> (capacity)','<span class="arabic">\u0639\u0644\u0645\u0647\u0627</span> (knowledge)','<span class="arabic">\u0635\u0628\u0631\u0647\u0627</span> (patience)'],correct:1,explanation:'Surah Al-Baqarah (2:286): "Allah does not burden a soul beyond its capacity (wus\'aha)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0625\u0646 \u0623\u0643\u0631\u0645\u0643\u0645 \u0639\u0646\u062F \u0627\u0644\u0644\u0647 ...</span><br>(Indeed, the most noble of you in the sight of Allah is the most...)',options:['<span class="arabic">\u0623\u063A\u0646\u0627\u0643\u0645</span> (wealthy)','<span class="arabic">\u0623\u0639\u0644\u0645\u0643\u0645</span> (knowledgeable)','<span class="arabic">\u0623\u062A\u0642\u0627\u0643\u0645</span> (righteous)','<span class="arabic">\u0623\u0643\u0628\u0631\u0643\u0645</span> (eldest)'],correct:2,explanation:'Surah Al-Hujurat (49:13): "The most noble of you in the sight of Allah is the most righteous (atqakum)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0625\u0630\u0627 \u0633\u0623\u0644\u0643 \u0639\u0628\u0627\u062F\u064A \u0639\u0646\u064A \u0641\u0625\u0646\u064A ...</span><br>(And when My servants ask you about Me, indeed I am...)',options:['<span class="arabic">\u0627\u0644\u0631\u062D\u0645\u0646</span> (the Most Merciful)','<span class="arabic">\u0642\u0631\u064A\u0628</span> (near)','<span class="arabic">\u0627\u0644\u0639\u0644\u064A\u0645</span> (All-Knowing)','<span class="arabic">\u0627\u0644\u0633\u0645\u064A\u0639</span> (All-Hearing)'],correct:1,explanation:'Surah Al-Baqarah (2:186): "And when My servants ask you about Me, indeed I am near (qareeb)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0643\u0644 \u0646\u0641\u0633 \u0630\u0627\u0626\u0642\u0629 ...</span><br>(Every soul shall taste...)',options:['<span class="arabic">\u0627\u0644\u0641\u0631\u062D</span> (joy)','<span class="arabic">\u0627\u0644\u062D\u0632\u0646</span> (sorrow)','<span class="arabic">\u0627\u0644\u0645\u0648\u062A</span> (death)','<span class="arabic">\u0627\u0644\u062E\u0648\u0641</span> (fear)'],correct:2,explanation:'Surah Al-Imran (3:185): "Every soul shall taste death (al-mawt)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0645\u0646 \u064A\u062A\u0642 \u0627\u0644\u0644\u0647 \u064A\u062C\u0639\u0644 \u0644\u0647 ...</span><br>(And whoever fears Allah, He will make for him...)',options:['<span class="arabic">\u062C\u0646\u0629</span> (paradise)','<span class="arabic">\u0645\u062E\u0631\u062C\u0627</span> (a way out)','<span class="arabic">\u0623\u062C\u0631\u0627 \u0639\u0638\u064A\u0645\u0627</span> (great reward)','<span class="arabic">\u0633\u0644\u0627\u0645\u0627</span> (peace)'],correct:1,explanation:'Surah At-Talaq (65:2): "And whoever fears Allah, He will make for him a way out (makhraja)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0645\u0627 \u0623\u0631\u0633\u0644\u0646\u0627\u0643 \u0625\u0644\u0627 ...</span><br>(And We have not sent you except as a...)',options:['<span class="arabic">\u0646\u0630\u064A\u0631\u0627 \u0644\u0644\u0646\u0627\u0633</span> (warner to mankind)','<span class="arabic">\u0631\u062D\u0645\u0629 \u0644\u0644\u0639\u0627\u0644\u0645\u064A\u0646</span> (mercy to the worlds)','<span class="arabic">\u0647\u0627\u062F\u064A\u0627 \u0644\u0644\u0645\u0624\u0645\u0646\u064A\u0646</span> (guide for believers)','<span class="arabic">\u0646\u0648\u0631\u0627 \u0644\u0644\u062C\u0645\u064A\u0639</span> (light for all)'],correct:1,explanation:'Surah Al-Anbiya (21:107): "And We have not sent you except as a mercy to the worlds (rahmatan lil-alamin)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0627\u0639\u062A\u0635\u0645\u0648\u0627 \u0628\u062D\u0628\u0644 \u0627\u0644\u0644\u0647 \u062C\u0645\u064A\u0639\u0627 \u0648\u0644\u0627 ...</span><br>(And hold firmly to the rope of Allah all together and do not become...)',options:['<span class="arabic">\u062A\u0643\u0628\u0631\u0648\u0627</span> (arrogant)','<span class="arabic">\u062A\u0636\u0639\u0641\u0648\u0627</span> (weak)','<span class="arabic">\u062A\u0641\u0631\u0642\u0648\u0627</span> (divided)','<span class="arabic">\u062A\u063A\u0641\u0644\u0648\u0627</span> (heedless)'],correct:2,explanation:'Surah Al-Imran (3:103): "Hold firmly to the rope of Allah all together and do not become divided (tafarraqu)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0625\u0646 \u0627\u0644\u0635\u0644\u0627\u0629 \u062A\u0646\u0647\u0649 \u0639\u0646 ...</span><br>(Indeed, the prayer prohibits from...)',options:['<span class="arabic">\u0627\u0644\u0643\u0633\u0644 \u0648\u0627\u0644\u0646\u0648\u0645</span> (laziness and sleep)','<span class="arabic">\u0627\u0644\u0641\u062D\u0634\u0627\u0621 \u0648\u0627\u0644\u0645\u0646\u0643\u0631</span> (immorality and wrongdoing)','<span class="arabic">\u0627\u0644\u0634\u0643 \u0648\u0627\u0644\u062D\u064A\u0631\u0629</span> (doubt and confusion)','<span class="arabic">\u0627\u0644\u062D\u0632\u0646 \u0648\u0627\u0644\u0647\u0645</span> (sadness and worry)'],correct:1,explanation:'Surah Al-Ankabut (29:45): "Indeed, the prayer prohibits from immorality and wrongdoing (al-fahsha wal-munkar)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0642\u0648\u0644\u0648\u0627 \u0644\u0644\u0646\u0627\u0633 ...</span><br>(And speak to people...)',options:['<span class="arabic">\u0628\u0642\u0648\u0629</span> (with strength)','<span class="arabic">\u062D\u0633\u0646\u0627</span> (good words)','<span class="arabic">\u0628\u0633\u0644\u0637\u0629</span> (with authority)','<span class="arabic">\u0628\u0639\u0644\u0645</span> (with knowledge)'],correct:1,explanation:'Surah Al-Baqarah (2:83): "And speak to people good words (husna)."'},
+{question:'Complete: <span class="arabic arabic-text">\u064A\u0631\u064A\u062F \u0627\u0644\u0644\u0647 \u0628\u0643\u0645 \u0627\u0644\u064A\u0633\u0631 \u0648\u0644\u0627 \u064A\u0631\u064A\u062F \u0628\u0643\u0645 ...</span><br>(Allah intends for you ease and does not intend for you...)',options:['<span class="arabic">\u0627\u0644\u0639\u0630\u0627\u0628</span> (suffering)','<span class="arabic">\u0627\u0644\u0639\u0633\u0631</span> (hardship)','<span class="arabic">\u0627\u0644\u0641\u0642\u0631</span> (poverty)','<span class="arabic">\u0627\u0644\u0636\u0644\u0627\u0644</span> (misguidance)'],correct:1,explanation:'Surah Al-Baqarah (2:185): "Allah intends for you ease and does not intend for you hardship (al-usr)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0625\u0646 \u0627\u0644\u0644\u0647 \u0644\u0627 \u064A\u063A\u064A\u0631 \u0645\u0627 \u0628\u0642\u0648\u0645 \u062D\u062A\u0649 \u064A\u063A\u064A\u0631\u0648\u0627 \u0645\u0627 \u0628 ...</span><br>(Indeed, Allah does not change the condition of a people until they change what is in...)',options:['<span class="arabic">\u0623\u0645\u0648\u0627\u0644\u0647\u0645</span> (their wealth)','<span class="arabic">\u0642\u0644\u0648\u0628\u0647\u0645</span> (their hearts)','<span class="arabic">\u0623\u0646\u0641\u0633\u0647\u0645</span> (themselves)','<span class="arabic">\u0623\u0631\u0636\u0647\u0645</span> (their land)'],correct:2,explanation:'Surah Ar-Ra\'d (13:11): "Allah does not change the condition of a people until they change what is in themselves (anfusihim)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0641\u0645\u0646 \u064A\u0639\u0645\u0644 \u0645\u062B\u0642\u0627\u0644 \u0630\u0631\u0629 \u062E\u064A\u0631\u0627 ...</span><br>(Whoever does an atom\'s weight of good will...)',options:['<span class="arabic">\u064A\u062C\u0632\u0649</span> (be rewarded)','<span class="arabic">\u064A\u062F\u062E\u0644 \u0627\u0644\u062C\u0646\u0629</span> (enter Paradise)','<span class="arabic">\u064A\u0631\u0647</span> (see it)','<span class="arabic">\u064A\u063A\u0641\u0631 \u0644\u0647</span> (be forgiven)'],correct:2,explanation:'Surah Az-Zalzalah (99:7): "Whoever does an atom\'s weight of good will see it (yarahu)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0644\u0644\u0622\u062E\u0631\u0629 \u062E\u064A\u0631 \u0644\u0643 \u0645\u0646 ...</span><br>(And the Hereafter is better for you than the...)',options:['<span class="arabic">\u0627\u0644\u062F\u0646\u064A\u0627</span> (worldly life)','<span class="arabic">\u0627\u0644\u0623\u0648\u0644\u0649</span> (first life)','<span class="arabic">\u0627\u0644\u062D\u0627\u0636\u0631</span> (present)','<span class="arabic">\u0627\u0644\u0645\u0627\u0636\u064A</span> (past)'],correct:1,explanation:'Surah Ad-Duha (93:4): "And the Hereafter is better for you than the first life (al-ula)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0645\u0646 \u0622\u064A\u0627\u062A\u0647 \u0623\u0646 \u062E\u0644\u0642 \u0644\u0643\u0645 \u0645\u0646 \u0623\u0646\u0641\u0633\u0643\u0645 ...</span><br>(And among His signs is that He created for you from yourselves...)',options:['<span class="arabic">\u0623\u0648\u0644\u0627\u062F\u0627</span> (children)','<span class="arabic">\u0623\u0632\u0648\u0627\u062C\u0627</span> (mates/spouses)','<span class="arabic">\u063A\u0627\u064A\u0629</span> (purpose)','<span class="arabic">\u0647\u062F\u0627\u064A\u0629</span> (guidance)'],correct:1,explanation:'Surah Ar-Rum (30:21): "He created for you from yourselves mates (azwajan) that you may find tranquility in them."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0639\u0628\u0627\u062F \u0627\u0644\u0631\u062D\u0645\u0646 \u0627\u0644\u0630\u064A\u0646 \u064A\u0645\u0634\u0648\u0646 \u0639\u0644\u0649 \u0627\u0644\u0623\u0631\u0636 ...</span><br>(The servants of the Most Merciful walk upon the earth...)',options:['<span class="arabic">\u0628\u0641\u062E\u0631</span> (proudly)','<span class="arabic">\u0647\u0648\u0646\u0627</span> (humbly)','<span class="arabic">\u0633\u0631\u064A\u0639\u0627</span> (quickly)','<span class="arabic">\u062E\u0627\u0626\u0641\u064A\u0646</span> (fearfully)'],correct:1,explanation:'Surah Al-Furqan (25:63): "The servants of the Most Merciful walk upon the earth humbly (hawna)."'},
+{question:'Complete: <span class="arabic arabic-text">\u062D\u0633\u0628\u0646\u0627 \u0627\u0644\u0644\u0647 \u0648\u0646\u0639\u0645 ...</span><br>(Sufficient for us is Allah, and He is the best...)',options:['<span class="arabic">\u0627\u0644\u062D\u0627\u0641\u0638</span> (Protector)','<span class="arabic">\u0627\u0644\u0648\u0643\u064A\u0644</span> (Disposer of affairs)','<span class="arabic">\u0627\u0644\u0631\u0627\u0632\u0642</span> (Provider)','<span class="arabic">\u0627\u0644\u062D\u0643\u0645</span> (Judge)'],correct:1,explanation:'Surah Al-Imran (3:173): "Sufficient for us is Allah, and He is the best Disposer of affairs (al-Wakeel)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0623\u0644\u0627 \u0628\u0630\u0643\u0631 \u0627\u0644\u0644\u0647 \u062A\u0637\u0645\u0626\u0646 ...</span><br>(Verily, in the remembrance of Allah do ... find rest)',options:['<span class="arabic">\u0627\u0644\u0623\u0631\u0648\u0627\u062D</span> (souls)','<span class="arabic">\u0627\u0644\u0639\u0642\u0648\u0644</span> (minds)','<span class="arabic">\u0627\u0644\u0642\u0644\u0648\u0628</span> (hearts)','<span class="arabic">\u0627\u0644\u0623\u0628\u062F\u0627\u0646</span> (bodies)'],correct:2,explanation:'Surah Ar-Ra\'d (13:28): "Verily, in the remembrance of Allah do hearts (al-quloob) find rest."'},
+{question:'Complete: <span class="arabic arabic-text">\u0648\u0642\u0636\u0649 \u0631\u0628\u0643 \u0623\u0644\u0627 \u062A\u0639\u0628\u062F\u0648\u0627 \u0625\u0644\u0627 \u0625\u064A\u0627\u0647 \u0648\u0628\u0627\u0644\u0648\u0627\u0644\u062F\u064A\u0646 ...</span><br>(Your Lord has decreed that you worship none but Him, and to parents...)',options:['<span class="arabic">\u0637\u0627\u0639\u0629</span> (obedience)','<span class="arabic">\u0625\u062D\u0633\u0627\u0646\u0627</span> (good treatment)','<span class="arabic">\u0627\u062D\u062A\u0631\u0627\u0645\u0627</span> (respect)','<span class="arabic">\u062D\u0628\u0627</span> (love)'],correct:1,explanation:'Surah Al-Isra (17:23): "Your Lord has decreed that you worship none but Him, and to parents, good treatment (ihsana)."'},
+{question:'Complete: <span class="arabic arabic-text">\u0627\u0642\u0631\u0623 \u0628\u0627\u0633\u0645 \u0631\u0628\u0643 \u0627\u0644\u0630\u064A ...</span><br>(Read! In the name of your Lord who...)',options:['<span class="arabic">\u0647\u062F\u0649</span> (guided)','<span class="arabic">\u0631\u0632\u0642</span> (provided)','<span class="arabic">\u062E\u0644\u0642</span> (created)','<span class="arabic">\u062D\u0643\u0645</span> (ruled)'],correct:2,explanation:'Surah Al-Alaq (96:1): "Read! In the name of your Lord who created (khalaqa)." The first verse revealed to the Prophet (PBUH).'},
 ],
 
 // ==================== ISLAMIC HISTORY ====================
 history:[
-{question:'In which year did the Hijrah (migration to Medina) take place?',options:['610 CE','620 CE','622 CE','632 CE'],correct:2,explanation:'The Hijrah took place in 622 CE, marking the start of the Islamic calendar.'},
-{question:'Who was the first caliph of Islam after Prophet Muhammad (PBUH)?',options:['Umar ibn al-Khattab','Uthman ibn Affan','Ali ibn Abi Talib','Abu Bakr as-Siddiq'],correct:3,explanation:'Abu Bakr as-Siddiq (RA) was the first Rashidun caliph.'},
-{question:'What was the first battle fought by Muslims?',options:['Battle of Uhud','Battle of Badr','Battle of Khandaq','Battle of Hunayn'],correct:1,explanation:'The Battle of Badr in 624 CE was the first major battle of Islam.'},
-{question:'Which prophet built the Kaaba?',options:['Prophet Muhammad (PBUH)','Prophet Musa (AS)','Prophet Ibrahim (AS)','Prophet Nuh (AS)'],correct:2,explanation:'Prophet Ibrahim (Abraham) and his son Ismail (AS) built/rebuilt the Kaaba.'},
-{question:'Who is known as the "Mother of the Believers"?',options:['Fatimah (RA)','Maryam (AS)','Khadijah (RA)','Asiya (RA)'],correct:2,explanation:'Khadijah bint Khuwaylid (RA), the first wife of the Prophet (PBUH), is known as the Mother of the Believers. All wives of the Prophet share this title.'},
-{question:'In which cave did Prophet Muhammad (PBUH) receive the first revelation?',options:['Cave of Thawr','Cave of Hira','Cave of Kahf','Cave of Ashaab'],correct:1,explanation:'The first revelation came in the Cave of Hira on Mount Noor near Makkah.'},
-{question:'Who compiled the Quran into a single book?',options:['Prophet Muhammad (PBUH)','Abu Bakr (RA)','Umar (RA)','Uthman (RA)'],correct:3,explanation:'Uthman ibn Affan (RA) standardized and distributed the official compilation of the Quran.'},
-{question:'What treaty was signed between Muslims and the Quraysh?',options:['Treaty of Medina','Treaty of Hudaybiyyah','Treaty of Aqaba','Treaty of Taif'],correct:1,explanation:'The Treaty of Hudaybiyyah was signed in 628 CE, a pivotal peace agreement.'},
-{question:'Which companion was known as "Sword of Allah"?',options:['Ali ibn Abi Talib','Hamza ibn Abdul-Muttalib','Khalid ibn al-Walid','Saad ibn Abi Waqqas'],correct:2,explanation:'Khalid ibn al-Walid (RA) was titled "Saifullah" (Sword of Allah) by the Prophet (PBUH).'},
-{question:'How old was Prophet Muhammad (PBUH) when he received the first revelation?',options:['25','30','35','40'],correct:3,explanation:'The Prophet (PBUH) was 40 years old when he received the first revelation.'},
-{question:'Which prophet was swallowed by a whale?',options:['Prophet Musa (AS)','Prophet Yunus (AS)','Prophet Ayyub (AS)','Prophet Dawud (AS)'],correct:1,explanation:'Prophet Yunus (Jonah) (AS) was swallowed by a large fish/whale as mentioned in the Quran.'},
-{question:'What was the profession of Prophet Muhammad (PBUH) before prophethood?',options:['Farmer','Carpenter','Merchant/Trader','Shepherd and Trader'],correct:3,explanation:'The Prophet (PBUH) worked as a shepherd in his youth and later as a trader.'},
-{question:'Which prophet is known as "Khalilullah" (Friend of Allah)?',options:['Prophet Musa (AS)','Prophet Isa (AS)','Prophet Ibrahim (AS)','Prophet Nuh (AS)'],correct:2,explanation:'Prophet Ibrahim (Abraham) is known as Khalilullah, the intimate friend of Allah.'},
-{question:'What was the first thing Prophet Muhammad (PBUH) did upon arriving in Medina?',options:['Built a house','Built a mosque','Established a market','Formed an army'],correct:1,explanation:'The Prophet (PBUH) built Masjid Quba, the first mosque in Islam, upon arriving near Medina.'},
-{question:'Which battle is known as the "Battle of the Trench"?',options:['Battle of Badr','Battle of Uhud','Battle of Khandaq','Battle of Tabuk'],correct:2,explanation:'The Battle of Khandaq (Trench) in 627 CE, where Muslims dug a trench to defend Medina.'},
-{question:'Who was the first child to accept Islam?',options:['Abdullah ibn Umar','Zaid ibn Haritha','Ali ibn Abi Talib','Anas ibn Malik'],correct:2,explanation:'Ali ibn Abi Talib (RA) was the first child/youth to accept Islam.'},
-{question:'Which prophet could speak to animals?',options:['Prophet Dawud (AS)','Prophet Sulayman (AS)','Prophet Idris (AS)','Prophet Salih (AS)'],correct:1,explanation:'Prophet Sulayman (Solomon) (AS) was granted the ability to communicate with animals.'},
-{question:'Where did the Prophet (PBUH) deliver his Farewell Sermon?',options:['Mount Uhud','Mount Sinai','Mount Arafat','Mount Hira'],correct:2,explanation:'The Farewell Sermon was delivered at Mount Arafat during the Hajj pilgrimage in 632 CE.'},
-{question:'Which companion is known as "Al-Farooq" (the one who distinguishes)?',options:['Abu Bakr (RA)','Umar ibn al-Khattab (RA)','Uthman (RA)','Ali (RA)'],correct:1,explanation:'Umar ibn al-Khattab (RA) was called Al-Farooq for his ability to distinguish truth from falsehood.'},
-{question:'How many years did the Prophet (PBUH) spend in Medina?',options:['5 years','8 years','10 years','13 years'],correct:2,explanation:'The Prophet (PBUH) spent approximately 10 years in Medina (622-632 CE).'},
+{question:'In which year (CE) did the Conquest of Makkah (Fath al-Makkah) take place?',options:['624 CE','628 CE','630 CE','632 CE'],correct:2,explanation:'The Conquest of Makkah occurred in 630 CE (8 AH), when the Prophet (PBUH) entered Makkah peacefully with 10,000 companions.'},
+{question:'Which companion suggested digging a trench in the Battle of Khandaq?',options:['Abu Bakr (RA)','Khalid ibn al-Walid (RA)','Salman al-Farsi (RA)','Sa\'d ibn Mu\'adh (RA)'],correct:2,explanation:'Salman al-Farsi (RA), from Persia, suggested the trench strategy based on Persian military tactics, which was new to Arabia.'},
+{question:'What significant achievement occurred during the caliphate of Uthman ibn Affan (RA)?',options:['Conquest of Egypt','Standardization of the Quran','Building of Al-Aqsa','Establishment of the postal system'],correct:1,explanation:'Uthman (RA) standardized the Quran into one official script and distributed copies to major cities to preserve its accuracy.'},
+{question:'Who was the Muslim general who led the conquest of Spain (Al-Andalus) in 711 CE?',options:['Khalid ibn al-Walid','Tariq ibn Ziyad','Salahuddin al-Ayyubi','Muhammad ibn Qasim'],correct:1,explanation:'Tariq ibn Ziyad crossed the strait (later named Gibraltar/Jabal Tariq) and defeated the Visigothic King Roderic.'},
+{question:'Which Islamic dynasty built the Dome of the Rock in Jerusalem?',options:['Abbasid','Umayyad','Ottoman','Fatimid'],correct:1,explanation:'The Umayyad Caliph Abd al-Malik ibn Marwan commissioned the Dome of the Rock, completed in 691 CE.'},
+{question:'What was the "Constitution of Medina" primarily about?',options:['Rules of warfare','Rights and duties of all citizens of Medina','Trade regulations','Marriage laws'],correct:1,explanation:'The Constitution of Medina was a charter establishing the rights and responsibilities of all groups in Medina, including Muslims, Jews, and others.'},
+{question:'Which caliph first established a formal state treasury (Bayt al-Mal)?',options:['Abu Bakr (RA)','Umar ibn al-Khattab (RA)','Uthman (RA)','Ali (RA)'],correct:1,explanation:'Umar (RA) established the Bayt al-Mal as a formal institution along with many other administrative innovations.'},
+{question:'What were the Ridda Wars?',options:['Wars against the Byzantines','Wars against apostasy after the Prophet\'s death','Wars against the Persian Empire','Internal Muslim civil wars'],correct:1,explanation:'After the Prophet\'s death, several tribes left Islam. Abu Bakr (RA) fought the Ridda (apostasy) wars to reunite the Muslim community.'},
+{question:'Which Muslim scholar is known as the "Father of Algebra"?',options:['Al-Kindi','Al-Khwarizmi','Ibn Sina','Al-Biruni'],correct:1,explanation:'Muhammad ibn Musa al-Khwarizmi (780-850 CE) wrote "Al-Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala," founding algebra.'},
+{question:'Who founded the University of Al-Qarawiyyin, often cited as the world\'s oldest existing university?',options:['Maryam al-Asturlabi','Fatima al-Fihri','Khadijah bint Ali','Lubna of Cordoba'],correct:1,explanation:'Fatima al-Fihri founded Al-Qarawiyyin in Fez, Morocco in 859 CE, recognized by UNESCO and Guinness as the oldest existing university.'},
+{question:'In which century did the Ottoman Empire capture Constantinople?',options:['13th century','14th century','15th century','16th century'],correct:2,explanation:'Sultan Mehmed II ("the Conqueror") captured Constantinople in 1453 CE, marking the end of the Byzantine Empire.'},
+{question:'What was the Bayt al-Hikmah (House of Wisdom)?',options:['A mosque in Medina','A library and translation center in Baghdad','A school in Cairo','A palace in Damascus'],correct:1,explanation:'The Bayt al-Hikmah was a major intellectual center in Baghdad under the Abbasid caliphate, translating and preserving Greek, Persian, and Indian works.'},
+{question:'Which prophet\'s story occupies an entire surah of the Quran?',options:['Prophet Musa (AS)','Prophet Ibrahim (AS)','Prophet Yusuf (AS)','Prophet Isa (AS)'],correct:2,explanation:'Surah Yusuf (Chapter 12) is entirely dedicated to the story of Prophet Yusuf (Joseph), described as "the best of stories."'},
+{question:'Who was the Muslim commander who liberated Jerusalem from the Crusaders in 1187 CE?',options:['Tariq ibn Ziyad','Salahuddin al-Ayyubi','Baybars I','Nur ad-Din Zangi'],correct:1,explanation:'Salahuddin al-Ayyubi (Saladin) defeated the Crusaders at the Battle of Hattin and recaptured Jerusalem, treating the inhabitants with mercy.'},
+{question:'Which Islamic empire is known for architectural wonders including the Taj Mahal?',options:['Ottoman Empire','Safavid Empire','Mughal Empire','Abbasid Empire'],correct:2,explanation:'The Mughal Empire in South Asia produced remarkable architecture. The Taj Mahal was built by Emperor Shah Jahan as a mausoleum for his wife.'},
+{question:'What is the "Year of the Elephant" (Aam al-Feel) significant for?',options:['The first revelation','The approximate birth year of Prophet Muhammad (PBUH)','The conquest of Makkah','The migration to Medina'],correct:1,explanation:'The Year of the Elephant (~570 CE) is when Abraha\'s army with elephants attacked the Kaaba and was destroyed, and is approximately the birth year of the Prophet (PBUH).'},
+{question:'Which Muslim scientist wrote "The Canon of Medicine," used in Europe for centuries?',options:['Ibn al-Haytham','Ibn Sina (Avicenna)','Al-Razi','Al-Zahrawi'],correct:1,explanation:'Ibn Sina (980-1037 CE) wrote "Al-Qanun fi al-Tibb" (The Canon of Medicine), a medical encyclopedia used in European universities until the 17th century.'},
+{question:'What was the Pledge of Aqabah?',options:['A trade agreement with Quraysh','An oath of allegiance to the Prophet by people of Yathrib','A peace treaty between tribes','A military alliance against Persia'],correct:1,explanation:'The Pledges of Aqabah were oaths of allegiance by people of Yathrib (Medina), paving the way for the Hijrah.'},
+{question:'Which companion was renowned as the greatest expert in Quranic interpretation (Tafsir)?',options:['Abu Hurairah (RA)','Abdullah ibn Abbas (RA)','Zaid ibn Thabit (RA)','Mu\'adh ibn Jabal (RA)'],correct:1,explanation:'Abdullah ibn Abbas (RA), the Prophet\'s cousin, was called "Habr al-Ummah" (Scholar of the Ummah) and "Tarjuman al-Quran" (Interpreter of the Quran).'},
+{question:'What was the first masjid built in Islam?',options:['Masjid al-Haram','Masjid an-Nabawi','Masjid Quba','Al-Aqsa Mosque'],correct:2,explanation:'Masjid Quba was built by the Prophet (PBUH) upon his arrival near Medina during the Hijrah. It is mentioned in the Quran (9:108).'},
+{question:'Which Islamic scholar founded the Maliki school of thought?',options:['Imam Abu Hanifa','Imam Malik ibn Anas','Imam al-Shafi\'i','Imam Ahmad ibn Hanbal'],correct:1,explanation:'Imam Malik ibn Anas (711-795 CE) founded the Maliki school, one of the four major Sunni schools of jurisprudence, and authored "Al-Muwatta."'},
+{question:'In which present-day country was the center of the Islamic Golden Age?',options:['Saudi Arabia','Egypt','Iraq','Turkey'],correct:2,explanation:'Baghdad (in modern Iraq) was the capital of the Abbasid caliphate and the center of the Islamic Golden Age of learning (8th-14th centuries).'},
+{question:'Which Umayyad caliph built the Great Mosque of Damascus?',options:['Mu\'awiyah I','Abd al-Malik ibn Marwan','Al-Walid I','Umar ibn Abd al-Aziz'],correct:2,explanation:'Caliph Al-Walid I (r. 705-715 CE) built the Umayyad Mosque of Damascus, one of the largest and oldest mosques in the world.'},
+{question:'The Abbasid Revolution ended the rule of which dynasty?',options:['Rashidun Caliphate','Umayyad Dynasty','Ottoman Empire','Safavid Dynasty'],correct:1,explanation:'The Abbasid Revolution of 750 CE overthrew the Umayyad Dynasty and established the Abbasid Caliphate, shifting the capital from Damascus to Baghdad.'},
+{question:'In which battle were Muslims initially winning but lost advantage due to archers leaving their positions?',options:['Battle of Badr','Battle of Uhud','Battle of Hunayn','Battle of Tabuk'],correct:1,explanation:'At the Battle of Uhud (625 CE), Muslim archers left their posts on the hill against the Prophet\'s orders, allowing Khalid ibn al-Walid to flank the Muslim forces.'},
 ],
 
 // ==================== RAPID FIRE ====================
 rapid:[
-{question:'How many surahs in the Quran?',options:['110','112','114','116'],correct:2,explanation:'114 surahs.'},
-{question:'First surah of the Quran?',options:['Al-Baqarah','Al-Fatiha','Al-Ikhlas','An-Nas'],correct:1,explanation:'Surah Al-Fatiha is the opening chapter.'},
-{question:'How many pillars of Islam?',options:['3','4','5','6'],correct:2,explanation:'5 pillars of Islam.'},
-{question:'Holiest month in Islam?',options:['Shawwal','Dhul Hijjah','Rajab','Ramadan'],correct:3,explanation:'Ramadan is the holiest month.'},
-{question:'What breaks your fast?',options:['Sleeping','Eating','Brushing teeth','Showering'],correct:1,explanation:'Intentionally eating or drinking breaks the fast.'},
-{question:'How many obligatory prayers per day?',options:['3','4','5','6'],correct:2,explanation:'5 daily prayers.'},
-{question:'Which prayer is at dawn?',options:['Dhuhr','Asr','Fajr','Isha'],correct:2,explanation:'Fajr prayer is performed at dawn.'},
-{question:'The Black Stone is in which corner of the Kaaba?',options:['North','South','East','West'],correct:2,explanation:'The Black Stone (Hajar al-Aswad) is in the eastern corner.'},
-{question:'What is the last surah of the Quran?',options:['Al-Falaq','An-Nas','Al-Ikhlas','Al-Kawthar'],correct:1,explanation:'Surah An-Nas (Mankind) is the 114th and last surah.'},
-{question:'What language is the Quran written in?',options:['Urdu','Persian','Hebrew','Arabic'],correct:3,explanation:'The Quran was revealed in Arabic.'},
-{question:'How many prophets are mentioned by name in the Quran?',options:['20','25','30','35'],correct:1,explanation:'25 prophets are mentioned by name in the Quran.'},
-{question:'Which day is the Muslim holy day for congregational prayer?',options:['Monday','Thursday','Friday','Saturday'],correct:2,explanation:'Friday (Jumu\'ah) is the day of congregational prayer.'},
-{question:'What is the name of the Islamic declaration of faith?',options:['Salah','Shahada','Zakat','Sawm'],correct:1,explanation:'The Shahada is the Islamic declaration of faith.'},
-{question:'Al-Aqsa Mosque is in which city?',options:['Makkah','Medina','Jerusalem','Istanbul'],correct:2,explanation:'Al-Aqsa Mosque is in Jerusalem (Al-Quds).'},
-{question:'What is the first month of the Islamic calendar?',options:['Ramadan','Safar','Rajab','Muharram'],correct:3,explanation:'Muharram is the first month of the Islamic (Hijri) calendar.'},
-{question:'How many times is "Bismillah" in the Quran?',options:['112','113','114','115'],correct:2,explanation:'Bismillah appears 114 times in the Quran.'},
-{question:'What does "Eid" mean?',options:['Holy','Festival/Celebration','Prayer','Fasting'],correct:1,explanation:'"Eid" means festival or celebration.'},
-{question:'How many Eids do Muslims celebrate?',options:['1','2','3','4'],correct:1,explanation:'Two Eids: Eid ul-Fitr and Eid ul-Adha.'},
-{question:'What is the cube-shaped building in Makkah called?',options:['Minaret','Mihrab','Kaaba','Masjid'],correct:2,explanation:'The Kaaba is the cube-shaped structure in Masjid al-Haram.'},
-{question:'Which surah is recited in every prayer?',options:['Al-Ikhlas','Al-Baqarah','Ya-Sin','Al-Fatiha'],correct:3,explanation:'Surah Al-Fatiha is recited in every rakat of prayer.'},
-{question:'What is the pilgrimage performed outside Hajj season called?',options:['Hajj','Umrah','Ziyarah','Tawaf'],correct:1,explanation:'Umrah is the lesser pilgrimage that can be performed any time of year.'},
-{question:'Who is the last prophet in Islam?',options:['Prophet Isa (AS)','Prophet Musa (AS)','Prophet Muhammad (PBUH)','Prophet Ibrahim (AS)'],correct:2,explanation:'Prophet Muhammad (PBUH) is the final prophet and messenger.'},
-{question:'What does "Allahu Akbar" mean?',options:['God is Merciful','God is Great','Praise God','God knows best'],correct:1,explanation:'"Allahu Akbar" means "Allah is the Greatest."'},
-{question:'How many days in the month of Ramadan (typically)?',options:['28','29 or 30','30 or 31','31'],correct:1,explanation:'Ramadan lasts either 29 or 30 days based on moon sighting.'},
-{question:'What is the angel of death called in Islamic tradition?',options:['Jibreel','Mikail','Israfil','Azrael/Malak al-Mawt'],correct:3,explanation:'The angel of death is commonly referred to as Azrael or Malak al-Mawt.'},
-{question:'Which prophet had the miracle of splitting the sea?',options:['Prophet Nuh (AS)','Prophet Ibrahim (AS)','Prophet Musa (AS)','Prophet Isa (AS)'],correct:2,explanation:'Prophet Musa (Moses) split the Red Sea by Allah\'s permission.'},
-{question:'What is charity given at end of Ramadan called?',options:['Zakat','Sadaqah','Zakat al-Fitr','Khums'],correct:2,explanation:'Zakat al-Fitr is the obligatory charity given before Eid al-Fitr prayer.'},
-{question:'What does "Insha\'Allah" mean?',options:['Thank God','God is Great','If God wills','I seek forgiveness'],correct:2,explanation:'"Insha\'Allah" means "If Allah wills" or "God willing."'},
-{question:'The Quran was revealed over how many years?',options:['10','15','20','23'],correct:3,explanation:'The Quran was revealed over approximately 23 years.'},
-{question:'What is the reward for fasting according to hadith?',options:['Paradise','Forgiveness','Known only to Allah','All wealth'],correct:2,explanation:'A hadith states: "Fasting is for Me, and I shall reward it" - the reward is with Allah.'},
-]
+{question:'What is the Arabic term for an obligatory act in Islam?',options:['Sunnah','Fard','Mustahabb','Mubah'],correct:1,explanation:'Fard (or Wajib) means obligatory, a duty every Muslim must fulfil.'},
+{question:'How many surahs of the Quran are named after prophets?',options:['4','6','8','10'],correct:1,explanation:'Six surahs: Yunus, Hud, Yusuf, Ibrahim, Muhammad, and Nuh.'},
+{question:'What prayer is performed during a solar eclipse?',options:['Salat al-Kusuf','Salat al-Istisqa','Salat at-Tawbah','Salat al-Hajah'],correct:0,explanation:'Salat al-Kusuf is the eclipse prayer, a confirmed Sunnah of the Prophet (PBUH).'},
+{question:'What is the last Juz of the Quran commonly called?',options:['Juz Amma','Juz Tabarak','Juz Ya-Sin','Juz Alif-Lam-Meem'],correct:0,explanation:'The 30th Juz is called "Juz Amma" after its first word from Surah An-Naba.'},
+{question:'Which month comes immediately before Ramadan?',options:['Rajab','Sha\'ban','Safar','Jumada al-Thani'],correct:1,explanation:'Sha\'ban is the 8th month of the Islamic calendar, directly before Ramadan (9th month).'},
+{question:'What is the voluntary night prayer called?',options:['Fajr','Tahajjud','Duha','Ishraq'],correct:1,explanation:'Tahajjud is the voluntary night prayer performed after Isha and before Fajr.'},
+{question:'What is the Arabic word for "repentance"?',options:['Sabr','Tawbah','Shukr','Dhikr'],correct:1,explanation:'Tawbah means repentance, turning back to Allah seeking forgiveness.'},
+{question:'Which prophet is also known as "Israeel"?',options:['Ibrahim (AS)','Ya\'qub (AS)','Yusuf (AS)','Ishaq (AS)'],correct:1,explanation:'Prophet Ya\'qub (Jacob) is also known as Israeel. The Children of Israel (Bani Israeel) are his descendants.'},
+{question:'How many of the five daily prayers have 4 fard raka\'at?',options:['1','2','3','4'],correct:2,explanation:'Three prayers have 4 fard raka\'at: Dhuhr, Asr, and Isha.'},
+{question:'What does "Jazakallahu Khairan" mean?',options:['Peace be upon you','May Allah reward you with good','God willing','All praise to Allah'],correct:1,explanation:'"Jazakallahu Khairan" means "May Allah reward you with good," a common Islamic expression of gratitude.'},
+{question:'Before prophethood, Muhammad (PBUH) was known as?',options:['Al-Mukhtar','Al-Rashid','Al-Amin and Al-Sadiq','Al-Qawi'],correct:2,explanation:'He was known as Al-Amin (The Trustworthy) and Al-Sadiq (The Truthful) even before prophethood.'},
+{question:'What was the first verse of the Quran revealed?',options:['Bismillah','Alhamdulillah','Iqra (Read!)','Qul (Say!)'],correct:2,explanation:'"Iqra" (Read/Recite) from Surah Al-Alaq (96:1) was the first revelation to the Prophet (PBUH) in the Cave of Hira.'},
+{question:'Which angel will blow the trumpet on the Day of Judgment?',options:['Jibreel','Mikail','Israfil','Malik'],correct:2,explanation:'Angel Israfil is tasked with blowing the trumpet (As-Sur) to signal the Day of Judgment.'},
+{question:'What is the act of walking between Safa and Marwah called?',options:['Tawaf','Sa\'i','Wuquf','Rami'],correct:1,explanation:'Sa\'i involves walking seven times between the hills of Safa and Marwah, commemorating Hajar\'s search for water.'},
+{question:'What does "La hawla wa la quwwata illa billah" mean?',options:['God is great','There is no power except with Allah','In the name of God','Glory to God'],correct:1,explanation:'It means "There is no power or might except with Allah," known as the Hawqala.'},
+{question:'Which surah is recommended to read every Friday?',options:['Al-Mulk','Al-Kahf','Ya-Sin','Ar-Rahman'],correct:1,explanation:'Reading Surah Al-Kahf on Friday is a recommended Sunnah with special blessings mentioned in hadith.'},
+{question:'What is "Wuquf" during Hajj?',options:['Standing at Arafat','Circling the Kaaba','Walking between hills','Throwing pebbles'],correct:0,explanation:'Wuquf at Arafat is the standing on the plain of Arafat on the 9th of Dhul Hijjah, the essential pillar of Hajj.'},
+{question:'How many verses does Surah Al-Fatiha have?',options:['5','6','7','8'],correct:2,explanation:'Surah Al-Fatiha has 7 verses and is also called "As-Sab\' al-Mathani" (The Seven Oft-Repeated Verses).'},
+{question:'What is the Islamic term for the evil eye?',options:['Hasad','Ayn','Sihr','Waswas'],correct:1,explanation:'Ayn (literally "eye") refers to the evil eye, against which the Prophet (PBUH) taught seeking Allah\'s protection.'},
+{question:'During Hajj, what is the act of throwing pebbles called?',options:['Rami al-Jamarat','Tawaf al-Ifadah','Sa\'i','Wuquf'],correct:0,explanation:'Rami al-Jamarat is the ritual of throwing pebbles at the stone pillars in Mina, symbolizing rejection of Shaytan.'},
+{question:'What time does the Islamic day begin?',options:['Midnight','Sunrise','Sunset (Maghrib)','Fajr'],correct:2,explanation:'The Islamic day begins at Maghrib (sunset), which is why Islamic dates change at sunset.'},
+{question:'What does "Inna lillahi wa inna ilayhi raji\'un" mean?',options:['God is the Greatest','Indeed, to Allah we belong and to Him we shall return','All praise is due to God','In the name of God'],correct:1,explanation:'This phrase from Surah Al-Baqarah (2:156) is recited upon hearing of someone\'s death or in times of calamity.'},
+{question:'How many days is the Eid al-Adha celebration?',options:['1 day','2 days','3 days','4 days'],correct:2,explanation:'Eid al-Adha is celebrated over 3 days (the 10th, 11th, and 12th of Dhul Hijjah), known as the Days of Tashreeq.'},
+{question:'The Quran was revealed over approximately how many years?',options:['10 years','15 years','20 years','23 years'],correct:3,explanation:'The Quran was revealed gradually over approximately 23 years, from 610 CE to 632 CE.'},
+{question:'What is the reward for fasting according to a famous hadith qudsi?',options:['Paradise','Forgiveness of sins','Known only to Allah','All worldly wealth'],correct:2,explanation:'Allah says: "Fasting is for Me, and I shall reward it." The reward is known only to Allah, indicating its immense value.'},
+],
 };
 
 </script>
