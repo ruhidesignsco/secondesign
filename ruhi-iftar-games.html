@@ -972,146 +972,902 @@ function lightenColor(hex,amt){
 // ===================== QUESTION BANKS =====================
 const questionBanks = {
 
-// ==================== ISLAMIC TRIVIA ====================
-trivia:[
-{question:'Which companion narrated the most hadith in the major collections?',options:['Aisha (RA)','Abu Hurairah (RA)','Ibn Umar (RA)','Anas ibn Malik (RA)'],correct:1,explanation:'Abu Hurairah (RA) narrated approximately 5,374 hadith, the most of any companion.'},
-{question:'Which surah of the Quran does not begin with Bismillah?',options:['Al-Anfal','At-Tawbah','Al-Baqarah','Al-Fatiha'],correct:1,explanation:'Surah At-Tawbah (Chapter 9) is the only surah that does not begin with Bismillah.'},
-{question:'In the Hadith of Jibreel, how is "Ihsan" defined?',options:['Giving charity generously','Worshipping Allah as if you see Him','Performing Hajj every year','Fasting every Monday and Thursday'],correct:1,explanation:'Ihsan is defined as worshipping Allah as though you see Him, and if you cannot see Him, then knowing that He sees you.'},
-{question:'How many gates does Jannah have according to authentic hadith?',options:['4','7','8','12'],correct:2,explanation:'According to hadith in Sahih al-Bukhari and Muslim, Jannah has 8 gates.'},
-{question:'What is the nisab threshold for gold when calculating Zakat?',options:['52.5 grams','72.5 grams','85 grams','100 grams'],correct:2,explanation:'The nisab for gold is 85 grams (approximately 7.5 tolas). Zakat of 2.5% is due on wealth above this threshold held for one lunar year.'},
-{question:'Which surah is described in hadith as being equivalent to one-third of the Quran?',options:['Al-Fatiha','Al-Ikhlas','Al-Mulk','Ya-Sin'],correct:1,explanation:'Prophet Muhammad (PBUH) said that Surah Al-Ikhlas is equivalent to one-third of the Quran (Sahih Muslim).'},
-{question:'How many takbeers (Allahu Akbar) are said in Salat al-Janazah?',options:['2','3','4','5'],correct:2,explanation:'The funeral prayer (Salat al-Janazah) consists of 4 takbeers, with specific supplications after each.'},
-{question:'What is the term for spiritual retreat in the mosque, especially during the last 10 days of Ramadan?',options:['Tahajjud','I\'tikaf','Umrah','Qiyam'],correct:1,explanation:'I\'tikaf is the practice of secluding oneself in the mosque for worship, commonly observed in the last 10 days of Ramadan.'},
-{question:'In which surah and ayah is Ayatul Kursi (the Verse of the Throne)?',options:['Al-Imran, Ayah 18','Al-Baqarah, Ayah 255','An-Nisa, Ayah 171','Al-Maidah, Ayah 3'],correct:1,explanation:'Ayatul Kursi is Surah Al-Baqarah (2:255), one of the greatest verses of the Quran.'},
-{question:'How many circuits around the Kaaba make one complete Tawaf?',options:['3','5','7','9'],correct:2,explanation:'One complete Tawaf consists of 7 circuits (rounds) around the Kaaba, beginning and ending at the Black Stone.'},
-{question:'According to the Quran, how many years did Prophet Nuh (AS) call his people to Islam?',options:['500 years','700 years','850 years','950 years'],correct:3,explanation:'The Quran states in Surah Al-Ankabut (29:14) that Nuh (AS) remained among his people for 950 years.'},
-{question:'Which surah uniquely contains two Bismillahs?',options:['Al-Fatiha','An-Naml','Al-Baqarah','Ar-Rahman'],correct:1,explanation:'Surah An-Naml (Chapter 27) contains Bismillah at its beginning and again within verse 30 (in the letter of Prophet Sulayman).'},
-{question:'What is "Qiyas" in Islamic jurisprudence?',options:['Scholarly consensus','Analogical reasoning','Prophetic tradition','Divine revelation'],correct:1,explanation:'Qiyas is the process of analogical reasoning used by jurists to derive rulings on new issues based on established precedents.'},
-{question:'What is the kaffarah for deliberately breaking a Ramadan fast without valid excuse?',options:['Fasting 3 days','Fasting 30 days','Fasting 60 consecutive days','Giving charity only'],correct:2,explanation:'The kaffarah (expiation) is to fast 60 consecutive days, or if unable, to feed 60 poor people (based on hadith in Sahih al-Bukhari).'},
-{question:'Which Islamic scholar compiled Sahih al-Bukhari, the most authentic hadith collection?',options:['Imam Malik ibn Anas','Imam Muhammad al-Bukhari','Imam Muslim ibn al-Hajjaj','Imam Abu Dawud'],correct:1,explanation:'Imam Muhammad ibn Ismail al-Bukhari (810-870 CE) compiled Sahih al-Bukhari over 16 years.'},
-{question:'What is the Islamic concept of "Shura"?',options:['Pilgrimage','Fasting','Consultation','Mandatory charity'],correct:2,explanation:'Shura means mutual consultation, emphasized in the Quran (42:38) as a principle of communal decision-making.'},
-{question:'Which companion was tasked with compiling the Quran into a single manuscript under Abu Bakr (RA)?',options:['Ali ibn Abi Talib (RA)','Zaid ibn Thabit (RA)','Abdullah ibn Masud (RA)','Ubayy ibn Ka\'b (RA)'],correct:1,explanation:'Zaid ibn Thabit (RA) led the compilation effort, being the primary scribe of the Prophet (PBUH).'},
-{question:'What does "Tawakkul" mean in Islamic theology?',options:['Patience in hardship','Complete trust and reliance on Allah','Seeking Allah\'s forgiveness','Repenting from sins'],correct:1,explanation:'Tawakkul is placing complete trust and reliance on Allah while taking practical means (tying the camel).'},
-{question:'How many days of fasting are recommended in Shawwal after Ramadan?',options:['3 days','6 days','10 days','15 days'],correct:1,explanation:'Fasting 6 days of Shawwal after Ramadan is highly recommended, as it is like fasting the entire year (Sahih Muslim).'},
-{question:'What is the term for the pre-Islamic period of ignorance?',options:['Fitrah','Jahiliyyah','Fitnah','Riddah'],correct:1,explanation:'Jahiliyyah refers to the period of ignorance before the revelation of Islam, characterized by idol worship and social injustice.'},
-{question:'Which prophet was given the miracle of bringing the dead back to life by Allah\'s permission?',options:['Prophet Musa (AS)','Prophet Ibrahim (AS)','Prophet Isa (AS)','Prophet Dawud (AS)'],correct:2,explanation:'Prophet Isa (Jesus) (AS) was given this miracle among others, as mentioned in Surah Al-Imran (3:49).'},
-{question:'What is the minimum duration wealth must be held above nisab before Zakat becomes obligatory?',options:['6 months','1 lunar year','2 years','3 months'],correct:1,explanation:'Wealth must be held above the nisab for one complete lunar year (Hawl) before Zakat becomes due.'},
-{question:'What are the last two surahs of the Quran collectively called?',options:['Al-Mu\'awwidhatayn','Al-Musabbihat','Az-Zahrawain','Al-Hawameem'],correct:0,explanation:'Surahs Al-Falaq and An-Nas are called Al-Mu\'awwidhatayn (the two protective ones), often recited for spiritual protection.'},
-{question:'How many prophets are mentioned by name in the Quran?',options:['20','25','28','33'],correct:1,explanation:'25 prophets are mentioned by name in the Quran, from Adam (AS) to Muhammad (PBUH).'},
-{question:'What does "Sakinah" mean in Islamic context?',options:['Sacrifice','Tranquility and divine peace','Strict obedience','Migration for faith'],correct:1,explanation:'Sakinah refers to tranquility, peace, and serenity sent down by Allah, mentioned multiple times in the Quran.'},
-],
+  // ==================== ISLAMIC TRIVIA ====================
+  trivia: [
+    {
+      question: 'Which companion narrated the most hadith in the major collections?',
+      options: ['Aisha (RA)', 'Abu Hurairah (RA)', 'Ibn Umar (RA)', 'Anas ibn Malik (RA)'],
+      correct: 1,
+      explanation: 'Abu Hurairah (RA) narrated the most hadith among the companions in the major collections.'
+    },
+    {
+      question: 'Which surah of the Quran does not begin with Bismillah?',
+      options: ['Al-Anfal', 'At-Tawbah', 'Al-Baqarah', 'Al-Fatiha'],
+      correct: 1,
+      explanation: 'Surah At-Tawbah is the only surah that does not begin with Bismillah.'
+    },
+    {
+      question: 'In the Hadith of Jibreel, how is "Ihsan" defined?',
+      options: ['Giving charity generously', 'Worshipping Allah as if you see Him', 'Performing Hajj every year', 'Fasting every Monday and Thursday'],
+      correct: 1,
+      explanation: 'Ihsan is defined as worshipping Allah as though you see Him, and if you cannot see Him, then knowing that He sees you.'
+    },
+    {
+      question: 'How many gates does Jannah have according to authentic hadith?',
+      options: ['4', '7', '8', '12'],
+      correct: 2,
+      explanation: 'Authentic hadith mention that Jannah has 8 gates.'
+    },
+    {
+      question: 'What is the nisab threshold for gold when calculating Zakat?',
+      options: ['52.5 grams', '72.5 grams', '85 grams', '100 grams'],
+      correct: 2,
+      explanation: 'The nisab for gold is 85 grams.'
+    },
+    {
+      question: 'Which surah is described in hadith as being equivalent to one-third of the Quran?',
+      options: ['Al-Fatiha', 'Al-Ikhlas', 'Al-Mulk', 'Ya-Sin'],
+      correct: 1,
+      explanation: 'The Prophet (PBUH) said that Surah Al-Ikhlas is equivalent to one-third of the Quran.'
+    },
+    {
+      question: 'What is the term for spiritual retreat in the mosque, especially during the last 10 days of Ramadan?',
+      options: ['Tahajjud', 'I\'tikaf', 'Umrah', 'Qiyam'],
+      correct: 1,
+      explanation: 'I\'tikaf is the practice of secluding oneself in the mosque for worship, especially in the last 10 days of Ramadan.'
+    },
+    {
+      question: 'In which surah and ayah is Ayatul Kursi (the Verse of the Throne)?',
+      options: ['Al-Imran, Ayah 18', 'Al-Baqarah, Ayah 255', 'An-Nisa, Ayah 171', 'Al-Maidah, Ayah 3'],
+      correct: 1,
+      explanation: 'Ayatul Kursi is Surah Al-Baqarah (2:255).'
+    },
+    {
+      question: 'How many circuits around the Kaaba make one complete Tawaf?',
+      options: ['3', '5', '7', '9'],
+      correct: 2,
+      explanation: 'One complete Tawaf consists of 7 circuits around the Kaaba.'
+    },
+    {
+      question: 'According to the Quran, how many years did Prophet Nuh (AS) remain among his people?',
+      options: ['500 years', '700 years', '850 years', '950 years'],
+      correct: 3,
+      explanation: 'Surah Al-Ankabut (29:14) states that Nuh (AS) remained among his people for a thousand years less fifty.'
+    },
+    {
+      question: 'Which surah uniquely contains two Bismillahs?',
+      options: ['Al-Fatiha', 'An-Naml', 'Al-Baqarah', 'Ar-Rahman'],
+      correct: 1,
+      explanation: 'Surah An-Naml contains Bismillah at its beginning and again in verse 30.'
+    },
+    {
+      question: 'What is "Qiyas" in Islamic jurisprudence?',
+      options: ['Scholarly consensus', 'Analogical reasoning', 'Prophetic tradition', 'Divine revelation'],
+      correct: 1,
+      explanation: 'Qiyas is analogical reasoning used by jurists to derive rulings for new issues.'
+    },
+    {
+      question: 'What expiation is mentioned in the famous hadith for having sexual intercourse during a Ramadan fast?',
+      options: ['Fasting 3 days', 'Fasting 30 days', 'Fasting 60 consecutive days', 'Giving one meal to a poor person'],
+      correct: 2,
+      explanation: 'The expiation mentioned is fasting 60 consecutive days, or if unable, feeding 60 poor people.'
+    },
+    {
+      question: 'Which Islamic scholar compiled Sahih al-Bukhari?',
+      options: ['Imam Malik ibn Anas', 'Imam Muhammad al-Bukhari', 'Imam Muslim ibn al-Hajjaj', 'Imam Abu Dawud'],
+      correct: 1,
+      explanation: 'Imam Muhammad ibn Ismail al-Bukhari compiled Sahih al-Bukhari.'
+    },
+    {
+      question: 'What is the Islamic concept of "Shura"?',
+      options: ['Pilgrimage', 'Fasting', 'Consultation', 'Mandatory charity'],
+      correct: 2,
+      explanation: 'Shura means mutual consultation.'
+    },
+    {
+      question: 'Which companion was tasked with compiling the Quran into a single manuscript under Abu Bakr (RA)?',
+      options: ['Ali ibn Abi Talib (RA)', 'Zaid ibn Thabit (RA)', 'Abdullah ibn Masud (RA)', 'Ubayy ibn Ka\'b (RA)'],
+      correct: 1,
+      explanation: 'Zaid ibn Thabit (RA) led the compilation of the Quran under Abu Bakr (RA).'
+    },
+    {
+      question: 'What does "Tawakkul" mean in Islamic theology?',
+      options: ['Patience in hardship', 'Complete trust and reliance on Allah', 'Seeking Allah\'s forgiveness', 'Repenting from sins'],
+      correct: 1,
+      explanation: 'Tawakkul means placing complete trust and reliance on Allah while taking the proper means.'
+    },
+    {
+      question: 'How many days of fasting are recommended in Shawwal after Ramadan?',
+      options: ['3 days', '6 days', '10 days', '15 days'],
+      correct: 1,
+      explanation: 'Fasting 6 days of Shawwal is highly recommended.'
+    },
+    {
+      question: 'What is the term for the pre-Islamic period of ignorance?',
+      options: ['Fitrah', 'Jahiliyyah', 'Fitnah', 'Riddah'],
+      correct: 1,
+      explanation: 'Jahiliyyah refers to the pre-Islamic period of ignorance.'
+    },
+    {
+      question: 'Which prophet was given the miracle of bringing the dead back to life by Allah\'s permission?',
+      options: ['Prophet Musa (AS)', 'Prophet Ibrahim (AS)', 'Prophet Isa (AS)', 'Prophet Dawud (AS)'],
+      correct: 2,
+      explanation: 'Prophet Isa (AS) was given this miracle by Allah\'s permission.'
+    },
+    {
+      question: 'What are the last two surahs of the Quran collectively called?',
+      options: ['Al-Mu\'awwidhatayn', 'Al-Musabbihat', 'Az-Zahrawayn', 'Al-Hawameem'],
+      correct: 0,
+      explanation: 'Surahs Al-Falaq and An-Nas are called Al-Mu\'awwidhatayn.'
+    },
+    {
+      question: 'How many prophets are mentioned by name in the Quran?',
+      options: ['20', '25', '28', '33'],
+      correct: 1,
+      explanation: '25 prophets are mentioned by name in the Quran.'
+    },
+    {
+      question: 'What does "Sakinah" mean in Islamic context?',
+      options: ['Sacrifice', 'Tranquility and divine peace', 'Strict obedience', 'Migration for faith'],
+      correct: 1,
+      explanation: 'Sakinah refers to tranquility and divine peace sent by Allah.'
+    },
+    {
+      question: 'Which two surahs are described in hadith as Az-Zahrawayn (the two radiant ones)?',
+      options: ['Al-Anfal and At-Tawbah', 'Al-Baqarah and Al-Imran', 'Yasin and Al-Mulk', 'Al-Falaq and An-Nas'],
+      correct: 1,
+      explanation: 'Al-Baqarah and Al-Imran are described in hadith as Az-Zahrawayn.'
+    },
+    {
+      question: 'What is the only month mentioned by name in the Quran?',
+      options: ['Rajab', 'Ramadan', 'Dhul Hijjah', 'Muharram'],
+      correct: 1,
+      explanation: 'Ramadan is the only month mentioned by name in the Quran.'
+    },
+    {
+      question: 'In Prophet Yusuf\'s dream, how many stars did he see prostrating?',
+      options: ['7', '9', '11', '12'],
+      correct: 2,
+      explanation: 'Prophet Yusuf (AS) saw eleven stars, along with the sun and moon, prostrating to him.'
+    },
+    {
+      question: 'Which prophet is mentioned by name most often in the Quran?',
+      options: ['Ibrahim (AS)', 'Musa (AS)', 'Nuh (AS)', 'Isa (AS)'],
+      correct: 1,
+      explanation: 'Prophet Musa (AS) is mentioned by name more than any other prophet in the Quran.'
+    },
+    {
+      question: 'What title is given to Prophet Muhammad (PBUH) in Surah Al-Ahzab 33:40?',
+      options: ['Sayyid al-Mursalin', 'Khatam an-Nabiyyin', 'Habibullah', 'Imam al-Muttaqin'],
+      correct: 1,
+      explanation: 'Surah Al-Ahzab (33:40) describes Prophet Muhammad (PBUH) as Khatam an-Nabiyyin, the Seal of the Prophets.'
+    },
+    {
+      question: 'Which surah contains the verse "This day I have perfected for you your religion"?',
+      options: ['Al-Baqarah', 'An-Nisa', 'Al-Maidah', 'At-Tawbah'],
+      correct: 2,
+      explanation: 'The verse "This day I have perfected for you your religion" is in Surah Al-Maidah (5:3).'
+    }
+  ],
 
-// ==================== ARABIC WORDS ====================
-arabic:[
-{question:'What does <span class="arabic arabic-text">\u062A\u0641\u0633\u064A\u0631</span> (Tafsir) mean?',options:['Purification','Interpretation of the Quran','Biography','Legal ruling'],correct:1,explanation:'Tafsir means exegesis or interpretation of the Quran, a major Islamic scholarly discipline.'},
-{question:'What does <span class="arabic arabic-text">\u0639\u062F\u0644</span> (Adl) mean?',options:['Worship','Knowledge','Justice','Mercy'],correct:2,explanation:'Adl means justice and fairness, a core principle in Islam.'},
-{question:'What does <span class="arabic arabic-text">\u0641\u0644\u0627\u062D</span> (Falah) mean?',options:['Corruption','Success and prosperity','Prayer','Fear'],correct:1,explanation:'Falah means success and prosperity, heard daily in the adhan: "Hayya \'alal-Falah" (Come to success).'},
-{question:'What does <span class="arabic arabic-text">\u0628\u0627\u0637\u0644</span> (Batil) mean?',options:['Hero','Truth','Falsehood','Patience'],correct:2,explanation:'Batil means falsehood, vanity, or something invalid and without basis.'},
-{question:'What does <span class="arabic arabic-text">\u0645\u064A\u0632\u0627\u0646</span> (Mizan) mean?',options:['Blessing','Scale or Balance','Forgiveness','Journey'],correct:1,explanation:'Mizan means scale or balance, used to refer to the Scale of Justice on the Day of Judgment.'},
-{question:'What does <span class="arabic arabic-text">\u062A\u062F\u0628\u0631</span> (Tadabbur) mean?',options:['Memorization','Speed','Deep reflection and contemplation','Recitation'],correct:2,explanation:'Tadabbur means deep reflection and contemplation, especially of the Quran\'s meanings.'},
-{question:'What does <span class="arabic arabic-text">\u0641\u0642\u0647</span> (Fiqh) mean?',options:['Philosophy','History','Islamic jurisprudence','Grammar'],correct:2,explanation:'Fiqh literally means "deep understanding" and refers to Islamic jurisprudence and legal rulings.'},
-{question:'What does <span class="arabic arabic-text">\u0639\u0642\u064A\u062F\u0629</span> (Aqeedah) mean?',options:['Practice','Creed and belief system','Poetry','Community'],correct:1,explanation:'Aqeedah refers to the Islamic creed or belief system, the foundational beliefs a Muslim holds.'},
-{question:'What does <span class="arabic arabic-text">\u0633\u064A\u0631\u0629</span> (Seerah) mean?',options:['Secret','Biography (of the Prophet)','Law','Garden'],correct:1,explanation:'Seerah refers to the biography and life story of Prophet Muhammad (PBUH).'},
-{question:'What does <span class="arabic arabic-text">\u0646\u064A\u0629</span> (Niyyah) mean?',options:['Night','Intention','Grace','Sleep'],correct:1,explanation:'Niyyah means intention. In Islam, the validity of deeds depends on one\'s intention (hadith: "Actions are judged by intentions").'},
-{question:'What does <span class="arabic arabic-text">\u0641\u0637\u0631\u0629</span> (Fitrah) mean?',options:['Festival','Breaking fast','Natural disposition','Tax'],correct:2,explanation:'Fitrah refers to the innate natural disposition with which every human is born, inclined towards knowing Allah.'},
-{question:'What does <span class="arabic arabic-text">\u062A\u0632\u0643\u064A\u0629</span> (Tazkiyah) mean?',options:['Decoration','Purification of the soul','Multiplication','Destruction'],correct:1,explanation:'Tazkiyah means purification and growth, especially the spiritual purification of one\'s soul and character.'},
-{question:'What does <span class="arabic arabic-text">\u0642\u062F\u0631</span> (Qadar) mean?',options:['Power','Ability','Divine decree and predestination','Value'],correct:2,explanation:'Qadar means divine decree or predestination, one of the six articles of faith in Islam.'},
-{question:'What does <span class="arabic arabic-text">\u0648\u062D\u064A</span> (Wahy) mean?',options:['Loneliness','Inspiration','Divine revelation','Fear'],correct:2,explanation:'Wahy means divine revelation, the means by which Allah communicated His message to the prophets.'},
-{question:'What does <span class="arabic arabic-text">\u062D\u064A\u0627\u0621</span> (Haya) mean?',options:['Life','Modesty and shyness','Beauty','Confusion'],correct:1,explanation:'Haya means modesty and shyness. The Prophet (PBUH) said: "Haya is a branch of faith" (Sahih al-Bukhari).'},
-{question:'What does <span class="arabic arabic-text">\u0625\u062E\u0644\u0627\u0635</span> (Ikhlas) mean?',options:['Creation','Salvation','Sincerity','Extraction'],correct:2,explanation:'Ikhlas means sincerity, doing deeds purely for the sake of Allah without seeking worldly recognition.'},
-{question:'What does <span class="arabic arabic-text">\u0641\u0631\u0642\u0627\u0646</span> (Furqan) mean?',options:['Division','Criterion that distinguishes truth from falsehood','Forgiveness','Abundance'],correct:1,explanation:'Furqan means the criterion that distinguishes right from wrong. It is also a name for the Quran (Surah Al-Furqan).'},
-{question:'What does <span class="arabic arabic-text">\u0645\u0646\u0627\u0641\u0642</span> (Munafiq) mean?',options:['Generous person','Hypocrite','Scholar','Traveller'],correct:1,explanation:'Munafiq means a hypocrite, someone who outwardly claims faith while concealing disbelief. A major theme in the Quran.'},
-{question:'What does <span class="arabic arabic-text">\u062E\u0634\u064A\u0629</span> (Khashyah) mean?',options:['Roughness','Joy','Awe-filled fear (of Allah)','Anger'],correct:2,explanation:'Khashyah means a deep, reverential fear mixed with awe, specifically the fear of Allah rooted in knowledge of His greatness.'},
-{question:'What does <span class="arabic arabic-text">\u062A\u0648\u062D\u064A\u062F</span> (Tawheed) mean?',options:['Multiplication','Monotheism / Oneness of God','Unity of people','Repetition'],correct:1,explanation:'Tawheed is the fundamental Islamic concept of the absolute oneness and uniqueness of Allah.'},
-{question:'What does <span class="arabic arabic-text">\u0628\u0631\u0647\u0627\u0646</span> (Burhan) mean?',options:['Volcano','Clear proof and evidence','Container','Blessing'],correct:1,explanation:'Burhan means clear, undeniable proof or evidence. Used in the Quran to refer to divine proofs.'},
-{question:'What does <span class="arabic arabic-text">\u063A\u064A\u0628</span> (Ghayb) mean?',options:['Forest','Absence','The Unseen','Stranger'],correct:2,explanation:'Ghayb refers to the unseen realm, matters beyond human perception. Belief in the Ghayb is a quality of the believers (2:3).'},
-{question:'What does <span class="arabic arabic-text">\u0633\u0643\u064A\u0646\u0629</span> (Sakinah) mean?',options:['Housing','Knife','Tranquility and divine peace','Silence'],correct:2,explanation:'Sakinah means divine tranquility and inner peace sent down by Allah upon the hearts of believers.'},
-{question:'What does <span class="arabic arabic-text">\u0645\u0642\u0627\u0635\u062F</span> (Maqasid) mean?',options:['Scissors','Objectives and purposes','Destinations','Stories'],correct:1,explanation:'Maqasid means objectives or purposes, commonly used in "Maqasid al-Shariah" (objectives of Islamic law).'},
-{question:'What does <span class="arabic arabic-text">\u0628\u064A\u0639\u0629</span> (Bay\'ah) mean?',options:['Sale','Pledge of allegiance','House','Environment'],correct:1,explanation:'Bay\'ah means a pledge of allegiance, historically given to leaders and the Prophet (PBUH).'},
-],
+  // ==================== ARABIC WORDS ====================
+  arabic: [
+    {
+      question: 'What does <span class="arabic arabic-text">تفسير</span> (Tafsir) mean?',
+      options: ['Purification', 'Interpretation of the Quran', 'Biography', 'Legal ruling'],
+      correct: 1,
+      explanation: 'Tafsir means interpretation or exegesis of the Quran.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">عدل</span> (Adl) mean?',
+      options: ['Worship', 'Knowledge', 'Justice', 'Mercy'],
+      correct: 2,
+      explanation: 'Adl means justice.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">فلاح</span> (Falah) mean?',
+      options: ['Corruption', 'Success and prosperity', 'Prayer', 'Fear'],
+      correct: 1,
+      explanation: 'Falah means success and prosperity.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">باطل</span> (Batil) mean?',
+      options: ['Hero', 'Truth', 'Falsehood', 'Patience'],
+      correct: 2,
+      explanation: 'Batil means falsehood.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">ميزان</span> (Mizan) mean?',
+      options: ['Blessing', 'Scale or Balance', 'Forgiveness', 'Journey'],
+      correct: 1,
+      explanation: 'Mizan means scale or balance.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">تدبر</span> (Tadabbur) mean?',
+      options: ['Memorization', 'Speed', 'Deep reflection and contemplation', 'Recitation'],
+      correct: 2,
+      explanation: 'Tadabbur means deep reflection and contemplation.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">فقه</span> (Fiqh) mean?',
+      options: ['Philosophy', 'History', 'Islamic jurisprudence', 'Grammar'],
+      correct: 2,
+      explanation: 'Fiqh refers to Islamic jurisprudence.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">عقيدة</span> (Aqeedah) mean?',
+      options: ['Practice', 'Creed and belief system', 'Poetry', 'Community'],
+      correct: 1,
+      explanation: 'Aqeedah refers to creed and belief system.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">سيرة</span> (Seerah) mean?',
+      options: ['Secret', 'Biography (of the Prophet)', 'Law', 'Garden'],
+      correct: 1,
+      explanation: 'Seerah means biography, especially the life of the Prophet (PBUH).'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">نية</span> (Niyyah) mean?',
+      options: ['Night', 'Intention', 'Grace', 'Sleep'],
+      correct: 1,
+      explanation: 'Niyyah means intention.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">فطرة</span> (Fitrah) mean?',
+      options: ['Festival', 'Breaking fast', 'Natural disposition', 'Tax'],
+      correct: 2,
+      explanation: 'Fitrah means the natural disposition upon which people are created.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">تزكية</span> (Tazkiyah) mean?',
+      options: ['Decoration', 'Purification of the soul', 'Multiplication', 'Destruction'],
+      correct: 1,
+      explanation: 'Tazkiyah means purification of the soul.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">قدر</span> (Qadar) mean?',
+      options: ['Power', 'Ability', 'Divine decree and predestination', 'Value'],
+      correct: 2,
+      explanation: 'Qadar means divine decree and predestination.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">وحي</span> (Wahy) mean?',
+      options: ['Loneliness', 'Inspiration', 'Divine revelation', 'Fear'],
+      correct: 2,
+      explanation: 'Wahy means divine revelation.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">حياء</span> (Haya) mean?',
+      options: ['Life', 'Modesty and shyness', 'Beauty', 'Confusion'],
+      correct: 1,
+      explanation: 'Haya means modesty.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">إخلاص</span> (Ikhlas) mean?',
+      options: ['Creation', 'Salvation', 'Sincerity', 'Extraction'],
+      correct: 2,
+      explanation: 'Ikhlas means sincerity.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">فرقان</span> (Furqan) mean?',
+      options: ['Division', 'Criterion that distinguishes truth from falsehood', 'Forgiveness', 'Abundance'],
+      correct: 1,
+      explanation: 'Furqan means the criterion that distinguishes truth from falsehood.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">منافق</span> (Munafiq) mean?',
+      options: ['Generous person', 'Hypocrite', 'Scholar', 'Traveller'],
+      correct: 1,
+      explanation: 'Munafiq means hypocrite.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">خشية</span> (Khashyah) mean?',
+      options: ['Roughness', 'Joy', 'Awe-filled fear (of Allah)', 'Anger'],
+      correct: 2,
+      explanation: 'Khashyah means a reverential, awe-filled fear.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">توحيد</span> (Tawheed) mean?',
+      options: ['Multiplication', 'Monotheism / Oneness of God', 'Unity of people', 'Repetition'],
+      correct: 1,
+      explanation: 'Tawheed is the oneness of Allah.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">برهان</span> (Burhan) mean?',
+      options: ['Volcano', 'Clear proof and evidence', 'Container', 'Blessing'],
+      correct: 1,
+      explanation: 'Burhan means clear proof and evidence.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">غيب</span> (Ghayb) mean?',
+      options: ['Forest', 'Absence', 'The Unseen', 'Stranger'],
+      correct: 2,
+      explanation: 'Ghayb refers to the unseen.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">سكينة</span> (Sakinah) mean?',
+      options: ['Housing', 'Knife', 'Tranquility and divine peace', 'Silence'],
+      correct: 2,
+      explanation: 'Sakinah means tranquility and divine peace.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">مقاصد</span> (Maqasid) mean?',
+      options: ['Scissors', 'Objectives and purposes', 'Destinations', 'Stories'],
+      correct: 1,
+      explanation: 'Maqasid means objectives and purposes.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">بيعة</span> (Bay\'ah) mean?',
+      options: ['Sale', 'Pledge of allegiance', 'House', 'Environment'],
+      correct: 1,
+      explanation: 'Bay\'ah means pledge of allegiance.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">ميثاق</span> (Mithaq) mean?',
+      options: ['Gift', 'Covenant', 'Weapon', 'Journey'],
+      correct: 1,
+      explanation: 'Mithaq means covenant.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">بصيرة</span> (Basirah) mean?',
+      options: ['Trade', 'Clear insight', 'Patience', 'Worship'],
+      correct: 1,
+      explanation: 'Basirah means clear insight or inner discernment.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">استقامة</span> (Istiqamah) mean?',
+      options: ['Migration', 'Steadfast uprightness', 'Generosity', 'Punishment'],
+      correct: 1,
+      explanation: 'Istiqamah means steadfast uprightness on the straight path.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">يقين</span> (Yaqin) mean?',
+      options: ['Certainty', 'Weakness', 'Memory', 'Witness'],
+      correct: 0,
+      explanation: 'Yaqin means certainty.'
+    },
+    {
+      question: 'What does <span class="arabic arabic-text">ظلم</span> (Zulm) mean?',
+      options: ['Justice', 'Oppression and wrongdoing', 'Kindness', 'Purification'],
+      correct: 1,
+      explanation: 'Zulm means oppression or wrongdoing.'
+    }
+  ],
 
-// ==================== COMPLETE THE AYAH ====================
-ayah:[
-{question:'Complete: <span class="arabic arabic-text">\u0644\u0627 \u064A\u0643\u0644\u0641 \u0627\u0644\u0644\u0647 \u0646\u0641\u0633\u0627 \u0625\u0644\u0627 ...</span><br>(Allah does not burden a soul beyond its...)',options:['<span class="arabic">\u0637\u0627\u0642\u062A\u0647\u0627</span> (strength)','<span class="arabic">\u0648\u0633\u0639\u0647\u0627</span> (capacity)','<span class="arabic">\u0639\u0644\u0645\u0647\u0627</span> (knowledge)','<span class="arabic">\u0635\u0628\u0631\u0647\u0627</span> (patience)'],correct:1,explanation:'Surah Al-Baqarah (2:286): "Allah does not burden a soul beyond its capacity (wus\'aha)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0625\u0646 \u0623\u0643\u0631\u0645\u0643\u0645 \u0639\u0646\u062F \u0627\u0644\u0644\u0647 ...</span><br>(Indeed, the most noble of you in the sight of Allah is the most...)',options:['<span class="arabic">\u0623\u063A\u0646\u0627\u0643\u0645</span> (wealthy)','<span class="arabic">\u0623\u0639\u0644\u0645\u0643\u0645</span> (knowledgeable)','<span class="arabic">\u0623\u062A\u0642\u0627\u0643\u0645</span> (righteous)','<span class="arabic">\u0623\u0643\u0628\u0631\u0643\u0645</span> (eldest)'],correct:2,explanation:'Surah Al-Hujurat (49:13): "The most noble of you in the sight of Allah is the most righteous (atqakum)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0625\u0630\u0627 \u0633\u0623\u0644\u0643 \u0639\u0628\u0627\u062F\u064A \u0639\u0646\u064A \u0641\u0625\u0646\u064A ...</span><br>(And when My servants ask you about Me, indeed I am...)',options:['<span class="arabic">\u0627\u0644\u0631\u062D\u0645\u0646</span> (the Most Merciful)','<span class="arabic">\u0642\u0631\u064A\u0628</span> (near)','<span class="arabic">\u0627\u0644\u0639\u0644\u064A\u0645</span> (All-Knowing)','<span class="arabic">\u0627\u0644\u0633\u0645\u064A\u0639</span> (All-Hearing)'],correct:1,explanation:'Surah Al-Baqarah (2:186): "And when My servants ask you about Me, indeed I am near (qareeb)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0643\u0644 \u0646\u0641\u0633 \u0630\u0627\u0626\u0642\u0629 ...</span><br>(Every soul shall taste...)',options:['<span class="arabic">\u0627\u0644\u0641\u0631\u062D</span> (joy)','<span class="arabic">\u0627\u0644\u062D\u0632\u0646</span> (sorrow)','<span class="arabic">\u0627\u0644\u0645\u0648\u062A</span> (death)','<span class="arabic">\u0627\u0644\u062E\u0648\u0641</span> (fear)'],correct:2,explanation:'Surah Al-Imran (3:185): "Every soul shall taste death (al-mawt)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0645\u0646 \u064A\u062A\u0642 \u0627\u0644\u0644\u0647 \u064A\u062C\u0639\u0644 \u0644\u0647 ...</span><br>(And whoever fears Allah, He will make for him...)',options:['<span class="arabic">\u062C\u0646\u0629</span> (paradise)','<span class="arabic">\u0645\u062E\u0631\u062C\u0627</span> (a way out)','<span class="arabic">\u0623\u062C\u0631\u0627 \u0639\u0638\u064A\u0645\u0627</span> (great reward)','<span class="arabic">\u0633\u0644\u0627\u0645\u0627</span> (peace)'],correct:1,explanation:'Surah At-Talaq (65:2): "And whoever fears Allah, He will make for him a way out (makhraja)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0645\u0627 \u0623\u0631\u0633\u0644\u0646\u0627\u0643 \u0625\u0644\u0627 ...</span><br>(And We have not sent you except as a...)',options:['<span class="arabic">\u0646\u0630\u064A\u0631\u0627 \u0644\u0644\u0646\u0627\u0633</span> (warner to mankind)','<span class="arabic">\u0631\u062D\u0645\u0629 \u0644\u0644\u0639\u0627\u0644\u0645\u064A\u0646</span> (mercy to the worlds)','<span class="arabic">\u0647\u0627\u062F\u064A\u0627 \u0644\u0644\u0645\u0624\u0645\u0646\u064A\u0646</span> (guide for believers)','<span class="arabic">\u0646\u0648\u0631\u0627 \u0644\u0644\u062C\u0645\u064A\u0639</span> (light for all)'],correct:1,explanation:'Surah Al-Anbiya (21:107): "And We have not sent you except as a mercy to the worlds (rahmatan lil-alamin)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0627\u0639\u062A\u0635\u0645\u0648\u0627 \u0628\u062D\u0628\u0644 \u0627\u0644\u0644\u0647 \u062C\u0645\u064A\u0639\u0627 \u0648\u0644\u0627 ...</span><br>(And hold firmly to the rope of Allah all together and do not become...)',options:['<span class="arabic">\u062A\u0643\u0628\u0631\u0648\u0627</span> (arrogant)','<span class="arabic">\u062A\u0636\u0639\u0641\u0648\u0627</span> (weak)','<span class="arabic">\u062A\u0641\u0631\u0642\u0648\u0627</span> (divided)','<span class="arabic">\u062A\u063A\u0641\u0644\u0648\u0627</span> (heedless)'],correct:2,explanation:'Surah Al-Imran (3:103): "Hold firmly to the rope of Allah all together and do not become divided (tafarraqu)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0625\u0646 \u0627\u0644\u0635\u0644\u0627\u0629 \u062A\u0646\u0647\u0649 \u0639\u0646 ...</span><br>(Indeed, the prayer prohibits from...)',options:['<span class="arabic">\u0627\u0644\u0643\u0633\u0644 \u0648\u0627\u0644\u0646\u0648\u0645</span> (laziness and sleep)','<span class="arabic">\u0627\u0644\u0641\u062D\u0634\u0627\u0621 \u0648\u0627\u0644\u0645\u0646\u0643\u0631</span> (immorality and wrongdoing)','<span class="arabic">\u0627\u0644\u0634\u0643 \u0648\u0627\u0644\u062D\u064A\u0631\u0629</span> (doubt and confusion)','<span class="arabic">\u0627\u0644\u062D\u0632\u0646 \u0648\u0627\u0644\u0647\u0645</span> (sadness and worry)'],correct:1,explanation:'Surah Al-Ankabut (29:45): "Indeed, the prayer prohibits from immorality and wrongdoing (al-fahsha wal-munkar)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0642\u0648\u0644\u0648\u0627 \u0644\u0644\u0646\u0627\u0633 ...</span><br>(And speak to people...)',options:['<span class="arabic">\u0628\u0642\u0648\u0629</span> (with strength)','<span class="arabic">\u062D\u0633\u0646\u0627</span> (good words)','<span class="arabic">\u0628\u0633\u0644\u0637\u0629</span> (with authority)','<span class="arabic">\u0628\u0639\u0644\u0645</span> (with knowledge)'],correct:1,explanation:'Surah Al-Baqarah (2:83): "And speak to people good words (husna)."'},
-{question:'Complete: <span class="arabic arabic-text">\u064A\u0631\u064A\u062F \u0627\u0644\u0644\u0647 \u0628\u0643\u0645 \u0627\u0644\u064A\u0633\u0631 \u0648\u0644\u0627 \u064A\u0631\u064A\u062F \u0628\u0643\u0645 ...</span><br>(Allah intends for you ease and does not intend for you...)',options:['<span class="arabic">\u0627\u0644\u0639\u0630\u0627\u0628</span> (suffering)','<span class="arabic">\u0627\u0644\u0639\u0633\u0631</span> (hardship)','<span class="arabic">\u0627\u0644\u0641\u0642\u0631</span> (poverty)','<span class="arabic">\u0627\u0644\u0636\u0644\u0627\u0644</span> (misguidance)'],correct:1,explanation:'Surah Al-Baqarah (2:185): "Allah intends for you ease and does not intend for you hardship (al-usr)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0625\u0646 \u0627\u0644\u0644\u0647 \u0644\u0627 \u064A\u063A\u064A\u0631 \u0645\u0627 \u0628\u0642\u0648\u0645 \u062D\u062A\u0649 \u064A\u063A\u064A\u0631\u0648\u0627 \u0645\u0627 \u0628 ...</span><br>(Indeed, Allah does not change the condition of a people until they change what is in...)',options:['<span class="arabic">\u0623\u0645\u0648\u0627\u0644\u0647\u0645</span> (their wealth)','<span class="arabic">\u0642\u0644\u0648\u0628\u0647\u0645</span> (their hearts)','<span class="arabic">\u0623\u0646\u0641\u0633\u0647\u0645</span> (themselves)','<span class="arabic">\u0623\u0631\u0636\u0647\u0645</span> (their land)'],correct:2,explanation:'Surah Ar-Ra\'d (13:11): "Allah does not change the condition of a people until they change what is in themselves (anfusihim)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0641\u0645\u0646 \u064A\u0639\u0645\u0644 \u0645\u062B\u0642\u0627\u0644 \u0630\u0631\u0629 \u062E\u064A\u0631\u0627 ...</span><br>(Whoever does an atom\'s weight of good will...)',options:['<span class="arabic">\u064A\u062C\u0632\u0649</span> (be rewarded)','<span class="arabic">\u064A\u062F\u062E\u0644 \u0627\u0644\u062C\u0646\u0629</span> (enter Paradise)','<span class="arabic">\u064A\u0631\u0647</span> (see it)','<span class="arabic">\u064A\u063A\u0641\u0631 \u0644\u0647</span> (be forgiven)'],correct:2,explanation:'Surah Az-Zalzalah (99:7): "Whoever does an atom\'s weight of good will see it (yarahu)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0644\u0644\u0622\u062E\u0631\u0629 \u062E\u064A\u0631 \u0644\u0643 \u0645\u0646 ...</span><br>(And the Hereafter is better for you than the...)',options:['<span class="arabic">\u0627\u0644\u062F\u0646\u064A\u0627</span> (worldly life)','<span class="arabic">\u0627\u0644\u0623\u0648\u0644\u0649</span> (first life)','<span class="arabic">\u0627\u0644\u062D\u0627\u0636\u0631</span> (present)','<span class="arabic">\u0627\u0644\u0645\u0627\u0636\u064A</span> (past)'],correct:1,explanation:'Surah Ad-Duha (93:4): "And the Hereafter is better for you than the first life (al-ula)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0645\u0646 \u0622\u064A\u0627\u062A\u0647 \u0623\u0646 \u062E\u0644\u0642 \u0644\u0643\u0645 \u0645\u0646 \u0623\u0646\u0641\u0633\u0643\u0645 ...</span><br>(And among His signs is that He created for you from yourselves...)',options:['<span class="arabic">\u0623\u0648\u0644\u0627\u062F\u0627</span> (children)','<span class="arabic">\u0623\u0632\u0648\u0627\u062C\u0627</span> (mates/spouses)','<span class="arabic">\u063A\u0627\u064A\u0629</span> (purpose)','<span class="arabic">\u0647\u062F\u0627\u064A\u0629</span> (guidance)'],correct:1,explanation:'Surah Ar-Rum (30:21): "He created for you from yourselves mates (azwajan) that you may find tranquility in them."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0639\u0628\u0627\u062F \u0627\u0644\u0631\u062D\u0645\u0646 \u0627\u0644\u0630\u064A\u0646 \u064A\u0645\u0634\u0648\u0646 \u0639\u0644\u0649 \u0627\u0644\u0623\u0631\u0636 ...</span><br>(The servants of the Most Merciful walk upon the earth...)',options:['<span class="arabic">\u0628\u0641\u062E\u0631</span> (proudly)','<span class="arabic">\u0647\u0648\u0646\u0627</span> (humbly)','<span class="arabic">\u0633\u0631\u064A\u0639\u0627</span> (quickly)','<span class="arabic">\u062E\u0627\u0626\u0641\u064A\u0646</span> (fearfully)'],correct:1,explanation:'Surah Al-Furqan (25:63): "The servants of the Most Merciful walk upon the earth humbly (hawna)."'},
-{question:'Complete: <span class="arabic arabic-text">\u062D\u0633\u0628\u0646\u0627 \u0627\u0644\u0644\u0647 \u0648\u0646\u0639\u0645 ...</span><br>(Sufficient for us is Allah, and He is the best...)',options:['<span class="arabic">\u0627\u0644\u062D\u0627\u0641\u0638</span> (Protector)','<span class="arabic">\u0627\u0644\u0648\u0643\u064A\u0644</span> (Disposer of affairs)','<span class="arabic">\u0627\u0644\u0631\u0627\u0632\u0642</span> (Provider)','<span class="arabic">\u0627\u0644\u062D\u0643\u0645</span> (Judge)'],correct:1,explanation:'Surah Al-Imran (3:173): "Sufficient for us is Allah, and He is the best Disposer of affairs (al-Wakeel)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0623\u0644\u0627 \u0628\u0630\u0643\u0631 \u0627\u0644\u0644\u0647 \u062A\u0637\u0645\u0626\u0646 ...</span><br>(Verily, in the remembrance of Allah do ... find rest)',options:['<span class="arabic">\u0627\u0644\u0623\u0631\u0648\u0627\u062D</span> (souls)','<span class="arabic">\u0627\u0644\u0639\u0642\u0648\u0644</span> (minds)','<span class="arabic">\u0627\u0644\u0642\u0644\u0648\u0628</span> (hearts)','<span class="arabic">\u0627\u0644\u0623\u0628\u062F\u0627\u0646</span> (bodies)'],correct:2,explanation:'Surah Ar-Ra\'d (13:28): "Verily, in the remembrance of Allah do hearts (al-quloob) find rest."'},
-{question:'Complete: <span class="arabic arabic-text">\u0648\u0642\u0636\u0649 \u0631\u0628\u0643 \u0623\u0644\u0627 \u062A\u0639\u0628\u062F\u0648\u0627 \u0625\u0644\u0627 \u0625\u064A\u0627\u0647 \u0648\u0628\u0627\u0644\u0648\u0627\u0644\u062F\u064A\u0646 ...</span><br>(Your Lord has decreed that you worship none but Him, and to parents...)',options:['<span class="arabic">\u0637\u0627\u0639\u0629</span> (obedience)','<span class="arabic">\u0625\u062D\u0633\u0627\u0646\u0627</span> (good treatment)','<span class="arabic">\u0627\u062D\u062A\u0631\u0627\u0645\u0627</span> (respect)','<span class="arabic">\u062D\u0628\u0627</span> (love)'],correct:1,explanation:'Surah Al-Isra (17:23): "Your Lord has decreed that you worship none but Him, and to parents, good treatment (ihsana)."'},
-{question:'Complete: <span class="arabic arabic-text">\u0627\u0642\u0631\u0623 \u0628\u0627\u0633\u0645 \u0631\u0628\u0643 \u0627\u0644\u0630\u064A ...</span><br>(Read! In the name of your Lord who...)',options:['<span class="arabic">\u0647\u062F\u0649</span> (guided)','<span class="arabic">\u0631\u0632\u0642</span> (provided)','<span class="arabic">\u062E\u0644\u0642</span> (created)','<span class="arabic">\u062D\u0643\u0645</span> (ruled)'],correct:2,explanation:'Surah Al-Alaq (96:1): "Read! In the name of your Lord who created (khalaqa)." The first verse revealed to the Prophet (PBUH).'},
-],
+  // ==================== COMPLETE THE AYAH ====================
+  ayah: [
+    {
+      question: 'Complete: <span class="arabic arabic-text">لا يكلف الله نفسا إلا ...</span><br>(Allah does not burden a soul beyond its...)',
+      options: ['<span class="arabic">طاقتها</span> (strength)', '<span class="arabic">وسعها</span> (capacity)', '<span class="arabic">علمها</span> (knowledge)', '<span class="arabic">صبرها</span> (patience)'],
+      correct: 1,
+      explanation: 'Surah Al-Baqarah (2:286): "Allah does not burden a soul beyond its capacity."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">إن أكرمكم عند الله ...</span><br>(Indeed, the most noble of you in the sight of Allah is the most...)',
+      options: ['<span class="arabic">أغناكم</span> (wealthy)', '<span class="arabic">أعلمكم</span> (knowledgeable)', '<span class="arabic">أتقاكم</span> (righteous)', '<span class="arabic">أكبركم</span> (eldest)'],
+      correct: 2,
+      explanation: 'Surah Al-Hujurat (49:13): "The most noble of you in the sight of Allah is the most righteous."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وإذا سألك عبادي عني فإني ...</span><br>(And when My servants ask you about Me, indeed I am...)',
+      options: ['<span class="arabic">الرحمن</span> (the Most Merciful)', '<span class="arabic">قريب</span> (near)', '<span class="arabic">العليم</span> (All-Knowing)', '<span class="arabic">السميع</span> (All-Hearing)'],
+      correct: 1,
+      explanation: 'Surah Al-Baqarah (2:186): "Indeed I am near."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">كل نفس ذائقة ...</span><br>(Every soul shall taste...)',
+      options: ['<span class="arabic">الفرح</span> (joy)', '<span class="arabic">الحزن</span> (sorrow)', '<span class="arabic">الموت</span> (death)', '<span class="arabic">الخوف</span> (fear)'],
+      correct: 2,
+      explanation: 'Surah Al-Imran (3:185): "Every soul shall taste death."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">ومن يتق الله يجعل له ...</span><br>(And whoever fears Allah, He will make for him...)',
+      options: ['<span class="arabic">جنة</span> (paradise)', '<span class="arabic">مخرجا</span> (a way out)', '<span class="arabic">أجرا عظيما</span> (great reward)', '<span class="arabic">سلاما</span> (peace)'],
+      correct: 1,
+      explanation: 'Surah At-Talaq (65:2): "He will make for him a way out."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وما أرسلناك إلا ...</span><br>(And We have not sent you except as a...)',
+      options: ['<span class="arabic">نذيرا للناس</span> (warner to mankind)', '<span class="arabic">رحمة للعالمين</span> (mercy to the worlds)', '<span class="arabic">هاديا للمؤمنين</span> (guide for believers)', '<span class="arabic">نورا للجميع</span> (light for all)'],
+      correct: 1,
+      explanation: 'Surah Al-Anbiya (21:107): "As a mercy to the worlds."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">واعتصموا بحبل الله جميعا ولا ...</span><br>(And hold firmly to the rope of Allah all together and do not become...)',
+      options: ['<span class="arabic">تكبروا</span> (arrogant)', '<span class="arabic">تضعفوا</span> (weak)', '<span class="arabic">تفرقوا</span> (divided)', '<span class="arabic">تغفلوا</span> (heedless)'],
+      correct: 2,
+      explanation: 'Surah Al-Imran (3:103): "And do not become divided."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">إن الصلاة تنهى عن ...</span><br>(Indeed, the prayer prohibits from...)',
+      options: ['<span class="arabic">الكسل والنوم</span> (laziness and sleep)', '<span class="arabic">الفحشاء والمنكر</span> (immorality and wrongdoing)', '<span class="arabic">الشك والحيرة</span> (doubt and confusion)', '<span class="arabic">الحزن والهم</span> (sadness and worry)'],
+      correct: 1,
+      explanation: 'Surah Al-Ankabut (29:45): "Indeed, prayer prohibits immorality and wrongdoing."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وقولوا للناس ...</span><br>(And speak to people...)',
+      options: ['<span class="arabic">بقوة</span> (with strength)', '<span class="arabic">حسنا</span> (good words)', '<span class="arabic">بسلطة</span> (with authority)', '<span class="arabic">بعلم</span> (with knowledge)'],
+      correct: 1,
+      explanation: 'Surah Al-Baqarah (2:83): "And speak to people good words."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">يريد الله بكم اليسر ولا يريد بكم ...</span><br>(Allah intends for you ease and does not intend for you...)',
+      options: ['<span class="arabic">العذاب</span> (suffering)', '<span class="arabic">العسر</span> (hardship)', '<span class="arabic">الفقر</span> (poverty)', '<span class="arabic">الضلال</span> (misguidance)'],
+      correct: 1,
+      explanation: 'Surah Al-Baqarah (2:185): "He does not intend hardship for you."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">إن الله لا يغير ما بقوم حتى يغيروا ما ب...</span><br>(Indeed, Allah does not change the condition of a people until they change what is in...)',
+      options: ['<span class="arabic">أموالهم</span> (their wealth)', '<span class="arabic">قلوبهم</span> (their hearts)', '<span class="arabic">أنفسهم</span> (themselves)', '<span class="arabic">أرضهم</span> (their land)'],
+      correct: 2,
+      explanation: 'Surah Ar-Ra\'d (13:11): "Until they change what is in themselves."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">فمن يعمل مثقال ذرة خيرا ...</span><br>(Whoever does an atom\'s weight of good will...)',
+      options: ['<span class="arabic">يجزى</span> (be rewarded)', '<span class="arabic">يدخل الجنة</span> (enter Paradise)', '<span class="arabic">يره</span> (see it)', '<span class="arabic">يغفر له</span> (be forgiven)'],
+      correct: 2,
+      explanation: 'Surah Az-Zalzalah (99:7): "Will see it."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وللآخرة خير لك من ...</span><br>(And the Hereafter is better for you than the...)',
+      options: ['<span class="arabic">الدنيا</span> (worldly life)', '<span class="arabic">الأولى</span> (first life)', '<span class="arabic">الحاضر</span> (present)', '<span class="arabic">الماضي</span> (past)'],
+      correct: 1,
+      explanation: 'Surah Ad-Duha (93:4): "And the Hereafter is better for you than the first life."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">ومن آياته أن خلق لكم من أنفسكم ...</span><br>(And among His signs is that He created for you from yourselves...)',
+      options: ['<span class="arabic">أولادا</span> (children)', '<span class="arabic">أزواجا</span> (mates/spouses)', '<span class="arabic">غاية</span> (purpose)', '<span class="arabic">هداية</span> (guidance)'],
+      correct: 1,
+      explanation: 'Surah Ar-Rum (30:21): "He created for you from yourselves mates."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وعباد الرحمن الذين يمشون على الأرض ...</span><br>(The servants of the Most Merciful walk upon the earth...)',
+      options: ['<span class="arabic">بفخر</span> (proudly)', '<span class="arabic">هونا</span> (humbly)', '<span class="arabic">سريعا</span> (quickly)', '<span class="arabic">خائفين</span> (fearfully)'],
+      correct: 1,
+      explanation: 'Surah Al-Furqan (25:63): "They walk upon the earth humbly."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">حسبنا الله ونعم ...</span><br>(Sufficient for us is Allah, and He is the best...)',
+      options: ['<span class="arabic">الحافظ</span> (Protector)', '<span class="arabic">الوكيل</span> (Disposer of affairs)', '<span class="arabic">الرازق</span> (Provider)', '<span class="arabic">الحكم</span> (Judge)'],
+      correct: 1,
+      explanation: 'Surah Al-Imran (3:173): "And He is the best Disposer of affairs."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">ألا بذكر الله تطمئن ...</span><br>(Verily, in the remembrance of Allah do ... find rest)',
+      options: ['<span class="arabic">الأرواح</span> (souls)', '<span class="arabic">العقول</span> (minds)', '<span class="arabic">القلوب</span> (hearts)', '<span class="arabic">الأبدان</span> (bodies)'],
+      correct: 2,
+      explanation: 'Surah Ar-Ra\'d (13:28): "Indeed, in the remembrance of Allah do hearts find rest."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وقضى ربك ألا تعبدوا إلا إياه وبالوالدين ...</span><br>(Your Lord has decreed that you worship none but Him, and to parents...)',
+      options: ['<span class="arabic">طاعة</span> (obedience)', '<span class="arabic">إحسانا</span> (good treatment)', '<span class="arabic">احتراما</span> (respect)', '<span class="arabic">حبا</span> (love)'],
+      correct: 1,
+      explanation: 'Surah Al-Isra (17:23): "And to parents, good treatment."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">اقرأ باسم ربك الذي ...</span><br>(Read! In the name of your Lord who...)',
+      options: ['<span class="arabic">هدى</span> (guided)', '<span class="arabic">رزق</span> (provided)', '<span class="arabic">خلق</span> (created)', '<span class="arabic">حكم</span> (ruled)'],
+      correct: 2,
+      explanation: 'Surah Al-Alaq (96:1): "Read in the name of your Lord who created."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">فاذكروني ...</span><br>(So remember Me; I will...)',
+      options: ['<span class="arabic">أذكركم</span> (remember you)', '<span class="arabic">أغفر لكم</span> (forgive you)', '<span class="arabic">أهديكم</span> (guide you)', '<span class="arabic">أنصركم</span> (help you)'],
+      correct: 0,
+      explanation: 'Surah Al-Baqarah (2:152): "So remember Me; I will remember you."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وما محمد إلا رسول ...</span><br>(Muhammad is no more than a messenger; ...)',
+      options: ['<span class="arabic">قد خلت من قبله الرسل</span> (messengers passed away before him)', '<span class="arabic">لا نبي بعده</span> (there is no prophet after him)', '<span class="arabic">رحمة للعالمين</span> (a mercy to the worlds)', '<span class="arabic">يشهد على الناس</span> (he bears witness over people)'],
+      correct: 0,
+      explanation: 'Surah Al-Imran (3:144): "Messengers have passed away before him."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">إن مع العسر ...</span><br>(Indeed, with hardship comes ...)',
+      options: ['<span class="arabic">صبرا</span> (patience)', '<span class="arabic">يسرا</span> (ease)', '<span class="arabic">فرجا</span> (relief)', '<span class="arabic">رحمة</span> (mercy)'],
+      correct: 1,
+      explanation: 'Surah Ash-Sharh (94:6): "Indeed, with hardship comes ease."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">يريد الله أن يخفف عنكم وخلق الإنسان ...</span><br>(Allah wishes to lighten your burden, for mankind was created ...)',
+      options: ['<span class="arabic">قويا</span> (strong)', '<span class="arabic">ضعيفا</span> (weak)', '<span class="arabic">هلوعا</span> (anxious)', '<span class="arabic">عجولا</span> (hasty)'],
+      correct: 1,
+      explanation: 'Surah An-Nisa (4:28): "And mankind was created weak."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">ما كان محمد أبا أحد من رجالكم ولكن رسول الله و ...</span><br>(Muhammad is not the father of any of your men, but he is the Messenger of Allah and ...)',
+      options: ['<span class="arabic">خاتم النبيين</span> (Seal of the Prophets)', '<span class="arabic">عبد الله ورسوله</span> (servant of Allah and His messenger)', '<span class="arabic">شاهدا ومبشرا</span> (a witness and bringer of glad tidings)', '<span class="arabic">إماما للمتقين</span> (leader of the righteous)'],
+      correct: 0,
+      explanation: 'Surah Al-Ahzab (33:40): "And the Seal of the Prophets."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">إن الله يأمر بالعدل والإحسان و ...</span><br>(Indeed, Allah commands justice, excellence, and ...)',
+      options: ['<span class="arabic">إقامة الصلاة</span> (establishing prayer)', '<span class="arabic">إيتاء ذي القربى</span> (giving to relatives)', '<span class="arabic">ذكر الله كثيرا</span> (remembering Allah often)', '<span class="arabic">الصبر على البلاء</span> (patience in hardship)'],
+      correct: 1,
+      explanation: 'Surah An-Nahl (16:90): "And giving to relatives."'
+    },
+    {
+      question: 'Complete: <span class="arabic arabic-text">وما خلقت الجن والإنس إلا ...</span><br>(And I did not create jinn and mankind except...)',
+      options: ['<span class="arabic">ليعبدون</span> (to worship Me)', '<span class="arabic">ليذكرون</span> (to remember Me)', '<span class="arabic">ليطيعون</span> (to obey Me)', '<span class="arabic">ليشكرون</span> (to thank Me)'],
+      correct: 0,
+      explanation: 'Surah Adh-Dhariyat (51:56): "Except to worship Me."'
+    }
+  ],
 
-// ==================== ISLAMIC HISTORY ====================
-history:[
-{question:'In which year (CE) did the Conquest of Makkah (Fath al-Makkah) take place?',options:['624 CE','628 CE','630 CE','632 CE'],correct:2,explanation:'The Conquest of Makkah occurred in 630 CE (8 AH), when the Prophet (PBUH) entered Makkah peacefully with 10,000 companions.'},
-{question:'Which companion suggested digging a trench in the Battle of Khandaq?',options:['Abu Bakr (RA)','Khalid ibn al-Walid (RA)','Salman al-Farsi (RA)','Sa\'d ibn Mu\'adh (RA)'],correct:2,explanation:'Salman al-Farsi (RA), from Persia, suggested the trench strategy based on Persian military tactics, which was new to Arabia.'},
-{question:'What significant achievement occurred during the caliphate of Uthman ibn Affan (RA)?',options:['Conquest of Egypt','Standardization of the Quran','Building of Al-Aqsa','Establishment of the postal system'],correct:1,explanation:'Uthman (RA) standardized the Quran into one official script and distributed copies to major cities to preserve its accuracy.'},
-{question:'Who was the Muslim general who led the conquest of Spain (Al-Andalus) in 711 CE?',options:['Khalid ibn al-Walid','Tariq ibn Ziyad','Salahuddin al-Ayyubi','Muhammad ibn Qasim'],correct:1,explanation:'Tariq ibn Ziyad crossed the strait (later named Gibraltar/Jabal Tariq) and defeated the Visigothic King Roderic.'},
-{question:'Which Islamic dynasty built the Dome of the Rock in Jerusalem?',options:['Abbasid','Umayyad','Ottoman','Fatimid'],correct:1,explanation:'The Umayyad Caliph Abd al-Malik ibn Marwan commissioned the Dome of the Rock, completed in 691 CE.'},
-{question:'What was the "Constitution of Medina" primarily about?',options:['Rules of warfare','Rights and duties of all citizens of Medina','Trade regulations','Marriage laws'],correct:1,explanation:'The Constitution of Medina was a charter establishing the rights and responsibilities of all groups in Medina, including Muslims, Jews, and others.'},
-{question:'Which caliph first established a formal state treasury (Bayt al-Mal)?',options:['Abu Bakr (RA)','Umar ibn al-Khattab (RA)','Uthman (RA)','Ali (RA)'],correct:1,explanation:'Umar (RA) established the Bayt al-Mal as a formal institution along with many other administrative innovations.'},
-{question:'What were the Ridda Wars?',options:['Wars against the Byzantines','Wars against apostasy after the Prophet\'s death','Wars against the Persian Empire','Internal Muslim civil wars'],correct:1,explanation:'After the Prophet\'s death, several tribes left Islam. Abu Bakr (RA) fought the Ridda (apostasy) wars to reunite the Muslim community.'},
-{question:'Which Muslim scholar is known as the "Father of Algebra"?',options:['Al-Kindi','Al-Khwarizmi','Ibn Sina','Al-Biruni'],correct:1,explanation:'Muhammad ibn Musa al-Khwarizmi (780-850 CE) wrote "Al-Kitab al-Mukhtasar fi Hisab al-Jabr wal-Muqabala," founding algebra.'},
-{question:'Who founded the University of Al-Qarawiyyin, often cited as the world\'s oldest existing university?',options:['Maryam al-Asturlabi','Fatima al-Fihri','Khadijah bint Ali','Lubna of Cordoba'],correct:1,explanation:'Fatima al-Fihri founded Al-Qarawiyyin in Fez, Morocco in 859 CE, recognized by UNESCO and Guinness as the oldest existing university.'},
-{question:'In which century did the Ottoman Empire capture Constantinople?',options:['13th century','14th century','15th century','16th century'],correct:2,explanation:'Sultan Mehmed II ("the Conqueror") captured Constantinople in 1453 CE, marking the end of the Byzantine Empire.'},
-{question:'What was the Bayt al-Hikmah (House of Wisdom)?',options:['A mosque in Medina','A library and translation center in Baghdad','A school in Cairo','A palace in Damascus'],correct:1,explanation:'The Bayt al-Hikmah was a major intellectual center in Baghdad under the Abbasid caliphate, translating and preserving Greek, Persian, and Indian works.'},
-{question:'Which prophet\'s story occupies an entire surah of the Quran?',options:['Prophet Musa (AS)','Prophet Ibrahim (AS)','Prophet Yusuf (AS)','Prophet Isa (AS)'],correct:2,explanation:'Surah Yusuf (Chapter 12) is entirely dedicated to the story of Prophet Yusuf (Joseph), described as "the best of stories."'},
-{question:'Who was the Muslim commander who liberated Jerusalem from the Crusaders in 1187 CE?',options:['Tariq ibn Ziyad','Salahuddin al-Ayyubi','Baybars I','Nur ad-Din Zangi'],correct:1,explanation:'Salahuddin al-Ayyubi (Saladin) defeated the Crusaders at the Battle of Hattin and recaptured Jerusalem, treating the inhabitants with mercy.'},
-{question:'Which Islamic empire is known for architectural wonders including the Taj Mahal?',options:['Ottoman Empire','Safavid Empire','Mughal Empire','Abbasid Empire'],correct:2,explanation:'The Mughal Empire in South Asia produced remarkable architecture. The Taj Mahal was built by Emperor Shah Jahan as a mausoleum for his wife.'},
-{question:'What is the "Year of the Elephant" (Aam al-Feel) significant for?',options:['The first revelation','The approximate birth year of Prophet Muhammad (PBUH)','The conquest of Makkah','The migration to Medina'],correct:1,explanation:'The Year of the Elephant (~570 CE) is when Abraha\'s army with elephants attacked the Kaaba and was destroyed, and is approximately the birth year of the Prophet (PBUH).'},
-{question:'Which Muslim scientist wrote "The Canon of Medicine," used in Europe for centuries?',options:['Ibn al-Haytham','Ibn Sina (Avicenna)','Al-Razi','Al-Zahrawi'],correct:1,explanation:'Ibn Sina (980-1037 CE) wrote "Al-Qanun fi al-Tibb" (The Canon of Medicine), a medical encyclopedia used in European universities until the 17th century.'},
-{question:'What was the Pledge of Aqabah?',options:['A trade agreement with Quraysh','An oath of allegiance to the Prophet by people of Yathrib','A peace treaty between tribes','A military alliance against Persia'],correct:1,explanation:'The Pledges of Aqabah were oaths of allegiance by people of Yathrib (Medina), paving the way for the Hijrah.'},
-{question:'Which companion was renowned as the greatest expert in Quranic interpretation (Tafsir)?',options:['Abu Hurairah (RA)','Abdullah ibn Abbas (RA)','Zaid ibn Thabit (RA)','Mu\'adh ibn Jabal (RA)'],correct:1,explanation:'Abdullah ibn Abbas (RA), the Prophet\'s cousin, was called "Habr al-Ummah" (Scholar of the Ummah) and "Tarjuman al-Quran" (Interpreter of the Quran).'},
-{question:'What was the first masjid built in Islam?',options:['Masjid al-Haram','Masjid an-Nabawi','Masjid Quba','Al-Aqsa Mosque'],correct:2,explanation:'Masjid Quba was built by the Prophet (PBUH) upon his arrival near Medina during the Hijrah. It is mentioned in the Quran (9:108).'},
-{question:'Which Islamic scholar founded the Maliki school of thought?',options:['Imam Abu Hanifa','Imam Malik ibn Anas','Imam al-Shafi\'i','Imam Ahmad ibn Hanbal'],correct:1,explanation:'Imam Malik ibn Anas (711-795 CE) founded the Maliki school, one of the four major Sunni schools of jurisprudence, and authored "Al-Muwatta."'},
-{question:'In which present-day country was the center of the Islamic Golden Age?',options:['Saudi Arabia','Egypt','Iraq','Turkey'],correct:2,explanation:'Baghdad (in modern Iraq) was the capital of the Abbasid caliphate and the center of the Islamic Golden Age of learning (8th-14th centuries).'},
-{question:'Which Umayyad caliph built the Great Mosque of Damascus?',options:['Mu\'awiyah I','Abd al-Malik ibn Marwan','Al-Walid I','Umar ibn Abd al-Aziz'],correct:2,explanation:'Caliph Al-Walid I (r. 705-715 CE) built the Umayyad Mosque of Damascus, one of the largest and oldest mosques in the world.'},
-{question:'The Abbasid Revolution ended the rule of which dynasty?',options:['Rashidun Caliphate','Umayyad Dynasty','Ottoman Empire','Safavid Dynasty'],correct:1,explanation:'The Abbasid Revolution of 750 CE overthrew the Umayyad Dynasty and established the Abbasid Caliphate, shifting the capital from Damascus to Baghdad.'},
-{question:'In which battle were Muslims initially winning but lost advantage due to archers leaving their positions?',options:['Battle of Badr','Battle of Uhud','Battle of Hunayn','Battle of Tabuk'],correct:1,explanation:'At the Battle of Uhud (625 CE), Muslim archers left their posts on the hill against the Prophet\'s orders, allowing Khalid ibn al-Walid to flank the Muslim forces.'},
-],
+  // ==================== ISLAMIC HISTORY ====================
+  history: [
+    {
+      question: 'In which year (CE) did the Conquest of Makkah (Fath al-Makkah) take place?',
+      options: ['624 CE', '628 CE', '630 CE', '632 CE'],
+      correct: 2,
+      explanation: 'The Conquest of Makkah took place in 630 CE (8 AH).'
+    },
+    {
+      question: 'Which companion suggested digging a trench in the Battle of Khandaq?',
+      options: ['Abu Bakr (RA)', 'Khalid ibn al-Walid (RA)', 'Salman al-Farsi (RA)', 'Sa\'d ibn Mu\'adh (RA)'],
+      correct: 2,
+      explanation: 'Salman al-Farsi (RA) suggested the trench strategy.'
+    },
+    {
+      question: 'What significant achievement occurred during the caliphate of Uthman ibn Affan (RA)?',
+      options: ['Conquest of Egypt', 'Standardization of the Quran', 'Building of Al-Aqsa', 'Establishment of the postal system'],
+      correct: 1,
+      explanation: 'Uthman (RA) standardised the Quran into one official written form.'
+    },
+    {
+      question: 'Who was the Muslim general who led the conquest of Spain (Al-Andalus) in 711 CE?',
+      options: ['Khalid ibn al-Walid', 'Tariq ibn Ziyad', 'Salahuddin al-Ayyubi', 'Muhammad ibn Qasim'],
+      correct: 1,
+      explanation: 'Tariq ibn Ziyad led the conquest of Al-Andalus in 711 CE.'
+    },
+    {
+      question: 'Which Islamic dynasty built the Dome of the Rock in Jerusalem?',
+      options: ['Abbasid', 'Umayyad', 'Ottoman', 'Fatimid'],
+      correct: 1,
+      explanation: 'The Dome of the Rock was built under the Umayyads.'
+    },
+    {
+      question: 'What was the "Constitution of Medina" primarily about?',
+      options: ['Rules of warfare', 'Rights and duties of the people of Medina', 'Trade regulations', 'Marriage laws'],
+      correct: 1,
+      explanation: 'It established rights and responsibilities among the communities of Medina.'
+    },
+    {
+      question: 'Which caliph first established a formal state treasury (Bayt al-Mal)?',
+      options: ['Abu Bakr (RA)', 'Umar ibn al-Khattab (RA)', 'Uthman (RA)', 'Ali (RA)'],
+      correct: 1,
+      explanation: 'Umar ibn al-Khattab (RA) established the Bayt al-Mal as a formal institution.'
+    },
+    {
+      question: 'What were the Ridda Wars?',
+      options: ['Wars against the Byzantines', 'Wars against apostasy after the Prophet\'s death', 'Wars against the Persian Empire', 'Internal Muslim civil wars'],
+      correct: 1,
+      explanation: 'The Ridda Wars were fought by Abu Bakr (RA) against tribes that left Islam after the Prophet\'s death.'
+    },
+    {
+      question: 'Which Muslim scholar is known as the "Father of Algebra"?',
+      options: ['Al-Kindi', 'Al-Khwarizmi', 'Ibn Sina', 'Al-Biruni'],
+      correct: 1,
+      explanation: 'Al-Khwarizmi is widely known as the father of algebra.'
+    },
+    {
+      question: 'In which century did the Ottoman Empire capture Constantinople?',
+      options: ['13th century', '14th century', '15th century', '16th century'],
+      correct: 2,
+      explanation: 'Constantinople was captured in 1453 CE, in the 15th century.'
+    },
+    {
+      question: 'What was Bayt al-Hikmah (House of Wisdom)?',
+      options: ['A mosque in Medina', 'A library and translation center in Baghdad', 'A school in Cairo', 'A palace in Damascus'],
+      correct: 1,
+      explanation: 'Bayt al-Hikmah was a major Abbasid library and translation center in Baghdad.'
+    },
+    {
+      question: 'Which prophet\'s story occupies an entire surah of the Quran?',
+      options: ['Prophet Musa (AS)', 'Prophet Ibrahim (AS)', 'Prophet Yusuf (AS)', 'Prophet Isa (AS)'],
+      correct: 2,
+      explanation: 'Surah Yusuf is dedicated to the story of Prophet Yusuf (AS).'
+    },
+    {
+      question: 'Who was the Muslim commander who liberated Jerusalem from the Crusaders in 1187 CE?',
+      options: ['Tariq ibn Ziyad', 'Salahuddin al-Ayyubi', 'Baybars I', 'Nur ad-Din Zangi'],
+      correct: 1,
+      explanation: 'Salahuddin al-Ayyubi liberated Jerusalem in 1187 CE.'
+    },
+    {
+      question: 'Which Islamic empire is known for architectural wonders including the Taj Mahal?',
+      options: ['Ottoman Empire', 'Safavid Empire', 'Mughal Empire', 'Abbasid Empire'],
+      correct: 2,
+      explanation: 'The Taj Mahal was built under the Mughal Empire.'
+    },
+    {
+      question: 'What is the "Year of the Elephant" (Aam al-Feel) significant for?',
+      options: ['The first revelation', 'The approximate birth year of Prophet Muhammad (PBUH)', 'The conquest of Makkah', 'The migration to Medina'],
+      correct: 1,
+      explanation: 'The Year of the Elephant is the approximate birth year of Prophet Muhammad (PBUH).'
+    },
+    {
+      question: 'Which Muslim scientist wrote "The Canon of Medicine," used in Europe for centuries?',
+      options: ['Ibn al-Haytham', 'Ibn Sina (Avicenna)', 'Al-Razi', 'Al-Zahrawi'],
+      correct: 1,
+      explanation: 'Ibn Sina wrote The Canon of Medicine.'
+    },
+    {
+      question: 'What was the Pledge of Aqabah?',
+      options: ['A trade agreement with Quraysh', 'An oath of allegiance to the Prophet by people of Yathrib', 'A peace treaty between tribes', 'A military alliance against Persia'],
+      correct: 1,
+      explanation: 'The Pledges of Aqabah were oaths of allegiance by people of Yathrib to the Prophet (PBUH).'
+    },
+    {
+      question: 'Which companion was known as Tarjuman al-Quran (Interpreter of the Quran)?',
+      options: ['Abu Hurairah (RA)', 'Abdullah ibn Abbas (RA)', 'Zaid ibn Thabit (RA)', 'Mu\'adh ibn Jabal (RA)'],
+      correct: 1,
+      explanation: 'Abdullah ibn Abbas (RA) was known as Tarjuman al-Quran.'
+    },
+    {
+      question: 'What was the first masjid built in Islam?',
+      options: ['Masjid al-Haram', 'Masjid an-Nabawi', 'Masjid Quba', 'Al-Aqsa Mosque'],
+      correct: 2,
+      explanation: 'Masjid Quba was the first masjid built in Islam.'
+    },
+    {
+      question: 'Which Islamic scholar founded the Maliki school of thought?',
+      options: ['Imam Abu Hanifa', 'Imam Malik ibn Anas', 'Imam al-Shafi\'i', 'Imam Ahmad ibn Hanbal'],
+      correct: 1,
+      explanation: 'Imam Malik ibn Anas founded the Maliki school of thought.'
+    },
+    {
+      question: 'In which present-day country was the center of the Islamic Golden Age?',
+      options: ['Saudi Arabia', 'Egypt', 'Iraq', 'Turkey'],
+      correct: 2,
+      explanation: 'Baghdad, in present-day Iraq, was the center of the Islamic Golden Age.'
+    },
+    {
+      question: 'Which Umayyad caliph built the Great Mosque of Damascus?',
+      options: ['Mu\'awiyah I', 'Abd al-Malik ibn Marwan', 'Al-Walid I', 'Umar ibn Abd al-Aziz'],
+      correct: 2,
+      explanation: 'Al-Walid I built the Great Mosque of Damascus.'
+    },
+    {
+      question: 'The Abbasid Revolution ended the rule of which dynasty?',
+      options: ['Rashidun Caliphate', 'Umayyad Dynasty', 'Ottoman Empire', 'Safavid Dynasty'],
+      correct: 1,
+      explanation: 'The Abbasid Revolution overthrew the Umayyad Dynasty.'
+    },
+    {
+      question: 'In which battle were Muslims initially winning but lost advantage after archers left their positions?',
+      options: ['Battle of Badr', 'Battle of Uhud', 'Battle of Hunayn', 'Battle of Tabuk'],
+      correct: 1,
+      explanation: 'This happened at the Battle of Uhud.'
+    },
+    {
+      question: 'Which caliph formally instituted the Hijri calendar?',
+      options: ['Abu Bakr (RA)', 'Umar ibn al-Khattab (RA)', 'Uthman ibn Affan (RA)', 'Ali ibn Abi Talib (RA)'],
+      correct: 1,
+      explanation: 'The Hijri calendar was formally instituted during the caliphate of Umar ibn al-Khattab (RA).'
+    },
+    {
+      question: 'Which battle in 636 CE decisively ended Byzantine rule in Syria?',
+      options: ['Battle of Qadisiyyah', 'Battle of Yarmouk', 'Battle of Uhud', 'Battle of Siffin'],
+      correct: 1,
+      explanation: 'The Battle of Yarmouk decisively ended Byzantine rule in Syria.'
+    },
+    {
+      question: 'Who was the first Abbasid caliph?',
+      options: ['Abu Muslim al-Khurasani', 'Abu al-Abbas al-Saffah', 'Al-Mansur', 'Harun al-Rashid'],
+      correct: 1,
+      explanation: 'Abu al-Abbas al-Saffah was the first Abbasid caliph.'
+    },
+    {
+      question: 'Which city became the political and intellectual center of the Abbasid caliphate?',
+      options: ['Damascus', 'Cordoba', 'Baghdad', 'Cairo'],
+      correct: 2,
+      explanation: 'Baghdad became the political and intellectual center of the Abbasid caliphate.'
+    },
+    {
+      question: 'Which caliph personally came to receive the surrender of Jerusalem?',
+      options: ['Abu Bakr (RA)', 'Umar ibn al-Khattab (RA)', 'Uthman ibn Affan (RA)', 'Muawiyah I'],
+      correct: 1,
+      explanation: 'Umar ibn al-Khattab (RA) personally came to receive the surrender of Jerusalem.'
+    },
+    {
+      question: 'Which Umayyad caliph personally commissioned the Dome of the Rock?',
+      options: ['Muawiyah I', 'Abd al-Malik ibn Marwan', 'Al-Walid I', 'Umar ibn Abd al-Aziz'],
+      correct: 1,
+      explanation: 'The Dome of the Rock was commissioned by Abd al-Malik ibn Marwan.'
+    },
+    {
+      question: 'Which battle against the Sasanian Persians opened the way to the conquest of Ctesiphon?',
+      options: ['Battle of Yarmouk', 'Battle of Qadisiyyah', 'Battle of Badr', 'Battle of Hunayn'],
+      correct: 1,
+      explanation: 'The Battle of Qadisiyyah was a decisive victory against the Sasanian Persians and opened the way to Ctesiphon.'
+    }
+  ],
 
-// ==================== RAPID FIRE ====================
-rapid:[
-{question:'What is the Arabic term for an obligatory act in Islam?',options:['Sunnah','Fard','Mustahabb','Mubah'],correct:1,explanation:'Fard (or Wajib) means obligatory, a duty every Muslim must fulfil.'},
-{question:'How many surahs of the Quran are named after prophets?',options:['4','6','8','10'],correct:1,explanation:'Six surahs: Yunus, Hud, Yusuf, Ibrahim, Muhammad, and Nuh.'},
-{question:'What prayer is performed during a solar eclipse?',options:['Salat al-Kusuf','Salat al-Istisqa','Salat at-Tawbah','Salat al-Hajah'],correct:0,explanation:'Salat al-Kusuf is the eclipse prayer, a confirmed Sunnah of the Prophet (PBUH).'},
-{question:'What is the last Juz of the Quran commonly called?',options:['Juz Amma','Juz Tabarak','Juz Ya-Sin','Juz Alif-Lam-Meem'],correct:0,explanation:'The 30th Juz is called "Juz Amma" after its first word from Surah An-Naba.'},
-{question:'Which month comes immediately before Ramadan?',options:['Rajab','Sha\'ban','Safar','Jumada al-Thani'],correct:1,explanation:'Sha\'ban is the 8th month of the Islamic calendar, directly before Ramadan (9th month).'},
-{question:'What is the voluntary night prayer called?',options:['Fajr','Tahajjud','Duha','Ishraq'],correct:1,explanation:'Tahajjud is the voluntary night prayer performed after Isha and before Fajr.'},
-{question:'What is the Arabic word for "repentance"?',options:['Sabr','Tawbah','Shukr','Dhikr'],correct:1,explanation:'Tawbah means repentance, turning back to Allah seeking forgiveness.'},
-{question:'Which prophet is also known as "Israeel"?',options:['Ibrahim (AS)','Ya\'qub (AS)','Yusuf (AS)','Ishaq (AS)'],correct:1,explanation:'Prophet Ya\'qub (Jacob) is also known as Israeel. The Children of Israel (Bani Israeel) are his descendants.'},
-{question:'How many of the five daily prayers have 4 fard raka\'at?',options:['1','2','3','4'],correct:2,explanation:'Three prayers have 4 fard raka\'at: Dhuhr, Asr, and Isha.'},
-{question:'What does "Jazakallahu Khairan" mean?',options:['Peace be upon you','May Allah reward you with good','God willing','All praise to Allah'],correct:1,explanation:'"Jazakallahu Khairan" means "May Allah reward you with good," a common Islamic expression of gratitude.'},
-{question:'Before prophethood, Muhammad (PBUH) was known as?',options:['Al-Mukhtar','Al-Rashid','Al-Amin and Al-Sadiq','Al-Qawi'],correct:2,explanation:'He was known as Al-Amin (The Trustworthy) and Al-Sadiq (The Truthful) even before prophethood.'},
-{question:'What was the first verse of the Quran revealed?',options:['Bismillah','Alhamdulillah','Iqra (Read!)','Qul (Say!)'],correct:2,explanation:'"Iqra" (Read/Recite) from Surah Al-Alaq (96:1) was the first revelation to the Prophet (PBUH) in the Cave of Hira.'},
-{question:'Which angel will blow the trumpet on the Day of Judgment?',options:['Jibreel','Mikail','Israfil','Malik'],correct:2,explanation:'Angel Israfil is tasked with blowing the trumpet (As-Sur) to signal the Day of Judgment.'},
-{question:'What is the act of walking between Safa and Marwah called?',options:['Tawaf','Sa\'i','Wuquf','Rami'],correct:1,explanation:'Sa\'i involves walking seven times between the hills of Safa and Marwah, commemorating Hajar\'s search for water.'},
-{question:'What does "La hawla wa la quwwata illa billah" mean?',options:['God is great','There is no power except with Allah','In the name of God','Glory to God'],correct:1,explanation:'It means "There is no power or might except with Allah," known as the Hawqala.'},
-{question:'Which surah is recommended to read every Friday?',options:['Al-Mulk','Al-Kahf','Ya-Sin','Ar-Rahman'],correct:1,explanation:'Reading Surah Al-Kahf on Friday is a recommended Sunnah with special blessings mentioned in hadith.'},
-{question:'What is "Wuquf" during Hajj?',options:['Standing at Arafat','Circling the Kaaba','Walking between hills','Throwing pebbles'],correct:0,explanation:'Wuquf at Arafat is the standing on the plain of Arafat on the 9th of Dhul Hijjah, the essential pillar of Hajj.'},
-{question:'How many verses does Surah Al-Fatiha have?',options:['5','6','7','8'],correct:2,explanation:'Surah Al-Fatiha has 7 verses and is also called "As-Sab\' al-Mathani" (The Seven Oft-Repeated Verses).'},
-{question:'What is the Islamic term for the evil eye?',options:['Hasad','Ayn','Sihr','Waswas'],correct:1,explanation:'Ayn (literally "eye") refers to the evil eye, against which the Prophet (PBUH) taught seeking Allah\'s protection.'},
-{question:'During Hajj, what is the act of throwing pebbles called?',options:['Rami al-Jamarat','Tawaf al-Ifadah','Sa\'i','Wuquf'],correct:0,explanation:'Rami al-Jamarat is the ritual of throwing pebbles at the stone pillars in Mina, symbolizing rejection of Shaytan.'},
-{question:'What time does the Islamic day begin?',options:['Midnight','Sunrise','Sunset (Maghrib)','Fajr'],correct:2,explanation:'The Islamic day begins at Maghrib (sunset), which is why Islamic dates change at sunset.'},
-{question:'What does "Inna lillahi wa inna ilayhi raji\'un" mean?',options:['God is the Greatest','Indeed, to Allah we belong and to Him we shall return','All praise is due to God','In the name of God'],correct:1,explanation:'This phrase from Surah Al-Baqarah (2:156) is recited upon hearing of someone\'s death or in times of calamity.'},
-{question:'How many days is the Eid al-Adha celebration?',options:['1 day','2 days','3 days','4 days'],correct:2,explanation:'Eid al-Adha is celebrated over 3 days (the 10th, 11th, and 12th of Dhul Hijjah), known as the Days of Tashreeq.'},
-{question:'The Quran was revealed over approximately how many years?',options:['10 years','15 years','20 years','23 years'],correct:3,explanation:'The Quran was revealed gradually over approximately 23 years, from 610 CE to 632 CE.'},
-{question:'What is the reward for fasting according to a famous hadith qudsi?',options:['Paradise','Forgiveness of sins','Known only to Allah','All worldly wealth'],correct:2,explanation:'Allah says: "Fasting is for Me, and I shall reward it." The reward is known only to Allah, indicating its immense value.'},
-],
+  // ==================== RAPID FIRE ====================
+  rapid: [
+    {
+      question: 'How many surahs of the Quran are named after prophets?',
+      options: ['4', '6', '8', '10'],
+      correct: 1,
+      explanation: 'Six surahs are named after prophets: Yunus, Hud, Yusuf, Ibrahim, Muhammad, and Nuh.'
+    },
+    {
+      question: 'What prayer is performed during a solar eclipse?',
+      options: ['Salat al-Kusuf', 'Salat al-Istisqa', 'Salat at-Tawbah', 'Salat al-Hajah'],
+      correct: 0,
+      explanation: 'Salat al-Kusuf is the prayer performed during a solar eclipse.'
+    },
+    {
+      question: 'What is the last Juz of the Quran commonly called?',
+      options: ['Juz Amma', 'Juz Tabarak', 'Juz Ya-Sin', 'Juz Alif-Lam-Meem'],
+      correct: 0,
+      explanation: 'The 30th Juz is commonly called Juz Amma.'
+    },
+    {
+      question: 'Which month comes immediately before Ramadan?',
+      options: ['Rajab', 'Sha\'ban', 'Safar', 'Jumada al-Thani'],
+      correct: 1,
+      explanation: 'Sha\'ban comes immediately before Ramadan.'
+    },
+    {
+      question: 'What is the voluntary night prayer called?',
+      options: ['Fajr', 'Tahajjud', 'Duha', 'Ishraq'],
+      correct: 1,
+      explanation: 'Tahajjud is the voluntary night prayer.'
+    },
+    {
+      question: 'What is the Arabic word for "repentance"?',
+      options: ['Sabr', 'Tawbah', 'Shukr', 'Dhikr'],
+      correct: 1,
+      explanation: 'Tawbah means repentance.'
+    },
+    {
+      question: 'Which prophet is also known as "Israeel"?',
+      options: ['Ibrahim (AS)', 'Ya\'qub (AS)', 'Yusuf (AS)', 'Ishaq (AS)'],
+      correct: 1,
+      explanation: 'Prophet Ya\'qub (AS) is also known as Israeel.'
+    },
+    {
+      question: 'How many of the five daily prayers have 4 fard raka\'at?',
+      options: ['1', '2', '3', '4'],
+      correct: 2,
+      explanation: 'Dhuhr, Asr, and Isha each have 4 fard raka\'at.'
+    },
+    {
+      question: 'What does "Jazakallahu Khairan" mean?',
+      options: ['Peace be upon you', 'May Allah reward you with good', 'God willing', 'All praise to Allah'],
+      correct: 1,
+      explanation: '"Jazakallahu Khairan" means "May Allah reward you with good."'
+    },
+    {
+      question: 'Before prophethood, Muhammad (PBUH) was known as?',
+      options: ['Al-Mukhtar', 'Al-Rashid', 'Al-Amin', 'Al-Qawi'],
+      correct: 2,
+      explanation: 'Before prophethood, Muhammad (PBUH) was known as Al-Amin, the trustworthy.'
+    },
+    {
+      question: 'Which angel will blow the trumpet on the Day of Judgment?',
+      options: ['Jibreel', 'Mikail', 'Israfil', 'Malik'],
+      correct: 2,
+      explanation: 'Israfil is the angel who will blow the trumpet.'
+    },
+    {
+      question: 'What is the act of walking between Safa and Marwah called?',
+      options: ['Tawaf', 'Sa\'i', 'Wuquf', 'Rami'],
+      correct: 1,
+      explanation: 'Walking between Safa and Marwah is called Sa\'i.'
+    },
+    {
+      question: 'What does "La hawla wa la quwwata illa billah" mean?',
+      options: ['God is great', 'There is no power nor might except with Allah', 'In the name of God', 'Glory to God'],
+      correct: 1,
+      explanation: 'It means "There is no power nor might except with Allah."'
+    },
+    {
+      question: 'Which surah is recommended to read every Friday?',
+      options: ['Al-Mulk', 'Al-Kahf', 'Ya-Sin', 'Ar-Rahman'],
+      correct: 1,
+      explanation: 'Reading Surah Al-Kahf on Friday is recommended.'
+    },
+    {
+      question: 'What is "Wuquf" during Hajj?',
+      options: ['Standing at Arafat', 'Circling the Kaaba', 'Walking between hills', 'Throwing pebbles'],
+      correct: 0,
+      explanation: 'Wuquf is the standing at Arafat during Hajj.'
+    },
+    {
+      question: 'How many verses does Surah Al-Fatiha have?',
+      options: ['5', '6', '7', '8'],
+      correct: 2,
+      explanation: 'Surah Al-Fatiha has 7 verses.'
+    },
+    {
+      question: 'What is the Islamic term for the evil eye?',
+      options: ['Hasad', 'Ayn', 'Sihr', 'Waswas'],
+      correct: 1,
+      explanation: 'Ayn refers to the evil eye.'
+    },
+    {
+      question: 'During Hajj, what is the act of throwing pebbles called?',
+      options: ['Rami al-Jamarat', 'Tawaf al-Ifadah', 'Sa\'i', 'Wuquf'],
+      correct: 0,
+      explanation: 'Throwing pebbles during Hajj is called Rami al-Jamarat.'
+    },
+    {
+      question: 'What time does the Islamic day begin?',
+      options: ['Midnight', 'Sunrise', 'Sunset (Maghrib)', 'Fajr'],
+      correct: 2,
+      explanation: 'In the Islamic calendar, the day begins at sunset.'
+    },
+    {
+      question: 'What does "Inna lillahi wa inna ilayhi raji\'un" mean?',
+      options: ['God is the Greatest', 'Indeed, to Allah we belong and to Him we shall return', 'All praise is due to God', 'In the name of God'],
+      correct: 1,
+      explanation: 'It means "Indeed, to Allah we belong and to Him we shall return."'
+    },
+    {
+      question: 'The Quran was revealed over approximately how many years?',
+      options: ['10 years', '15 years', '20 years', '23 years'],
+      correct: 3,
+      explanation: 'The Quran was revealed over approximately 23 years.'
+    },
+    {
+      question: 'What is the Arabic term for a permissible act in Islam?',
+      options: ['Fard', 'Mubah', 'Makruh', 'Haram'],
+      correct: 1,
+      explanation: 'Mubah means permissible or neutral.'
+    },
+    {
+      question: 'What are the 11th, 12th, and 13th of Dhul Hijjah called?',
+      options: ['Ayyam al-Bid', 'Ayyam al-Tashreeq', 'Ayyam al-Ashr', 'Ayyam al-Furqan'],
+      correct: 1,
+      explanation: 'These days are called Ayyam al-Tashreeq.'
+    },
+    {
+      question: 'What does Allah say about fasting in the hadith qudsi?',
+      options: ['It equals Hajj', 'It is for Me and I reward it', 'It replaces charity', 'It erases every hardship'],
+      correct: 1,
+      explanation: 'In the hadith qudsi, Allah says: "Fasting is for Me and I reward it."'
+    },
+    {
+      question: 'In which surah is Ramadan mentioned by name?',
+      options: ['Al-Baqarah', 'Al-Qadr', 'Maryam', 'An-Nisa'],
+      correct: 0,
+      explanation: 'Ramadan is mentioned by name in Surah Al-Baqarah.'
+    },
+    {
+      question: 'Which prophet helped Ibrahim (AS) raise the foundations of the Kaaba?',
+      options: ['Ishaq (AS)', 'Yaqub (AS)', 'Ismail (AS)', 'Yusuf (AS)'],
+      correct: 2,
+      explanation: 'Prophet Ismail (AS) helped Ibrahim (AS) raise the foundations of the Kaaba.'
+    },
+    {
+      question: 'How many sacred months are there in Islam?',
+      options: ['2', '3', '4', '5'],
+      correct: 2,
+      explanation: 'There are 4 sacred months in Islam.'
+    },
+    {
+      question: 'How many years did the People of the Cave remain in the cave according to the Quran?',
+      options: ['300', '303', '309', '312'],
+      correct: 2,
+      explanation: 'The Quran states that they remained in the cave for 300 years and exceeded by 9, making 309.'
+    },
+    {
+      question: 'What was the first qiblah of the Muslims?',
+      options: ['The Kaaba', 'Masjid Quba', 'Bayt al-Maqdis (Jerusalem)', 'Masjid an-Nabawi'],
+      correct: 2,
+      explanation: 'The first qiblah was Bayt al-Maqdis in Jerusalem.'
+    },
+    {
+      question: 'Which surah contains Ayat al-Kursi?',
+      options: ['Al-Imran', 'Al-Baqarah', 'An-Nisa', 'Al-Maidah'],
+      correct: 1,
+      explanation: 'Ayat al-Kursi is in Surah Al-Baqarah.'
+    }
+  ]
 };
-
 </script>
 </body>
 </html>
